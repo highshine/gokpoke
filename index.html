@@ -20,6 +20,8 @@
       getFirestore, 
       collection, 
       doc, 
+      getDoc,
+      getDocs,
       setDoc, 
       onSnapshot, 
       query, 
@@ -45,6 +47,8 @@
       db,
       collection,
       doc,
+      getDoc,
+      getDocs,
       setDoc,
       onSnapshot,
       query,
@@ -140,44 +144,73 @@
 
     .dex-silhouette {
       filter: brightness(0) contrast(100%);
-      opacity: 0.25;
+      opacity: 0.22;
     }
 
-    /* 시네마틱 가챠 볼 떨어지기 (쾅 바운스) */
-    @keyframes gachaSuperDrop {
-      0% { transform: translateY(-400px) scale(0.2); opacity: 0; }
-      55% { transform: translateY(30px) scale(1.25, 0.8); opacity: 1; }
-      75% { transform: translateY(-25px) scale(0.9, 1.15); }
-      90% { transform: translateY(8px) scale(1.05, 0.95); }
+    /* ================= 4초 시네마틱 가챠 전용 키프레임 ================= */
+    /* 1. 상공 낙하 슈퍼 드롭 (0s ~ 1.2s) */
+    @keyframes gachaCinematicDrop {
+      0% { transform: translateY(-500px) scale(0.3); opacity: 0; }
+      60% { transform: translateY(35px) scale(1.25, 0.8); opacity: 1; }
+      75% { transform: translateY(-28px) scale(0.9, 1.15); }
+      90% { transform: translateY(10px) scale(1.05, 0.95); }
       100% { transform: translateY(0) scale(1); }
     }
-    .anim-gacha-drop {
-      animation: gachaSuperDrop 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    .anim-gacha-drop-4s {
+      animation: gachaCinematicDrop 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    /* 볼 흔들리기 3단계 격렬한 진동 */
-    @keyframes gachaFierceShake {
+    /* 2. 볼 좌우 격렬한 펄스 진동 (1.2s ~ 2.6s) */
+    @keyframes gachaTensionShake {
       0%, 100% { transform: rotate(0deg) scale(1); }
-      15% { transform: rotate(-24deg) scale(1.08) translate(-6px, -2px); }
-      35% { transform: rotate(24deg) scale(1.08) translate(6px, -2px); }
-      55% { transform: rotate(-18deg) scale(1.12); }
-      75% { transform: rotate(18deg) scale(1.12); }
-      90% { transform: rotate(-6deg) scale(1.05); }
+      15% { transform: rotate(-22deg) scale(1.06) translate(-5px, -2px); }
+      35% { transform: rotate(22deg) scale(1.06) translate(5px, -2px); }
+      55% { transform: rotate(-16deg) scale(1.1); }
+      75% { transform: rotate(16deg) scale(1.1); }
+      90% { transform: rotate(-5deg) scale(1.04); }
     }
-    .anim-gacha-shake {
-      animation: gachaFierceShake 0.45s ease-in-out infinite;
-    }
-
-    /* 에너지 응축 펄스 */
-    @keyframes pulseAuraGlow {
-      0%, 100% { transform: scale(1); opacity: 0.4; }
-      50% { transform: scale(1.4); opacity: 0.9; }
-    }
-    .anim-pulse-aura {
-      animation: pulseAuraGlow 0.6s ease-in-out infinite;
+    .anim-gacha-shake-tension {
+      animation: gachaTensionShake 0.4s ease-in-out infinite;
     }
 
-    /* 태양광 회전 이펙트 (Sunburst) */
+    /* 3. 볼 상단/하단 분할 개방 (2.6s ~ 3.4s) */
+    @keyframes splitBallTop {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(-80px, -90px) rotate(-35deg) scale(0.85); opacity: 0; }
+    }
+    @keyframes splitBallBottom {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(80px, 90px) rotate(35deg) scale(0.85); opacity: 0; }
+    }
+    .anim-split-top {
+      animation: splitBallTop 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    .anim-split-bottom {
+      animation: splitBallBottom 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    /* 4. 황금빛 충격파 링 회전 */
+    @keyframes shockwaveRingExpand {
+      0% { transform: scale(0.3) rotate(0deg); opacity: 0; }
+      40% { opacity: 0.95; }
+      100% { transform: scale(2.4) rotate(180deg); opacity: 0; }
+    }
+    .anim-shockwave-ring {
+      animation: shockwaveRingExpand 1.2s ease-out infinite;
+    }
+
+    /* 5. 최종 카드 3D 폭발 팝인 (3.4s ~ 4.2s) */
+    @keyframes cardBurstEpic {
+      0% { transform: scale(0.05) rotate(-20deg); opacity: 0; filter: brightness(4) blur(4px); }
+      60% { transform: scale(1.18) rotate(4deg); opacity: 1; filter: brightness(1.6) blur(0); }
+      80% { transform: scale(0.95) rotate(-2deg); }
+      100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+    }
+    .anim-card-burst-epic {
+      animation: cardBurstEpic 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    /* 썬버스트 회전 */
     @keyframes sunburstSpin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -186,15 +219,32 @@
       animation: sunburstSpin 14s linear infinite;
     }
 
-    /* 포켓몬 오픈 대폭발 팝인 */
-    @keyframes cardBurstPop {
-      0% { transform: scale(0.1) rotate(-15deg); opacity: 0; filter: brightness(3); }
-      60% { transform: scale(1.15) rotate(4deg); opacity: 1; filter: brightness(1.5); }
-      80% { transform: scale(0.96) rotate(-2deg); }
-      100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
-    }
-    .anim-card-burst {
-      animation: cardBurstPop 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    /* ================= 태블릿(가로 768px 이상) 전용 반응형 확대 ================= */
+    @media (min-width: 768px) {
+      .tablet-scale-container {
+        max-width: 768px !important;
+      }
+      .kakdugi-box {
+        width: 4rem !important;
+        height: 4rem !important;
+        font-size: 2rem !important;
+        border-width: 4px !important;
+      }
+      .choice-btn {
+        height: 4.2rem !important;
+        font-size: 2rem !important;
+      }
+      #stageSelect {
+        font-size: 0.95rem !important;
+        padding-top: 0.6rem !important;
+        padding-bottom: 0.6rem !important;
+      }
+      #currentLiveScore, #currentQNumText {
+        font-size: 1.15rem !important;
+      }
+      .nav-tab span:last-child {
+        font-size: 0.85rem !important;
+      }
     }
 
     ::-webkit-scrollbar {
@@ -213,7 +263,7 @@
   <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
 
   <!-- 메인 반응형 컨테이너 -->
-  <div class="w-full max-w-2xl mx-auto flex-grow flex flex-col justify-between min-h-screen bg-transparent sm:bg-white/40 sm:shadow-lg sm:border-x sm:border-amber-200">
+  <div class="w-full max-w-2xl mx-auto flex-grow flex flex-col justify-between min-h-screen bg-transparent sm:bg-white/40 sm:shadow-lg sm:border-x sm:border-amber-200 tablet-scale-container">
 
     <!-- 상단 간편 유틸 바 -->
     <div class="bg-slate-900/95 text-white px-3 py-1.5 text-[11px] flex items-center justify-between gap-1.5 border-b border-slate-700">
@@ -240,7 +290,7 @@
         
         <!-- 왼쪽: 로고 + 타이틀 -->
         <div class="flex items-center gap-2 min-w-0">
-          <div class="w-8 h-8 rounded-full border-2 border-slate-800 bg-white relative overflow-hidden flex flex-col shadow cursor-pointer btn-bounce shrink-0" id="headerPokeBall" title="클릭하면 피카츄 소리가 나요!">
+          <div class="w-8 h-8 rounded-full border-2 border-slate-800 bg-white relative overflow-hidden flex flex-col shadow cursor-pointer btn-bounce shrink-0" id="headerPokeBall" title="피카츄 소리">
             <div class="h-1/2 bg-poke-red"></div>
             <div class="h-0.5 bg-slate-800"></div>
             <div class="h-1/2 bg-white"></div>
@@ -297,28 +347,39 @@
       </div>
     </header>
 
-    <!-- 월드 보스 레쿠쟈 레이드 배너 -->
+    <!-- 월드 보스 레쿠쟈 레이드 배너 & 퍼즐 현황 -->
     <div class="w-full px-2.5 pt-2">
-      <div class="bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 text-white rounded-2xl p-2 sm:p-2.5 shadow border border-emerald-500/70 flex items-center justify-between gap-2">
-        <div id="bossRayquazaAvatar" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-slate-800 border border-emerald-400 p-0.5 shrink-0 flex items-center justify-center relative shadow-inner cursor-pointer btn-bounce" title="클릭하면 레쿠쟈 울음소리가 나요!">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png" alt="레쿠쟈" class="w-full h-full object-contain filter drop-shadow">
-          <span class="absolute -top-1 -right-1 text-[8px] bg-rose-600 text-white font-black px-1 rounded-full border border-white">BOSS</span>
+      <div class="bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 text-white rounded-2xl p-2.5 shadow border border-emerald-500/70 flex flex-col gap-1.5">
+        <div class="flex items-center justify-between gap-2">
+          <div id="bossRayquazaAvatar" class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-slate-800 border border-emerald-400 p-0.5 shrink-0 flex items-center justify-center relative shadow-inner cursor-pointer btn-bounce" title="레쿠쟈 울음소리">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png" alt="레쿠쟈" class="w-full h-full object-contain filter drop-shadow">
+            <span class="absolute -top-1 -right-1 text-[8px] bg-rose-600 text-white font-black px-1 rounded-full border border-white">BOSS</span>
+          </div>
+
+          <div class="flex-grow min-w-0">
+            <div class="flex items-center justify-between text-[11px] font-bold">
+              <span class="text-emerald-400 truncate">⚡ 월드 보스 레쿠쟈</span>
+              <span class="text-[10px] text-slate-300">내 타격: <strong id="myRaidDamageText" class="text-amber-400 font-black">0</strong>⚔️</span>
+            </div>
+            <div class="w-full bg-slate-800 rounded-full h-2.5 border border-emerald-500/50 mt-1 relative overflow-hidden">
+              <div id="bossHpBar" class="bg-gradient-to-r from-emerald-500 via-amber-400 to-rose-500 h-full rounded-full transition-all duration-300" style="width: 100%;"></div>
+            </div>
+            <div class="text-[10px] text-slate-300 mt-0.5 flex justify-between items-center">
+              <span>남은 HP: <strong id="bossHpText" class="text-emerald-300 font-bold">1000 / 1000</strong></span>
+              <button id="openRaidRankModalBtn" class="text-[10px] text-emerald-300 underline font-bold hover:text-white">
+                공헌 랭킹 ➔
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div class="flex-grow min-w-0">
-          <div class="flex items-center justify-between text-[11px] font-bold">
-            <span class="text-emerald-400 truncate">⚡ 월드 보스 레쿠쟈</span>
-            <span class="text-[10px] text-slate-300">내 타격: <strong id="myRaidDamageText" class="text-amber-400 font-black">0</strong>⚔️</span>
+        <!-- 레쿠쟈 4조각 퍼즐 진행 바 -->
+        <div class="w-full pt-1 border-t border-emerald-800/60 flex items-center justify-between text-[10px]">
+          <div class="flex items-center gap-1">
+            <span class="text-amber-300 font-black">🧩 레쿠쟈 조각:</span>
+            <div id="rayquazaShardsContainer" class="flex items-center gap-1"></div>
           </div>
-          <div class="w-full bg-slate-800 rounded-full h-2.5 border border-emerald-500/50 mt-1 relative overflow-hidden">
-            <div id="bossHpBar" class="bg-gradient-to-r from-emerald-500 via-amber-400 to-rose-500 h-full rounded-full transition-all duration-300" style="width: 100%;"></div>
-          </div>
-          <div class="text-[10px] text-slate-300 mt-0.5 flex justify-between">
-            <span>남은 HP: <strong id="bossHpText" class="text-emerald-300 font-bold">1000 / 1000</strong></span>
-            <button id="openRaidRankModalBtn" class="text-[10px] text-emerald-300 underline font-bold hover:text-white">
-              공헌 랭킹 ➔
-            </button>
-          </div>
+          <span id="rayquazaShardStatusText" class="text-emerald-300 font-bold text-[9px]">토벌 시 1조각 지급! (4조각 모으면 해금)</span>
         </div>
       </div>
     </div>
@@ -516,30 +577,33 @@
         </div>
       </section>
 
-      <!-- ================= 탭 3: 포켓몬 도감 ================= -->
+      <!-- ================= 탭 3: 포켓몬 도감 (13종: 레쿠쟈 슬롯 추가) ================= -->
       <section id="dexView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-3xl p-3 sm:p-4 shadow border border-slate-200">
           <div class="flex items-center justify-between border-b pb-2 mb-2.5 gap-2">
             <div>
               <h2 class="text-sm sm:text-base font-black text-slate-800 flex items-center gap-1.5">
-                <span>📖</span> <span>곡정초 12종 도감</span>
+                <span>📖</span> <span>곡정초 13종 도감</span>
               </h2>
               <p class="text-[10px] text-slate-500">포켓몬을 터치하여 대표 파트너로 장착하세요!</p>
             </div>
             <div class="text-[11px] bg-amber-100 text-amber-900 border border-amber-300 font-bold px-2 py-0.5 rounded-lg">
-              도감: <span id="dexCompletionRate" class="text-poke-red font-black">8%</span>
+              도감: <span id="dexCompletionRate" class="text-poke-red font-black">7%</span>
             </div>
           </div>
 
           <div id="dexGridContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-2 my-1"></div>
         </div>
 
+        <!-- 황금볼 합성소 (도감 1마리 영구 보존 방식: 3마리 이상 시 2마리 소모) -->
         <div class="bg-amber-50 rounded-2xl p-3 border border-amber-300 shadow-xs">
           <div class="flex items-center gap-1.5 mb-1.5">
             <span class="text-xl">✨🟡</span>
             <div>
               <h3 class="text-xs font-black text-amber-950">중복 포켓몬 황금 몬스터볼 합성소</h3>
-              <p class="text-[10px] text-amber-800">같은 포켓몬 3마리를 모아 상위 확률 황금 몬스터볼로 교환하세요!</p>
+              <p class="text-[10px] text-amber-800">
+                3마리 이상일 때 <strong>2마리만 소모</strong>하고 <strong>1마리는 도감에 안전하게 보존</strong>됩니다!
+              </p>
             </div>
           </div>
           <div id="duplicateExchangeList" class="space-y-1.5"></div>
@@ -565,7 +629,7 @@
         <div id="wrongListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
       </section>
 
-      <!-- ================= 탭 5: 실시간 랭킹 ================= -->
+      <!-- ================= 탭 5: 실시간 랭킹 (동점자 및 전체 학생 누락 방지: 100명) ================= -->
       <section id="rankingView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-2xl p-3 shadow border border-slate-200">
           <div class="flex items-center justify-between gap-2 mb-2.5">
@@ -606,14 +670,15 @@
 
     </main>
 
-    <!-- 푸터 -->
-    <footer class="text-center py-2 text-[10px] text-slate-400 font-medium">
-      곡정초등학교 1학년 어린이들의 즐거운 포켓몬 받아쓰기 ✏️ 함께 레쿠쟈를 물리쳐보아요!
+    <!-- 푸터 및 비영리 교육용 저작권 안내 -->
+    <footer class="text-center py-2 text-[10px] text-slate-500 font-medium px-3">
+      곡정초등학교 1학년 어린이들의 비영리 한글 교육을 위한 팬메이드 학습 웹앱입니다 ✏️<br>
+      포켓몬 및 관련 명칭의 저작권과 상표권은 Nintendo, Creatures Inc., GAME FREAK inc.에 귀속됩니다.
     </footer>
 
   </div>
 
-  <!-- ================= 모달 0: 신규 트레이너 스타팅 포켓몬 뽑기 환영 팝업 ================= -->
+  <!-- ================= 모달 0: 스타팅 포켓몬 뽑기 환영 팝업 ================= -->
   <div id="welcomeStarterModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="relative w-full max-w-sm flex flex-col items-center justify-center text-center">
       <div class="bg-white rounded-3xl p-5 shadow-2xl border-4 border-amber-400 w-full flex flex-col items-center justify-center gap-3">
@@ -625,7 +690,7 @@
         </div>
 
         <div id="starterEggTrigger" class="w-28 h-28 my-1 flex items-center justify-center cursor-pointer btn-bounce bg-amber-50 rounded-2xl border-2 border-dashed border-amber-300 relative shadow-inner">
-          <div class="w-20 h-20 rounded-full border-4 border-slate-900 bg-white relative overflow-hidden shadow-md flex flex-col anim-gacha-shake">
+          <div class="w-20 h-20 rounded-full border-4 border-slate-900 bg-white relative overflow-hidden shadow-md flex flex-col anim-gacha-shake-tension">
             <div class="h-1/2 bg-poke-red"></div>
             <div class="h-1 bg-slate-900"></div>
             <div class="h-1/2 bg-white"></div>
@@ -654,42 +719,62 @@
     </div>
   </div>
 
-  <!-- ================= 모달 1: 화려한 시네마틱 가챠 연출 오버레이 (복원 완료) ================= -->
-  <div id="cinematicGachaModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl z-50 flex items-center justify-center p-4 hidden">
+  <!-- ================= 모달 1: 4.2초 시네마틱 2분할 개방 & 썬더 스파크 가챠 연출 오버레이 ================= -->
+  <div id="cinematicGachaModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-2xl z-50 flex items-center justify-center p-4 hidden">
     <div class="relative w-full max-w-sm flex flex-col items-center justify-center text-center">
       
       <!-- 1. 태양광 회전 썬버스트 (Sunburst) -->
-      <div id="gachaSunburst" class="absolute w-[560px] h-[560px] pointer-events-none opacity-0 anim-sunburst transition-opacity duration-700" style="background: radial-gradient(circle, rgba(255,222,0,0.55) 0%, rgba(244,63,94,0.3) 45%, rgba(0,0,0,0) 70%);"></div>
+      <div id="gachaSunburst" class="absolute w-[580px] h-[580px] pointer-events-none opacity-0 anim-sunburst transition-opacity duration-700" style="background: radial-gradient(circle, rgba(255,222,0,0.55) 0%, rgba(244,63,94,0.35) 45%, rgba(0,0,0,0) 72%);"></div>
 
-      <!-- 2. 등급별 컬러 네온 에너지 오라 (Aura) -->
-      <div id="gachaEnergyAura" class="absolute w-44 h-44 rounded-full filter blur-2xl opacity-0 transition-opacity duration-500 anim-pulse-aura"></div>
+      <!-- 2. 황금 충격파 회전 링 -->
+      <div id="gachaShockwaveRing" class="absolute w-64 h-64 rounded-full border-4 border-amber-300 pointer-events-none opacity-0 anim-shockwave-ring"></div>
 
-      <!-- 3. 중앙 몬스터볼 연출 컨테이너 -->
-      <div id="gachaBallContainer" class="w-36 h-36 relative cursor-pointer z-10">
-        <div id="gachaBallGraphic" class="w-full h-full rounded-full border-4 border-slate-900 bg-white relative overflow-hidden shadow-2xl flex flex-col">
-          <div id="gachaBallTopHalf" class="h-1/2 bg-poke-red transition-all duration-300"></div>
-          <div class="h-2 bg-slate-900"></div>
-          <div class="h-1/2 bg-white"></div>
-          <div id="gachaBallCenterCore" class="absolute inset-0 m-auto w-9 h-9 rounded-full border-4 border-slate-900 bg-white shadow-inner flex items-center justify-center">
-            <div id="gachaCenterPulseLed" class="w-3 h-3 rounded-full bg-slate-300 transition-colors duration-300"></div>
-          </div>
+      <!-- 3. 등급별 네온 컬러 에너지 오라 (Aura) -->
+      <div id="gachaEnergyAura" class="absolute w-48 h-48 rounded-full filter blur-3xl opacity-0 transition-opacity duration-500"></div>
+
+      <!-- 4. 번개 전선 스파크 시각 효과 레이어 -->
+      <div id="gachaLightningCanvasWrap" class="absolute inset-0 pointer-events-none flex items-center justify-center">
+        <canvas id="lightningCanvas" width="360" height="360" class="opacity-0 transition-opacity duration-300"></canvas>
+      </div>
+
+      <!-- 5. 몬스터볼 2분할 쪼개기 컨테이너 -->
+      <div id="gachaBallContainer" class="w-36 h-36 relative cursor-pointer z-10 flex flex-col items-center justify-center">
+        
+        <!-- 상단 반구 (위/좌측으로 쪼개져 날아감) -->
+        <div id="gachaBallTopHalf" class="w-36 h-[4.5rem] rounded-t-full bg-poke-red border-4 border-b-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all">
+          <div class="absolute bottom-1 right-5 w-4 h-2 bg-white/40 rounded-full blur-[1px]"></div>
         </div>
+
+        <!-- 중앙 코어 버튼 & LED 점멸 -->
+        <div id="gachaCenterCore" class="absolute z-20 w-11 h-11 rounded-full border-4 border-slate-900 bg-white shadow-md flex items-center justify-center">
+          <div id="gachaCenterPulseLed" class="w-4 h-4 rounded-full bg-slate-300"></div>
+        </div>
+
+        <!-- 하단 반구 (아래/우측으로 쪼개져 날아감) -->
+        <div id="gachaBallBottomHalf" class="w-36 h-[4.5rem] rounded-b-full bg-white border-4 border-t-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all">
+          <div class="absolute top-1 left-5 w-5 h-2 bg-slate-200/50 rounded-full"></div>
+        </div>
+
       </div>
 
-      <!-- 4. 박진감 넘치는 단계별 자막 안내 -->
-      <div id="gachaPhaseText" class="text-amber-300 font-black text-sm tracking-wider mt-6 z-10 transition-all filter drop-shadow">
-        몬스터볼이 하늘에서 낙하합니다...!
+      <!-- 6. 단계별 몰입감 자막 안내 -->
+      <div id="gachaPhaseText" class="text-amber-300 font-black text-sm tracking-widest mt-6 z-10 transition-all filter drop-shadow">
+        몬스터볼이 하늘에서 내려옵니다...!
       </div>
 
-      <!-- 5. 펑 터진 후 최종 등장 포켓몬 카드 (anim-card-burst) -->
-      <div id="gachaResultCard" class="hidden z-20 bg-white rounded-3xl p-5 shadow-2xl border-4 w-full max-w-xs flex flex-col items-center justify-center gap-2.5 anim-card-burst">
-        <div class="flex items-center gap-1.5">
-          <span id="gachaResultGradeBadge" class="text-xs font-black px-3 py-0.5 rounded-full text-white shadow">등급</span>
+      <!-- 7. 펑 터진 후 최종 등장 포켓몬 카드 (anim-card-burst-epic) -->
+      <div id="gachaResultCard" class="hidden z-20 bg-white rounded-3xl p-5 shadow-2xl border-4 w-full max-w-xs flex flex-col items-center justify-center gap-2.5 anim-card-burst-epic">
+        
+        <!-- 화려한 네온 등급 뱃지 (이미지의 ★ 전설 ★ 등) -->
+        <div class="flex flex-col items-center gap-1">
+          <div id="gachaNeonGradeBanner" class="text-sm font-black tracking-widest px-4 py-0.5 rounded-full text-white shadow-lg animate-pulse">
+            ★ 등급 ★
+          </div>
           <span id="gachaNewOrDupBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">NEW!</span>
         </div>
         
-        <div class="w-32 h-32 relative flex items-center justify-center my-1">
-          <img id="gachaResultImg" src="" alt="획득 포켓몬" class="w-full h-full object-contain filter drop-shadow-lg">
+        <div class="w-36 h-36 relative flex items-center justify-center my-1">
+          <img id="gachaResultImg" src="" alt="획득 포켓몬" class="w-full h-full object-contain filter drop-shadow-xl">
         </div>
 
         <div class="text-center">
@@ -754,7 +839,7 @@
           <span class="text-xl">📖</span>
           <div>
             <h3 id="showcaseTrainerName" class="text-sm font-black text-slate-800">도감 전시대</h3>
-            <p id="showcaseTrainerMeta" class="text-[10px] text-slate-500">도감 수집: 8/12마리</p>
+            <p id="showcaseTrainerMeta" class="text-[10px] text-slate-500">도감 수집: 8/13마리</p>
           </div>
         </div>
         <button id="closeShowcaseModalBtn" class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center text-xs">✕</button>
@@ -823,7 +908,7 @@
         </div>
         <div class="p-2 rounded-xl bg-purple-50 border border-purple-200">
           <strong class="text-purple-950 block text-[11px]">3단계: 뽑기 & 전설 퇴치</strong>
-          <span class="text-[10px]">사탕 10개로 알을 깨워 도감을 채우고 뮤를 만나보세요!</span>
+          <span class="text-[10px]">사탕 10개로 알을 깨워 도감을 채우고 뮤와 레쿠쟈를 만나보세요!</span>
         </div>
       </div>
 
@@ -894,14 +979,18 @@
     </div>
   </div>
 
-  <!-- ================= 모달 9: 닉네임 설정 ================= -->
+  <!-- ================= 모달 9: 닉네임 설정 (중복 방지 실시간 검증 탑재) ================= -->
   <div id="trainerNameModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-xs w-full text-center shadow-xl border-4 border-poke-red">
       <div class="text-3xl mb-1">🧢</div>
       <h4 class="text-sm font-bold text-slate-800 mb-0.5">닉네임 설정</h4>
-      <p class="text-[10px] text-slate-500 mb-2">랭킹에 표시될 닉네임을 적어주세요!</p>
+      <p class="text-[10px] text-slate-500 mb-2">다른 친구와 겹치지 않는 멋진 이름을 지어주세요!</p>
       
-      <input type="text" id="trainerNicknameInput" maxlength="10" class="w-full py-1.5 px-2 border-2 border-amber-300 rounded-xl text-center font-bold text-xs focus:outline-none focus:border-poke-red mb-2" placeholder="닉네임 (최대 10자)">
+      <input type="text" id="trainerNicknameInput" maxlength="10" class="w-full py-1.5 px-2 border-2 border-amber-300 rounded-xl text-center font-bold text-xs focus:outline-none focus:border-poke-red mb-1.5" placeholder="닉네임 (최대 10자)">
+      
+      <div id="nicknameDuplicateWarning" class="text-[10px] text-rose-600 font-bold mb-2 hidden">
+        ⚠️ 이미 다른 친구가 사용 중인 닉네임이에요!
+      </div>
 
       <div class="flex items-center gap-1.5">
         <button id="cancelTrainerNameBtn" class="flex-1 py-1.5 bg-slate-100 text-slate-700 font-bold rounded-xl text-xs">취소</button>
@@ -942,7 +1031,7 @@
   </div>
 
   <script>
-    /* 1. 1학년 받아쓰기 1급 ~ 15급 (총 150문제 완벽 데이터베이스) */
+    /* 1. 1학년 받아쓰기 1급 ~ 15급 데이터베이스 */
     const DICTATION_DATA = {
       1: { title: "1. 기분을 말해요", words: ["매미", "꽃", "병아리", "내 마음", "둥실둥실", "반짝반짝", "기뻐요", "슬퍼요", "화나요", "무서워요"] },
       2: { title: "1. 기분을 말해요", words: ["기분", "그림책", "놀이터", "예쁘게", "미끄럼틀", "그네", "웃겨요", "감사해요", "부러워", "화내지 말고"] },
@@ -961,7 +1050,7 @@
       15: { title: "8. 느끼고 표현해요", words: ["재채기했다.", "잘못을 깨달았습니다.", "늑대 아저씨네 옆집에", "고장 난 시계", "꺾어 온 강아지풀", "콧구멍에 간질간질", "학교 갈 때", "날씨가 무척 춥다.", "바람에 날아간 깃털", "뉘우치지 않았습니다."] }
     };
 
-    /* 2. 12종 포켓몬 등급 및 가챠 마스터 테이블 */
+    /* 2. 포켓몬 등급 및 마스터 테이블 (13종: 레쿠쟈 도감 슬롯 신설) */
     const GACHA_POKEMON_LIST = [
       { id: 16, name: "구구", grade: "common", gradeKr: "일반", color: "#64748b", dmg: 1 },
       { id: 19, name: "꼬렛", grade: "common", gradeKr: "일반", color: "#64748b", dmg: 1 },
@@ -977,10 +1066,13 @@
       { id: 143, name: "잠만보", grade: "ultra", gradeKr: "울트라", color: "#a855f7", dmg: 4 },
       { id: 94, name: "팬텀", grade: "ultra", gradeKr: "울트라", color: "#a855f7", dmg: 4 },
 
-      { id: 151, name: "뮤", grade: "legend", gradeKr: "전설", color: "#ec4899", dmg: 8 }
+      { id: 151, name: "뮤", grade: "legend", gradeKr: "전설", color: "#ec4899", dmg: 8 },
+
+      // 도감 13번: 월드 레이드 토벌 전용 레쿠쟈
+      { id: 384, name: "레쿠쟈", grade: "legend", gradeKr: "신화", color: "#10b981", dmg: 10, isSpecialRaidBoss: true }
     ];
 
-    const STARTER_POKEMON_IDS = [25, 4, 7, 1, 133]; // 피카츄, 파이리, 꼬부기, 이상해씨, 이브이
+    const STARTER_POKEMON_IDS = [25, 4, 7, 1, 133];
 
     const INITIAL_RIVALS = [
       { name: "챔피언 단델", partner: "리자몽", partnerId: 6, exp: 2800 },
@@ -992,7 +1084,7 @@
 
     function getTodayKST() {
       const now = new Date();
-      const kstOffset = 9 * 60; // UTC+9 (분)
+      const kstOffset = 9 * 60;
       const kstTime = new Date(now.getTime() + (kstOffset + now.getTimezoneOffset()) * 60000);
       const y = kstTime.getFullYear();
       const m = String(kstTime.getMonth() + 1).padStart(2, '0');
@@ -1061,6 +1153,8 @@
       goldBalls: 0,
       pityCount: 0,
       inventory: { 25: 1 },
+      rayquazaShards: 0, // 레쿠쟈 퍼즐 조각 (최대 4개)
+      claimedRaidBossReward: false, // 레쿠쟈 처치 보상 수령 여부 (무한 축하 방지)
       attendanceDays: 0,
       lastAttendanceDate: "",
       claimedDays: [],
@@ -1082,6 +1176,8 @@
             state.goldBalls = typeof parsed.goldBalls === 'number' ? parsed.goldBalls : 0;
             state.pityCount = typeof parsed.pityCount === 'number' ? parsed.pityCount : 0;
             state.inventory = parsed.inventory || { 25: 1 };
+            state.rayquazaShards = typeof parsed.rayquazaShards === 'number' ? parsed.rayquazaShards : 0;
+            state.claimedRaidBossReward = !!parsed.claimedRaidBossReward;
             state.userExp = typeof parsed.userExp === 'number' ? parsed.userExp : 650;
             state.myRaidDamage = typeof parsed.myRaidDamage === 'number' ? parsed.myRaidDamage : 0;
             if (parsed.partnerId) state.partnerId = parsed.partnerId;
@@ -1099,6 +1195,7 @@
       }
       updateWalletUI();
       updatePartnerUI();
+      updateRayquazaShardUI();
       checkAttendanceNotification();
     }
 
@@ -1111,6 +1208,8 @@
           goldBalls: state.goldBalls,
           pityCount: state.pityCount,
           inventory: state.inventory,
+          rayquazaShards: state.rayquazaShards,
+          claimedRaidBossReward: state.claimedRaidBossReward,
           userExp: state.userExp,
           myRaidDamage: state.myRaidDamage,
           partnerId: state.partnerId,
@@ -1127,13 +1226,14 @@
       } catch (e) {}
 
       updateWalletUI();
+      updateRayquazaShardUI();
       checkAttendanceNotification();
       if (shouldSyncCloud) syncMyScoreToCloud();
     }
 
     loadSecureState();
 
-    /* 4. Firebase 실시간 레이드 & 랭킹 연동 */
+    /* 4. Firebase 실시간 레이드 & 랭킹 연동 (상위 100명까지 전체 동점자 누락 방지) */
     let cloudRankers = [];
 
     async function syncMyScoreToCloud() {
@@ -1150,14 +1250,17 @@
           name: state.userName || "곡정초 트레이너",
           partner: state.partnerName,
           partnerId: state.partnerId,
-          exp: state.userExp,
-          raidDamage: state.myRaidDamage,
+          exp: Number(state.userExp) || 0,
+          raidDamage: Number(state.myRaidDamage) || 0,
           candies: state.candies,
           goldBalls: state.goldBalls,
           pityCount: state.pityCount,
           inventory: state.inventory,
+          rayquazaShards: state.rayquazaShards || 0,
+          claimedRaidBossReward: !!state.claimedRaidBossReward,
           dexCount: unlockedCount,
           hasMew: !!(state.inventory && state.inventory[151] > 0),
+          hasRayquaza: !!(state.inventory && state.inventory[384] > 0),
           attendanceDays: state.attendanceDays || 0,
           lastAttendanceDate: state.lastAttendanceDate || "",
           claimedDays: state.claimedDays || [],
@@ -1176,6 +1279,7 @@
       try {
         const { db, collection, doc, query, orderBy, limit, onSnapshot, setDoc } = window.PokeFirebase;
         
+        // 월드 보스 레쿠쟈 동기화
         const raidDocRef = doc(db, "world_raid", "rayquaza_s1");
         onSnapshot(raidDocRef, (snap) => {
           if (snap.exists()) {
@@ -1186,6 +1290,7 @@
           }
         });
 
+        // 내 계정 상태 동기화
         const myDocRef = doc(db, "rankings", uid);
         onSnapshot(myDocRef, (snap) => {
           if (snap.exists()) {
@@ -1208,6 +1313,13 @@
               state.userExp = d.exp;
               hasExternalUpdate = true;
             }
+            if (typeof d.rayquazaShards === 'number' && d.rayquazaShards > state.rayquazaShards) {
+              state.rayquazaShards = d.rayquazaShards;
+              hasExternalUpdate = true;
+            }
+            if (d.claimedRaidBossReward) {
+              state.claimedRaidBossReward = true;
+            }
             if (d.inventory && typeof d.inventory === 'object') {
               state.inventory = { ...state.inventory, ...d.inventory };
               hasExternalUpdate = true;
@@ -1228,6 +1340,7 @@
             if (hasExternalUpdate) {
               saveSecureState(false);
               updatePartnerUI();
+              updateRayquazaShardUI();
               renderDexGrid();
               renderDuplicateExchangeList();
               checkAttendanceNotification();
@@ -1237,7 +1350,8 @@
           }
         });
 
-        const rankQuery = query(collection(db, "rankings"), orderBy("exp", "desc"), limit(25));
+        // 랭킹: 상위 100명까지 대폭 확대하여 이민규 학생 등 동점자 누락 완전 해소
+        const rankQuery = query(collection(db, "rankings"), orderBy("exp", "desc"), limit(100));
         onSnapshot(rankQuery, (snapshot) => {
           cloudRankers = [];
           snapshot.forEach(docSnap => {
@@ -1247,11 +1361,12 @@
               name: d.name || "곡정초 트레이너",
               partner: d.partner || "피카츄",
               partnerId: d.partnerId || 25,
-              exp: d.exp || 0,
-              raidDamage: d.raidDamage || 0,
+              exp: Number(d.exp) || 0,
+              raidDamage: Number(d.raidDamage) || 0,
               inventory: d.inventory || {},
               dexCount: d.dexCount || Object.keys(d.inventory || {}).length,
               hasMew: !!(d.inventory && d.inventory[151] > 0),
+              hasRayquaza: !!(d.inventory && d.inventory[384] > 0),
               isMe: (docSnap.id === uid)
             });
           });
@@ -1267,7 +1382,39 @@
       syncMyScoreToCloud();
     });
 
-    /* 5. 한글 자모 분해 및 합성 알고리즘 */
+    /* 5. 닉네임 중복 방지 검증 로직 */
+    async function isNicknameAlreadyTaken(desiredName) {
+      if (!window.PokeFirebase || !window.PokeFirebase.db) return false;
+      const uid = state.userId || getGuaranteedUserId();
+      const trimmed = desiredName.trim();
+      
+      // 1. 메모리상의 상위 랭커 목록에서 우선 1차 확인
+      const existingInCache = cloudRankers.find(r => r.name.toLowerCase() === trimmed.toLowerCase() && r.id !== uid);
+      if (existingInCache) return true;
+
+      // 2. 가상 라이벌 이름 보호
+      if (INITIAL_RIVALS.some(r => r.name === trimmed)) return true;
+
+      // 3. Firestore rankings 전체 검증
+      try {
+        const { db, collection, getDocs } = window.PokeFirebase;
+        const snap = await getDocs(collection(db, "rankings"));
+        let duplicateFound = false;
+        snap.forEach(doc => {
+          if (doc.id !== uid) {
+            const d = doc.data();
+            if (d.name && d.name.trim().toLowerCase() === trimmed.toLowerCase()) {
+              duplicateFound = true;
+            }
+          }
+        });
+        return duplicateFound;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    /* 6. 한글 자모 분해 및 합성 알고리즘 */
     const CHO_LIST = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
     const JUNG_LIST = ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'];
     const JONG_LIST = ['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
@@ -1294,7 +1441,7 @@
       return String.fromCharCode(code);
     }
 
-    /* 6. 오디오 및 Web Audio API 신디사이저 */
+    /* 7. 오디오 및 Web Audio API 신디사이저 */
     let audioCtx = null;
     let pokeCryVolume = 0.75;
     let enablePokeCryOnSolve = true;
@@ -1457,7 +1604,7 @@
       }, 100);
     }
 
-    /* 7. 받아쓰기 문제 풀이 & 2초 카운트다운 넘김 */
+    /* 8. 받아쓰기 문제 풀이 로직 */
     let nextQuestionTimer = null;
     let isChoiceProcessing = false;
 
@@ -1880,6 +2027,7 @@
       loadQuestion();
     }
 
+    /* 9. 레쿠쟈 레이드 & 4조각 퍼즐 도감 시스템 (무한 축하 방지 적용) */
     function applyRaidDamageToBoss(dmg) {
       state.myRaidDamage += dmg;
       document.getElementById('myRaidDamageText').textContent = state.myRaidDamage;
@@ -1901,9 +2049,55 @@
       bar.style.width = `${pct}%`;
       text.textContent = `${hp} / 1000 (${pct.toFixed(0)}%)`;
 
-      if (hp <= 0) {
+      // 체력이 0이 되었을 때 (무한 팝업 방지: 1회만 지급)
+      if (hp <= 0 && !state.claimedRaidBossReward && state.myRaidDamage > 0) {
+        state.claimedRaidBossReward = true;
+        state.rayquazaShards = Math.min(4, (state.rayquazaShards || 0) + 1);
+
+        saveSecureState();
+        updateRayquazaShardUI();
         launchConfettiBig();
-        showAlertModal("🐉 레쿠쟈 퇴치 성공!", "곡정초 친구들이 힘을 합쳐 레쿠쟈를 무찔렀습니다!");
+        playPokemonCry(384, true);
+
+        if (state.rayquazaShards >= 4) {
+          // 4조각 완성 시 레쿠쟈 완전 해금!
+          state.inventory[384] = (state.inventory[384] || 0) + 1;
+          state.partnerId = 384;
+          state.partnerName = "레쿠쟈";
+          saveSecureState();
+          renderDexGrid();
+          updatePartnerUI();
+
+          showAlertModal("🐉✨ 전설의 레쿠쟈 퍼즐 완성!", "곡정초 친구들의 협동으로 레쿠쟈 4조각 퍼즐이 모두 모였습니다!\n[레쿠쟈]가 도감에 등록되고 나의 대표 파트너로 합류했습니다!");
+        } else {
+          showAlertModal("🐉 레쿠쟈 토벌 성공!", `곡정초 친구들과 함께 레쿠쟈를 무찔렀습니다!\n[🧩 레쿠쟈 조각 1개]를 획득했어요! (현재: ${state.rayquazaShards}/4조각)`);
+        }
+      }
+    }
+
+    function updateRayquazaShardUI() {
+      const container = document.getElementById('rayquazaShardsContainer');
+      const statusText = document.getElementById('rayquazaShardStatusText');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const count = state.rayquazaShards || 0;
+      for (let i = 1; i <= 4; i++) {
+        const isCollected = i <= count;
+        const shard = document.createElement('div');
+        shard.className = `w-4 h-4 rounded flex items-center justify-center font-black text-[9px] border transition ${
+          isCollected ? 'bg-amber-400 text-amber-950 border-amber-300 shadow-sm' : 'bg-slate-800 text-slate-500 border-slate-700'
+        }`;
+        shard.textContent = isCollected ? '🧩' : i;
+        container.appendChild(shard);
+      }
+
+      if (count >= 4) {
+        statusText.textContent = "🎉 4조각 완성! 레쿠쟈 해금 완료!";
+        statusText.className = "text-amber-300 font-black text-[9px]";
+      } else {
+        statusText.textContent = `${count}/4조각 수집됨 (완성 시 레쿠쟈 획득!)`;
+        statusText.className = "text-emerald-300 font-bold text-[9px]";
       }
     }
 
@@ -2008,7 +2202,7 @@
       renderWrongBookList();
     });
 
-    /* 8. 신규 유저 스타팅 포켓몬 뽑기 시스템 */
+    /* 10. 신규 유저 스타팅 포켓몬 뽑기 */
     let chosenStarter = null;
 
     function checkAndTriggerStarterTutorial() {
@@ -2047,7 +2241,7 @@
       state.partnerId = chosenStarter.id;
       state.partnerName = chosenStarter.name;
       state.inventory = { [chosenStarter.id]: 1 };
-      state.candies += 10; // 환영 보상 사탕 10개 지급!
+      state.candies += 10;
 
       saveSecureState();
       updatePartnerUI();
@@ -2058,7 +2252,38 @@
       showAlertModal("🎉 모험 준비 완료!", `[${chosenStarter.name}]이(가) 첫 번째 파트너가 되었어요!\n선물로 지급된 🍬 별사탕 10개로 뽑기방을 이용하거나 받아쓰기를 시작해 보세요!`);
     });
 
-    /* 9. 이전 버전의 화려하고 박진감 넘치는 가챠 연출 복원 */
+    /* 11. 4초 시네마틱 가챠 연출 (2분할 개방 + 썬더 스파크 + 네온 레터링) */
+    function drawLightningSparks(canvas, color = "#67e8f9") {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+
+      for (let i = 0; i < 6; i++) {
+        let x = cx;
+        let y = cy;
+        const angle = Math.random() * Math.PI * 2;
+        const dist = Math.random() * 90 + 50;
+        const targetX = cx + Math.cos(angle) * dist;
+        const targetY = cy + Math.sin(angle) * dist;
+
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        let curDist = 0;
+        while (curDist < dist) {
+          curDist += 15;
+          x += Math.cos(angle) * 15 + (Math.random() - 0.5) * 18;
+          y += Math.sin(angle) * 15 + (Math.random() - 0.5) * 18;
+          ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = color;
+        ctx.lineWidth = Math.random() * 2 + 1.5;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 10;
+        ctx.stroke();
+      }
+    }
+
     function rollGacha(isGoldBall = false) {
       if (isGoldBall) {
         if (state.goldBalls < 1) {
@@ -2085,7 +2310,7 @@
 
         if (state.pityCount >= 15) {
           state.pityCount = 0;
-          const highTier = GACHA_POKEMON_LIST.filter(p => p.grade === 'ultra' || p.grade === 'legend');
+          const highTier = GACHA_POKEMON_LIST.filter(p => p.grade === 'ultra' || p.grade === 'legend' && !p.isSpecialRaidBoss);
           return highTier[Math.floor(Math.random() * highTier.length)];
         }
 
@@ -2110,89 +2335,109 @@
     function showCinematicGacha(poke, isGold = false) {
       const modal = document.getElementById('cinematicGachaModal');
       const ballContainer = document.getElementById('gachaBallContainer');
-      const ballGraphic = document.getElementById('gachaBallGraphic');
       const ballTopHalf = document.getElementById('gachaBallTopHalf');
+      const ballBottomHalf = document.getElementById('gachaBallBottomHalf');
       const centerLed = document.getElementById('gachaCenterPulseLed');
       const phaseText = document.getElementById('gachaPhaseText');
       const sunburst = document.getElementById('gachaSunburst');
+      const shockwave = document.getElementById('gachaShockwaveRing');
       const aura = document.getElementById('gachaEnergyAura');
+      const lightningCanvas = document.getElementById('lightningCanvas');
       const resultCard = document.getElementById('gachaResultCard');
 
-      // 0단계: 초기화
-      ballContainer.classList.remove('anim-gacha-drop', 'anim-gacha-shake');
+      // 0단계: 씬 초기화
+      ballContainer.classList.remove('anim-gacha-drop-4s', 'anim-gacha-shake-tension', 'hidden');
+      ballTopHalf.classList.remove('anim-split-top');
+      ballBottomHalf.classList.remove('anim-split-bottom');
+      ballTopHalf.style.transform = '';
+      ballBottomHalf.style.transform = '';
+      ballTopHalf.style.opacity = '1';
+      ballBottomHalf.style.opacity = '1';
       resultCard.classList.add('hidden');
-      ballContainer.classList.remove('hidden');
       sunburst.classList.add('opacity-0');
+      shockwave.classList.add('opacity-0');
       aura.classList.add('opacity-0');
+      lightningCanvas.classList.add('opacity-0');
 
       if (isGold) {
-        ballTopHalf.className = "h-1/2 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 shadow-inner";
-        ballGraphic.style.borderColor = "#b45309";
+        ballTopHalf.className = "w-36 h-[4.5rem] rounded-t-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 border-4 border-b-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all";
       } else {
-        ballTopHalf.className = "h-1/2 bg-gradient-to-r from-poke-red to-rose-600";
-        ballGraphic.style.borderColor = "#0f172a";
+        ballTopHalf.className = "w-36 h-[4.5rem] rounded-t-full bg-gradient-to-r from-poke-red to-rose-600 border-4 border-b-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all";
       }
 
       modal.classList.remove('hidden');
-      playTone(160, 'sine', 0.25, 0.3);
 
-      // 1단계: 하늘에서 몬스터볼이 낙하 (쾅!)
-      phaseText.textContent = "⚡ 몬스터볼이 낙하합니다...!";
-      ballContainer.classList.add('anim-gacha-drop');
+      // [1단계: 0.0s ~ 1.2s] 상공 슈퍼 드롭 & 묵직한 착지
+      playTone(130, 'sine', 0.35, 0.35);
+      phaseText.textContent = "⚡ 몬스터볼이 하늘에서 내려옵니다...!";
+      ballContainer.classList.add('anim-gacha-drop-4s');
 
-      // 2단계 (0.9초 후): 바운스 안착 & 진동 시작
+      // [2단계: 1.2s ~ 2.6s] 좌우 긴장감 진동, 코어 LED 점멸, 전선 스파크 및 충격파 링
       setTimeout(() => {
-        playTone(330, 'triangle', 0.2, 0.25);
-        phaseText.textContent = "딸깍...! 볼이 반응하기 시작합니다!";
-        ballContainer.classList.remove('anim-gacha-drop');
-        ballContainer.classList.add('anim-gacha-shake');
-        centerLed.classList.remove('bg-slate-300');
-        centerLed.classList.add('bg-rose-500', 'animate-ping');
-      }, 900);
+        playTone(310, 'triangle', 0.25, 0.3);
+        phaseText.textContent = "딸깍...! 볼 내부에서 엄청난 반응이 일어납니다!";
+        ballContainer.classList.remove('anim-gacha-drop-4s');
+        ballContainer.classList.add('anim-gacha-shake-tension');
+        centerLed.className = "w-4 h-4 rounded-full bg-rose-500 animate-ping";
 
-      // 3단계 (2.0초 후): 등급별 빛 에너지가 뿜어져 나옴
-      setTimeout(() => {
-        playTone(493.88, 'triangle', 0.25, 0.3);
+        shockwave.classList.remove('opacity-0');
+        lightningCanvas.classList.remove('opacity-0');
+
+        let sparkInterval = setInterval(() => {
+          if (!modal.classList.contains('hidden') && !ballContainer.classList.contains('hidden')) {
+            drawLightningSparks(lightningCanvas, poke.grade === 'legend' ? '#f472b6' : '#38bdf8');
+          } else {
+            clearInterval(sparkInterval);
+          }
+        }, 120);
+
         if (poke.grade === 'legend') {
-          phaseText.textContent = "👑 눈부신 전설의 오라가 차오릅니다!!";
-          aura.style.background = `radial-gradient(circle, #ec4899 0%, #a855f7 60%, transparent 80%)`;
+          aura.style.background = `radial-gradient(circle, #ec4899 0%, #a855f7 50%, transparent 75%)`;
         } else if (poke.grade === 'ultra') {
-          phaseText.textContent = "🌟 엄청난 보랏빛 에너지가 뿜어져 나옵니다!";
-          aura.style.background = `radial-gradient(circle, #a855f7 0%, #6366f1 60%, transparent 80%)`;
-        } else if (poke.grade === 'rare') {
-          phaseText.textContent = "🔷 푸른 기운이 알을 감쌉니다!";
-          aura.style.background = `radial-gradient(circle, #3b82f6 0%, #06b6d4 60%, transparent 80%)`;
+          aura.style.background = `radial-gradient(circle, #a855f7 0%, #6366f1 50%, transparent 75%)`;
         } else {
-          phaseText.textContent = "✨ 볼이 활짝 열리려 합니다!";
-          aura.style.background = `radial-gradient(circle, #94a3b8 0%, #cbd5e1 60%, transparent 80%)`;
+          aura.style.background = `radial-gradient(circle, #38bdf8 0%, #0284c7 50%, transparent 75%)`;
         }
         aura.classList.remove('opacity-0');
-      }, 2000);
+      }, 1200);
 
-      // 4단계 (3.2초 후): 펑 대폭발! 카드 팝인 & 폭죽 & 울음소리
+      // [3단계: 2.6s ~ 3.4s] 몬스터볼 2분할 쪼개기 개방 & 빛의 기둥 분출
+      setTimeout(() => {
+        playTone(523.25, 'sawtooth', 0.4, 0.35);
+        phaseText.textContent = "💥 몬스터볼이 활짝 개방됩니다!!";
+        ballContainer.classList.remove('anim-gacha-shake-tension');
+        ballTopHalf.classList.add('anim-split-top');
+        ballBottomHalf.classList.add('anim-split-bottom');
+      }, 2600);
+
+      // [4단계: 3.4s ~ 4.2s] 펑! 최종 카드 3D 팝인 & 네온 뱃지 점멸 & 축하 팡파르
       setTimeout(() => {
         sunburst.classList.remove('opacity-0');
         playSuccessSound();
 
         if (poke.grade === 'legend') {
           launchConfettiBig();
-          playTone(1046.50, 'sawtooth', 0.5, 0.35);
+          playTone(1046.50, 'sawtooth', 0.6, 0.4);
         } else {
           launchConfettiSmall();
         }
 
         ballContainer.classList.add('hidden');
+        lightningCanvas.classList.add('opacity-0');
         phaseText.textContent = "";
 
         const isNew = !(state.inventory[poke.id] > 0);
-        const gradeBadge = document.getElementById('gachaResultGradeBadge');
-        gradeBadge.textContent = poke.gradeKr.toUpperCase();
-        gradeBadge.style.backgroundColor = poke.color;
+        
+        // 네온 등급 레터링 (★ 전설 ★ 등)
+        const neonGrade = document.getElementById('gachaNeonGradeBanner');
+        neonGrade.textContent = `★ ${poke.gradeKr.toUpperCase()} ★`;
+        neonGrade.style.backgroundColor = poke.color;
+        neonGrade.style.boxShadow = `0 0 20px ${poke.color}`;
 
         const newDupBadge = document.getElementById('gachaNewOrDupBadge');
         if (isNew) {
           newDupBadge.textContent = "✨ NEW 신규!";
-          newDupBadge.className = "text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500 text-white shadow";
+          newDupBadge.className = "text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-500 text-white shadow";
         } else {
           newDupBadge.textContent = "중복 획득 (+1)";
           newDupBadge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300";
@@ -2211,7 +2456,7 @@
         renderDexGrid();
         renderDuplicateExchangeList();
         renderRankingTable();
-      }, 3200);
+      }, 3400);
     }
 
     document.getElementById('drawGachaNormalBtn').addEventListener('click', () => {
@@ -2228,7 +2473,7 @@
       document.getElementById('cinematicGachaModal').classList.add('hidden');
     });
 
-    /* 10. 랭킹 렌더링 & 도감 쇼케이스 */
+    /* 12. 랭킹 렌더링 & 도감 쇼케이스 (100명 전체 표시) */
     function renderRankingTable() {
       const tbody = document.getElementById('rankingTableBody');
       tbody.innerHTML = '';
@@ -2241,9 +2486,10 @@
         ...r,
         isMe: false,
         avatar: "https://placehold.co/40x40/fef3c7/b45309?text=🧢",
-        dexCount: r.name === "챔피언 단델" ? 11 : 6,
+        dexCount: r.name === "챔피언 단델" ? 12 : 6,
         hasMew: r.name === "챔피언 단델",
-        inventory: { 1: 1, 4: 1, 7: 1, 25: 1, 133: 1, 143: 1, 151: r.name === "챔피언 단델" ? 1 : 0 }
+        hasRayquaza: r.name === "챔피언 단델",
+        inventory: { 1: 1, 4: 1, 7: 1, 25: 1, 133: 1, 143: 1, 151: r.name === "챔피언 단델" ? 1 : 0, 384: r.name === "챔피언 단델" ? 1 : 0 }
       }));
 
       cloudRankers.forEach(cr => {
@@ -2256,12 +2502,14 @@
           inventory: cr.inventory || {},
           dexCount: cr.dexCount || Object.keys(cr.inventory || {}).length,
           hasMew: !!cr.hasMew,
+          hasRayquaza: !!cr.hasRayquaza,
           isMe: cr.isMe
         });
       });
 
       const myUnlockedCount = Object.keys(state.inventory).filter(id => (state.inventory[id] || 0) > 0).length;
       const myHasMew = (state.inventory[151] || 0) > 0;
+      const myHasRayquaza = (state.inventory[384] || 0) > 0;
 
       combinedMap.set(state.userId, {
         name: `👑 ${myDisplayName}`,
@@ -2272,6 +2520,7 @@
         inventory: state.inventory,
         dexCount: myUnlockedCount,
         hasMew: myHasMew,
+        hasRayquaza: myHasRayquaza,
         isMe: true
       });
 
@@ -2295,10 +2544,11 @@
             <div class="flex items-center gap-1">
               <span class="font-bold text-xs truncate max-w-[80px] sm:max-w-none">${user.name}</span>
               ${user.hasMew ? `<span class="text-[8px] bg-pink-500 text-white font-black px-1 rounded-full">뮤</span>` : ''}
+              ${user.hasRayquaza ? `<span class="text-[8px] bg-emerald-600 text-white font-black px-1 rounded-full">레쿠쟈</span>` : ''}
             </div>
           </td>
           <td class="p-1.5 text-slate-600 font-bold text-xs truncate max-w-[60px] sm:max-w-none">${user.partner}</td>
-          <td class="p-1.5 text-center text-[10px] font-black">${user.dexCount || 0}/12</td>
+          <td class="p-1.5 text-center text-[10px] font-black">${user.dexCount || 0}/13</td>
           <td class="p-1.5 text-right font-black text-poke-red text-xs">${user.exp.toLocaleString()}</td>
         `;
 
@@ -2318,14 +2568,14 @@
       const unlockedCount = Object.keys(inv).filter(id => (inv[id] || 0) > 0).length;
 
       document.getElementById('showcaseTrainerMeta').textContent = 
-        `대표 파트너: ${user.partner} | 도감 수집: ${unlockedCount}/12마리`;
+        `대표 파트너: ${user.partner} | 도감 수집: ${unlockedCount}/13마리`;
       document.getElementById('showcaseRaidDamage').textContent = `${user.raidDamage || 0}⚔️`;
       document.getElementById('showcaseExp').textContent = `${user.exp.toLocaleString()}`;
 
       const grid = document.getElementById('showcaseDexGrid');
       grid.innerHTML = '';
 
-      GACHA_POKEMON_LIST.slice(0, 12).forEach(poke => {
+      GACHA_POKEMON_LIST.forEach(poke => {
         const isOwned = (inv[poke.id] || 0) > 0;
         const cell = document.createElement('div');
         cell.className = `p-1.5 rounded-xl border flex flex-col items-center justify-center text-center ${
@@ -2347,6 +2597,7 @@
       document.getElementById('showcaseModal').classList.add('hidden');
     });
 
+    /* 13. 도감 렌더링 & 황금볼 합성소 (도감 1마리 영구 보존 방식: 3마리 이상 시 2마리 소모) */
     function renderDexGrid() {
       const container = document.getElementById('dexGridContainer');
       if (!container) return;
@@ -2366,7 +2617,9 @@
 
         card.innerHTML = `
           <div class="w-full flex items-center justify-between text-[9px]">
-            <span class="font-bold px-1 rounded" style="background:${poke.color}20; color:${poke.color}">${poke.gradeKr}</span>
+            <span class="font-bold px-1 rounded" style="background:${poke.color}20; color:${poke.color}">
+              ${poke.gradeKr}${poke.isSpecialRaidBoss ? ' (레이드)' : ''}
+            </span>
             <span class="text-slate-400 font-bold">${isOwned ? `x${count}` : '-'}</span>
           </div>
 
@@ -2388,7 +2641,7 @@
       });
 
       document.getElementById('unlockedDexCountText').textContent = ownedCount;
-      const rate = Math.round((ownedCount / 12) * 100);
+      const rate = Math.round((ownedCount / 13) * 100);
       document.getElementById('dexCompletionRate').textContent = `${rate}%`;
     }
 
@@ -2412,14 +2665,18 @@
       let hasDuplicates = false;
       GACHA_POKEMON_LIST.forEach(poke => {
         const count = state.inventory[poke.id] || 0;
+        // 최소 3마리 이상이어야 합성 가능 (2마리 소모, 1마리 보존)
         if (count >= 3) {
           hasDuplicates = true;
           const row = document.createElement('div');
           row.className = "flex items-center justify-between p-1.5 bg-white rounded-xl border border-amber-200";
           row.innerHTML = `
-            <span class="text-xs font-black text-slate-800">${poke.name} (${count}마리)</span>
-            <button class="px-2 py-0.5 bg-amber-400 text-amber-950 font-black rounded-lg text-[10px]" onclick="exchangeDuplicateForGoldBall(${poke.id})">
-              황금볼 교환
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs font-black text-slate-800">${poke.name}</span>
+              <span class="text-[10px] text-slate-500 font-bold">(보유 ${count}마리 ➔ 합성 후 ${count - 2}마리 남음)</span>
+            </div>
+            <button class="px-2 py-0.5 bg-amber-400 hover:bg-amber-500 text-amber-950 font-black rounded-lg text-[10px] btn-bounce" onclick="exchangeDuplicateForGoldBall(${poke.id})">
+              2마리 합성 ➔ 황금볼 1개
             </button>
           `;
           container.appendChild(row);
@@ -2427,22 +2684,28 @@
       });
 
       if (!hasDuplicates) {
-        container.innerHTML = `<div class="text-[10px] text-amber-800/80 text-center py-1">3마리 이상 모인 중복 포켓몬이 없습니다.</div>`;
+        container.innerHTML = `<div class="text-[10px] text-amber-800/80 text-center py-1">3마리 이상 모인 중복 포켓몬이 없습니다. (1마리는 항상 도감에 안전하게 남습니다!)</div>`;
       }
     }
 
     window.exchangeDuplicateForGoldBall = function(pokeId) {
-      if ((state.inventory[pokeId] || 0) < 3) return;
-      state.inventory[pokeId] -= 3;
+      const current = state.inventory[pokeId] || 0;
+      if (current < 3) {
+        showAlertModal("합성 불가", "도감 보존을 위해 최소 3마리 이상 모여야 합성이 가능합니다!");
+        return;
+      }
+      
+      // 요청 A안: 2마리만 소모되어 1마리는 영구 보존!
+      state.inventory[pokeId] -= 2;
       state.goldBalls += 1;
       saveSecureState();
       renderDexGrid();
       renderDuplicateExchangeList();
       playSuccessSound();
-      showAlertModal("✨🟡 황금볼 합성 완료!", "중복 포켓몬 3마리를 합성하여 [황금 몬스터볼] 1개를 획득했습니다!");
+      showAlertModal("✨🟡 황금볼 합성 완료!", `2마리를 합성하여 [황금 몬스터볼] 1개를 획득했습니다!\n1마리는 도감에 안전하게 보존되었습니다.`);
     };
 
-    /* 11. 7일 누적 출석부 관리 */
+    /* 14. 7일 누적 출석부 관리 (KST 기준) */
     function checkAttendanceNotification() {
       const today = getTodayKST();
       const notiDot = document.getElementById('attendanceNotiDot');
@@ -2570,7 +2833,6 @@
 
       const heroMap = new Map();
 
-      // 라이벌 기본 타격치
       INITIAL_RIVALS.forEach(r => {
         heroMap.set(r.name, {
           name: r.name,
@@ -2580,7 +2842,6 @@
         });
       });
 
-      // 클라우드 유저 실제 타격치
       cloudRankers.forEach(cr => {
         if ((cr.raidDamage || 0) > 0) {
           heroMap.set(cr.id, {
@@ -2592,7 +2853,6 @@
         }
       });
 
-      // 내 현재 타격치
       heroMap.set(state.userId, {
         name: `👑 ${state.userName || '곡정초 트레이너'}`,
         partner: state.partnerName,
@@ -2679,20 +2939,41 @@
       document.getElementById('voiceModal').classList.add('hidden');
     });
 
+    // 닉네임 설정 및 실시간 중복 방지 저장
     document.getElementById('editTrainerNameBtn').addEventListener('click', () => {
       document.getElementById('trainerNicknameInput').value = state.userName || "";
+      document.getElementById('nicknameDuplicateWarning').classList.add('hidden');
       document.getElementById('trainerNameModal').classList.remove('hidden');
     });
-    document.getElementById('cancelTrainerNameBtn').addEventListener('click', () => { document.getElementById('trainerNameModal').classList.add('hidden'); });
-    document.getElementById('saveTrainerNameBtn').addEventListener('click', () => {
-      const nick = document.getElementById('trainerNicknameInput').value.trim();
-      if (nick) {
-        state.userName = nick;
-        saveSecureState();
-        updatePartnerUI();
-        renderRankingTable();
+    document.getElementById('cancelTrainerNameBtn').addEventListener('click', () => { 
+      document.getElementById('trainerNameModal').classList.add('hidden'); 
+    });
+    document.getElementById('saveTrainerNameBtn').addEventListener('click', async () => {
+      const input = document.getElementById('trainerNicknameInput');
+      const warning = document.getElementById('nicknameDuplicateWarning');
+      const nick = input.value.trim();
+
+      if (!nick) {
+        warning.textContent = "⚠️ 닉네임을 입력해주세요!";
+        warning.classList.remove('hidden');
+        return;
       }
+
+      // 중복 검사 실행
+      const taken = await isNicknameAlreadyTaken(nick);
+      if (taken) {
+        warning.textContent = "⚠️ 이미 다른 친구가 사용 중인 닉네임이에요!";
+        warning.classList.remove('hidden');
+        playWrongSound();
+        return;
+      }
+
+      state.userName = nick;
+      saveSecureState();
+      updatePartnerUI();
+      renderRankingTable();
       document.getElementById('trainerNameModal').classList.add('hidden');
+      showAlertModal("🎉 닉네임 변경 완료!", `[${nick}] 트레이너님으로 변경되었습니다!`);
     });
 
     // 탭 전환
