@@ -8,7 +8,7 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts -->
+  <!-- Google Fonts (기존 고운돋움 100% 보존) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Noto+Sans+KR:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -16,17 +16,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { 
-      getFirestore, 
-      collection, 
-      doc, 
-      getDoc,
-      getDocs,
-      setDoc, 
-      onSnapshot, 
-      query, 
-      orderBy, 
-      limit,
-      serverTimestamp 
+      getFirestore, collection, doc, getDoc, getDocs, setDoc, onSnapshot, query, orderBy, limit, serverTimestamp 
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -43,17 +33,7 @@
     const db = getFirestore(app);
 
     window.PokeFirebase = {
-      db,
-      collection,
-      doc,
-      getDoc,
-      getDocs,
-      setDoc,
-      onSnapshot,
-      query,
-      orderBy,
-      limit,
-      serverTimestamp
+      db, collection, doc, getDoc, getDocs, setDoc, onSnapshot, query, orderBy, limit, serverTimestamp
     };
 
     window.dispatchEvent(new Event('firebase-ready'));
@@ -65,15 +45,9 @@
         extend: {
           colors: {
             poke: {
-              red: '#EE1515',
-              darkred: '#CC0000',
-              blue: '#222224',
-              gold: '#FFDE00',
-              darkgold: '#B3A125',
-              sky: '#3B4CCA',
-              green: '#48D0B0',
-              card: '#F6F8FC',
-              ballred: '#FB1B1B'
+              red: '#EE1515', darkred: '#CC0000', blue: '#222224',
+              gold: '#FFDE00', darkgold: '#B3A125', sky: '#3B4CCA',
+              green: '#48D0B0', card: '#F6F8FC', ballred: '#FB1B1B'
             }
           },
           fontFamily: {
@@ -87,66 +61,32 @@
   </script>
 
   <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif;
-      touch-action: manipulation;
-      user-select: none;
+      touch-action: manipulation; user-select: none;
       background: radial-gradient(circle at 50% 15%, #fef3c7 0%, #fee2e2 65%, #fed7aa 100%);
-      min-height: 100vh;
-      overflow-x: hidden;
+      min-height: 100vh; overflow-x: hidden;
     }
 
-    /* 깍두기 공책 박스 */
     .kakdugi-box {
-      position: relative;
-      background-color: #ffffff;
-      border: 3px solid #f87171;
-      font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif;
-      font-weight: 700;
+      position: relative; background-color: #ffffff;
+      border: 3px solid #f87171; font-weight: 700;
     }
     .kakdugi-box::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      border-top: 1.5px dashed rgba(248, 113, 113, 0.45);
-      pointer-events: none;
+      content: ''; position: absolute; top: 50%; left: 0; right: 0;
+      border-top: 1.5px dashed rgba(248, 113, 113, 0.45); pointer-events: none;
     }
     .kakdugi-box::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      border-left: 1.5px dashed rgba(248, 113, 113, 0.45);
-      pointer-events: none;
+      content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+      border-left: 1.5px dashed rgba(248, 113, 113, 0.45); pointer-events: none;
     }
 
-    .choice-btn {
-      font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      line-height: 1;
-    }
+    .choice-btn { font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
+    .btn-bounce { transition: transform 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.12s ease; }
+    .btn-bounce:active { transform: scale(0.92) translateY(2px); }
+    .dex-silhouette { filter: brightness(0) contrast(100%); opacity: 0.22; }
 
-    .btn-bounce {
-      transition: transform 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.12s ease;
-    }
-    .btn-bounce:active {
-      transform: scale(0.92) translateY(2px);
-    }
-
-    .dex-silhouette {
-      filter: brightness(0) contrast(100%);
-      opacity: 0.22;
-    }
-
-    /* 4.2초 시네마틱 가챠 전용 키프레임 */
     @keyframes gachaCinematicDrop {
       0% { transform: translateY(-500px) scale(0.3); opacity: 0; }
       60% { transform: translateY(35px) scale(1.25, 0.8); opacity: 1; }
@@ -154,9 +94,7 @@
       90% { transform: translateY(10px) scale(1.05, 0.95); }
       100% { transform: translateY(0) scale(1); }
     }
-    .anim-gacha-drop-4s {
-      animation: gachaCinematicDrop 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
+    .anim-gacha-drop-4s { animation: gachaCinematicDrop 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
     @keyframes gachaTensionShake {
       0%, 100% { transform: rotate(0deg) scale(1); }
@@ -166,9 +104,7 @@
       75% { transform: rotate(16deg) scale(1.1); }
       90% { transform: rotate(-5deg) scale(1.04); }
     }
-    .anim-gacha-shake-tension {
-      animation: gachaTensionShake 0.4s ease-in-out infinite;
-    }
+    .anim-gacha-shake-tension { animation: gachaTensionShake 0.4s ease-in-out infinite; }
 
     @keyframes splitBallTop {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
@@ -178,21 +114,15 @@
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
       100% { transform: translate(80px, 90px) rotate(35deg) scale(0.85); opacity: 0; }
     }
-    .anim-split-top {
-      animation: splitBallTop 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-    .anim-split-bottom {
-      animation: splitBallBottom 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
+    .anim-split-top { animation: splitBallTop 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+    .anim-split-bottom { animation: splitBallBottom 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 
     @keyframes shockwaveRingExpand {
       0% { transform: scale(0.3) rotate(0deg); opacity: 0; }
       40% { opacity: 0.95; }
       100% { transform: scale(2.4) rotate(180deg); opacity: 0; }
     }
-    .anim-shockwave-ring {
-      animation: shockwaveRingExpand 1.2s ease-out infinite;
-    }
+    .anim-shockwave-ring { animation: shockwaveRingExpand 1.2s ease-out infinite; }
 
     @keyframes cardBurstEpic {
       0% { transform: scale(0.05) rotate(-20deg); opacity: 0; filter: brightness(4) blur(4px); }
@@ -200,73 +130,37 @@
       80% { transform: scale(0.95) rotate(-2deg); }
       100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
     }
-    .anim-card-burst-epic {
-      animation: cardBurstEpic 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
+    .anim-card-burst-epic { animation: cardBurstEpic 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
-    @keyframes sunburstSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .anim-sunburst {
-      animation: sunburstSpin 14s linear infinite;
-    }
+    @keyframes sunburstSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .anim-sunburst { animation: sunburstSpin 14s linear infinite; }
 
-    /* 황금빛 챔피언 트로피 아우라 펄스 */
     @keyframes goldenGlow {
       0%, 100% { box-shadow: 0 0 10px rgba(251, 191, 36, 0.8), 0 0 20px rgba(245, 158, 11, 0.5); }
       50% { box-shadow: 0 0 18px rgba(251, 191, 36, 1), 0 0 30px rgba(245, 158, 11, 0.8); }
     }
-    .glow-champion {
-      animation: goldenGlow 2s ease-in-out infinite;
-    }
+    .glow-champion { animation: goldenGlow 2s ease-in-out infinite; }
+    .glow-event { animation: goldenGlow 1.5s ease-in-out infinite; }
 
-    /* 태블릿(가로 768px 이상) 전용 반응형 확대 - 스마트폰은 100% 불변 */
     @media (min-width: 768px) {
-      .tablet-scale-container {
-        max-width: 768px !important;
-      }
-      .kakdugi-box {
-        width: 4.2rem !important;
-        height: 4.2rem !important;
-        font-size: 2.2rem !important;
-        border-width: 4px !important;
-      }
-      .choice-btn {
-        height: 4.5rem !important;
-        font-size: 2.2rem !important;
-      }
-      #stageSelect, #wordbookStageSelect {
-        font-size: 1rem !important;
-        padding-top: 0.65rem !important;
-        padding-bottom: 0.65rem !important;
-      }
-      #currentLiveScore, #currentQNumText {
-        font-size: 1.25rem !important;
-      }
-      .nav-tab span:last-child {
-        font-size: 0.85rem !important;
-      }
+      .tablet-scale-container { max-width: 768px !important; }
+      .kakdugi-box { width: 4.2rem !important; height: 4.2rem !important; font-size: 2.2rem !important; border-width: 4px !important; }
+      .choice-btn { height: 4.5rem !important; font-size: 2.2rem !important; }
+      #stageSelect, #wordbookStageSelect { font-size: 1rem !important; padding-top: 0.65rem !important; padding-bottom: 0.65rem !important; }
+      #currentLiveScore, #currentQNumText { font-size: 1.25rem !important; }
+      .nav-tab span:last-child { font-size: 0.85rem !important; }
     }
 
-    ::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #f87171;
-      border-radius: 9999px;
-    }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-thumb { background: #f87171; border-radius: 9999px; }
   </style>
 </head>
 <body class="text-slate-800 flex flex-col justify-between relative">
 
-  <!-- 전체화면 축하 폭죽 캔버스 -->
   <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
 
   <div class="w-full max-w-2xl mx-auto flex-grow flex flex-col justify-between min-h-screen bg-transparent sm:bg-white/40 sm:shadow-lg sm:border-x sm:border-amber-200 tablet-scale-container">
 
-    <!-- 상단 간편 유틸 바 -->
     <div class="bg-slate-900/95 text-white px-3 py-1.5 text-[11px] flex items-center justify-between gap-1.5 border-b border-slate-700">
       <div class="flex items-center gap-1.5 text-amber-300 font-bold truncate">
         <span>✨ 곡정초 1학년 받아쓰기</span>
@@ -288,11 +182,8 @@
       </div>
     </div>
 
-    <!-- 헤더 -->
     <header class="bg-white/95 backdrop-blur-md border-b-2 border-poke-red px-3 py-2 sticky top-0 z-30 shadow-sm">
       <div class="flex items-center justify-between gap-2">
-        
-        <!-- 왼쪽: 로고 + 타이틀 -->
         <div class="flex items-center gap-2 min-w-0">
           <div class="w-8 h-8 rounded-full border-2 border-slate-800 bg-white relative overflow-hidden flex flex-col shadow cursor-pointer btn-bounce shrink-0" id="headerPokeBall" title="피카츄 소리">
             <div class="h-1/2 bg-poke-red"></div>
@@ -300,14 +191,11 @@
             <div class="h-1/2 bg-white"></div>
             <div class="absolute inset-0 m-auto w-2.5 h-2.5 rounded-full border border-slate-800 bg-white shadow-inner"></div>
           </div>
-
           <div class="min-w-0">
             <div class="flex items-center gap-1">
               <span class="text-[10px] bg-emerald-500 text-white font-black px-1.5 py-0.2 rounded-full leading-tight shrink-0">곡정초</span>
               <span class="text-[10px] bg-amber-400 text-amber-950 font-black px-1.5 py-0.2 rounded-full leading-tight shrink-0">1학년</span>
-              <h1 class="text-xs sm:text-sm font-black text-poke-red truncate leading-tight">
-                포켓몬 받아쓰기
-              </h1>
+              <h1 class="text-xs sm:text-sm font-black text-poke-red truncate leading-tight">포켓몬 받아쓰기</h1>
             </div>
             <div class="text-[9px] text-emerald-700 font-bold flex items-center gap-1 mt-0.5">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -316,33 +204,27 @@
           </div>
         </div>
 
-        <!-- 오른쪽: 출석부, 사탕, 황금볼, 닉네임, 사운드 -->
         <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
           <button id="openAttendanceModalBtn" class="flex items-center gap-0.5 bg-amber-100 border border-amber-300 px-2 py-1 rounded-xl shadow-xs btn-bounce relative" title="7일 누적 출석부">
             <span class="text-xs">📅</span>
             <span class="font-black text-amber-950 text-[10px]">출석</span>
             <span id="attendanceNotiDot" class="w-2 h-2 rounded-full bg-rose-500 absolute -top-0.5 -right-0.5 border border-white animate-ping"></span>
           </button>
-
           <div class="flex items-center gap-1 bg-pink-100 border border-pink-300 px-2 py-1 rounded-xl shadow-xs" title="보유 별사탕">
             <span class="text-xs">🍬</span>
             <span id="candyCountBadge" class="font-black text-pink-700 text-xs">0</span>
           </div>
-
           <div class="flex items-center gap-0.5 bg-amber-100 border border-amber-300 px-1.5 py-1 rounded-xl shadow-xs cursor-pointer btn-bounce" id="goldenBallQuickBtn" title="황금 몬스터볼">
             <span class="text-xs">✨🟡</span>
             <span id="goldBallCountBadge" class="font-black text-amber-800 text-xs">10</span>
           </div>
-
           <button id="editTrainerNameBtn" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-300 rounded-xl text-[11px] font-bold btn-bounce" title="닉네임 변경">
             <span>🧢</span>
           </button>
-
           <button id="openSoundSettingsBtn" class="p-1 rounded-xl bg-amber-50 border border-amber-300 btn-bounce text-xs" title="소리 설정">
             <span id="soundIcon">🔊</span>
           </button>
         </div>
-
       </div>
     </header>
 
@@ -353,7 +235,6 @@
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png" alt="레쿠쟈" class="w-full h-full object-contain filter drop-shadow">
             <span class="absolute -top-1 -right-1 text-[8px] bg-rose-600 text-white font-black px-1 rounded-full border border-white">BOSS</span>
           </div>
-
           <div class="flex-grow min-w-0">
             <div class="flex items-center justify-between text-[11px] font-bold">
               <span class="text-emerald-400 truncate flex items-center gap-1">
@@ -362,42 +243,33 @@
               </span>
               <span class="text-[10px] text-slate-300">내 타격: <strong id="myRaidDamageText" class="text-amber-400 font-black">0</strong>⚔️</span>
             </div>
-
-            <!-- 체력 바 및 75%, 50%, 25% 구간 마커 -->
             <div class="w-full bg-slate-800 rounded-full h-3 border border-emerald-500/50 mt-1 relative overflow-hidden">
               <div id="bossHpBar" class="bg-gradient-to-r from-emerald-500 via-amber-400 to-rose-500 h-full rounded-full transition-all duration-300" style="width: 100%;"></div>
-              
-              <!-- 구간 마커 선 -->
               <div class="absolute top-0 bottom-0 left-1/4 w-0.5 bg-white/40 pointer-events-none" title="25% 구간"></div>
               <div class="absolute top-0 bottom-0 left-2/4 w-0.5 bg-white/60 pointer-events-none" title="50% 구간"></div>
               <div class="absolute top-0 bottom-0 left-3/4 w-0.5 bg-white/40 pointer-events-none" title="75% 구간"></div>
             </div>
-
             <div class="text-[10px] text-slate-300 mt-0.5 flex justify-between items-center">
               <div class="flex items-center gap-1">
                 <span>HP: <strong id="bossHpText" class="text-emerald-300 font-bold">1000 / 1000</strong></span>
                 <span id="bossRespawnTimerText" class="hidden text-amber-300 font-black text-[10px] animate-pulse">⏰ 04:59 후 부활!</span>
               </div>
               <button id="openRaidRankModalBtn" class="text-[10px] text-emerald-300 underline font-bold hover:text-white flex items-center gap-0.5">
-                <span>공헌 랭킹</span>
-                <span>➔</span>
+                <span>공헌 랭킹</span><span>➔</span>
               </button>
             </div>
           </div>
         </div>
-
-        <!-- 레쿠쟈 4조각 퍼즐 진행 바 -->
         <div class="w-full pt-1 border-t border-emerald-800/60 flex items-center justify-between text-[10px]">
           <div class="flex items-center gap-1">
             <span class="text-amber-300 font-black">🧩 레쿠쟈 조각:</span>
             <div id="rayquazaShardsContainer" class="flex items-center gap-1"></div>
           </div>
-          <span id="rayquazaShardStatusText" class="text-emerald-300 font-bold text-[9px]">참여 시 1조각 지급! (4조각 모으면 해금)</span>
+          <span id="rayquazaShardStatusText" class="text-emerald-300 font-bold text-[9px]">참여 시 1조각 지급!</span>
         </div>
       </div>
     </div>
 
-    <!-- 파트너 포켓몬 정보 바 -->
     <div class="w-full px-2.5 pt-1.5">
       <div class="bg-gradient-to-r from-amber-100 via-rose-50 to-orange-100 rounded-2xl p-2 border border-amber-300 shadow-xs flex items-center justify-between gap-2">
         <div class="flex items-center gap-2 min-w-0 flex-grow">
@@ -405,7 +277,6 @@
             <img id="partnerSpriteImg" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="파트너 포켓몬" class="w-full h-full object-contain filter drop-shadow">
             <span class="absolute -top-1 -right-1 text-[8px] bg-poke-red text-white font-black px-1 rounded-full border border-white">파트너</span>
           </div>
-
           <div class="min-w-0 flex-grow">
             <div class="flex items-center gap-1 flex-wrap">
               <span id="partnerNameBadge" class="text-[11px] font-black text-amber-950 bg-amber-300 px-1.5 py-0.2 rounded-md border border-amber-400 leading-none">피카츄</span>
@@ -417,7 +288,6 @@
             </p>
           </div>
         </div>
-
         <button id="quickGoGachaBtn" class="px-2.5 py-1.5 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-black text-[11px] rounded-xl shadow btn-bounce shrink-0 flex items-center gap-1 relative">
           <span>🎰</span>
           <span class="hidden sm:inline">뽑기방</span>
@@ -429,29 +299,23 @@
     <nav class="w-full px-2.5 pt-1.5">
       <div class="grid grid-cols-6 gap-0.5 sm:gap-1 bg-white/90 backdrop-blur-sm p-1 rounded-2xl border border-slate-200 shadow-xs text-center text-xs font-bold">
         <button class="nav-tab active-tab py-1.5 rounded-xl transition flex flex-col items-center justify-center gap-0.5 bg-poke-red text-white shadow" data-tab="dictationView">
-          <span class="text-sm">🎯</span>
-          <span class="text-[10px] sm:text-[11px]">받아쓰기</span>
+          <span class="text-sm">🎯</span><span class="text-[10px] sm:text-[11px]">받아쓰기</span>
         </button>
         <button class="nav-tab py-1.5 rounded-xl transition flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:bg-slate-100" data-tab="wordbookView">
-          <span class="text-sm">📚</span>
-          <span class="text-[10px] sm:text-[11px]">단어장</span>
+          <span class="text-sm">📚</span><span class="text-[10px] sm:text-[11px]">단어장</span>
         </button>
         <button class="nav-tab py-1.5 rounded-xl transition flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:bg-slate-100 relative" data-tab="gachaView">
-          <span class="text-sm">🎰</span>
-          <span class="text-[10px] sm:text-[11px]">뽑기방</span>
+          <span class="text-sm">🎰</span><span class="text-[10px] sm:text-[11px]">뽑기방</span>
           <span id="tabGachaBadgeDot" class="w-2 h-2 rounded-full bg-rose-500 absolute top-1 right-2 hidden"></span>
         </button>
         <button class="nav-tab py-1.5 rounded-xl transition flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:bg-slate-100" data-tab="dexView">
-          <span class="text-sm">📖</span>
-          <span class="text-[10px] sm:text-[11px]">도감(<b id="unlockedDexCountText">1</b>)</span>
+          <span class="text-sm">📖</span><span class="text-[10px] sm:text-[11px]">도감(<b id="unlockedDexCountText">1</b>)</span>
         </button>
         <button class="nav-tab py-1.5 rounded-xl transition flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:bg-slate-100" data-tab="wrongNotesView">
-          <span class="text-sm">📝</span>
-          <span class="text-[10px] sm:text-[11px]">오답노트</span>
+          <span class="text-sm">📝</span><span class="text-[10px] sm:text-[11px]">오답노트</span>
         </button>
         <button class="nav-tab py-1.5 rounded-xl transition flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:bg-slate-100" data-tab="rankingView">
-          <span class="text-sm">🏆</span>
-          <span class="text-[10px] sm:text-[11px]">랭킹</span>
+          <span class="text-sm">🏆</span><span class="text-[10px] sm:text-[11px]">랭킹</span>
         </button>
       </div>
     </nav>
@@ -460,20 +324,15 @@
 
       <!-- ================= 탭 1: 받아쓰기 게임 뷰 ================= -->
       <section id="dictationView" class="tab-pane flex flex-col gap-2.5">
-        
-        <!-- 급수 선택 & 점수 현황 카드 -->
-        <div class="bg-white rounded-2xl p-2.5 shadow-sm border-2 border-slate-200 flex flex-col gap-2">
-          <div class="w-full flex items-center gap-1.5">
+        <div class="bg-white rounded-2xl p-2.5 shadow-sm border-2 border-slate-200 flex flex-col gap-2 relative overflow-hidden">
+          <div class="w-full flex items-center gap-1.5 z-10 relative">
             <span class="text-xs font-black text-slate-700 shrink-0">🧭 급수:</span>
-            <select id="stageSelect" class="w-full flex-grow py-1.5 px-2 rounded-xl border-2 font-bold text-slate-800 text-xs bg-amber-50 focus:outline-none focus:ring-2 transition truncate">
-            </select>
+            <select id="stageSelect" class="w-full flex-grow py-1.5 px-2 rounded-xl border-2 font-bold text-slate-800 text-xs bg-amber-50 focus:outline-none focus:ring-2 transition truncate"></select>
           </div>
-
-          <div id="tierRewardBadge" class="w-full text-[11px] font-black py-1 px-2 rounded-xl border bg-emerald-100 text-emerald-900 border-emerald-300 text-center truncate">
+          <div id="tierRewardBadge" class="w-full text-[11px] font-black py-1 px-2 rounded-xl border bg-emerald-100 text-emerald-900 border-emerald-300 text-center truncate z-10 relative">
             🌱 초급 (정답 🍬1개 + 10 EXP | 만점 +2개 | ⚔️1배)
           </div>
-
-          <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+          <div class="grid grid-cols-2 gap-2 text-xs font-bold z-10 relative">
             <div class="bg-slate-100 text-slate-700 py-1.5 rounded-xl border border-slate-300 text-center truncate">
               문제: <span id="currentQNumText" class="text-poke-red font-black text-sm">1</span> / 10번
             </div>
@@ -483,15 +342,12 @@
           </div>
         </div>
 
-        <!-- 중앙 퀴즈 보드 -->
         <div class="bg-white rounded-3xl p-3 sm:p-5 shadow border-4 border-amber-300 flex flex-col gap-3">
-          
           <div class="flex items-center justify-between bg-slate-50 p-2 rounded-2xl border border-slate-200">
             <div class="flex items-center gap-1">
               <span class="text-[11px] font-bold text-slate-500 mr-0.5">기회:</span>
               <div id="livesContainer" class="flex items-center gap-1"></div>
             </div>
-
             <button id="replayAudioBtn" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow border-b-2 border-emerald-700 font-black text-xs flex items-center gap-1.5 btn-bounce relative overflow-hidden">
               <span id="replayBtnIcon" class="text-sm">📢</span>
               <span id="replayBtnText">소리 다시듣기</span>
@@ -501,28 +357,21 @@
             </button>
           </div>
 
-          <!-- 깍두기 공책 영역 -->
           <div class="flex flex-col items-center justify-center py-1">
             <div class="text-[11px] font-bold text-slate-400 mb-1.5 flex items-center gap-1">
               <span>📝</span> <span>1학년 깍두기 공책 (또박또박 골라보아요!)</span>
             </div>
-
             <div id="kakdugiWrapper" class="flex flex-wrap items-center justify-center gap-1.5 min-h-[70px] p-2 bg-amber-50/70 rounded-2xl border-2 border-dashed border-amber-300 w-full"></div>
-
             <div id="assemblyPrompt" class="text-[11px] sm:text-xs font-bold text-slate-700 mt-2 bg-white px-3 py-1 rounded-full border border-slate-300 shadow-xs text-center">
               👉 첫 번째 글자의 <span class="text-poke-red font-bold">첫소리(초성)</span>을 골라주세요!
             </div>
           </div>
 
-          <!-- 4지선다 자모음 조각 그리드 -->
           <div>
-            <div class="text-center text-[10px] font-bold text-slate-400 mb-1.5">
-              알맞은 글자 조각을 터치해 보세요 👇
-            </div>
+            <div class="text-center text-[10px] font-bold text-slate-400 mb-1.5">알맞은 글자 조각을 터치해 보세요 👇</div>
             <div id="choicesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-md mx-auto"></div>
           </div>
 
-          <!-- 정답/오답 액션 피드백 -->
           <div id="actionFeedback" class="hidden rounded-2xl p-2.5 text-center text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center gap-1.5">
             <div id="feedbackText" class="whitespace-pre-line leading-relaxed"></div>
             <button id="skipNextQuestionBtn" class="hidden px-4 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-amber-950 font-black text-xs shadow border-b-2 border-amber-600 btn-bounce flex items-center gap-1.5">
@@ -533,15 +382,14 @@
         </div>
       </section>
 
-      <!-- ================= 탭 2: 받아쓰기 문제 단어장 (사전 학습) ================= -->
+      <!-- ================= 탭 2: 📚 단어장 뷰 ================= -->
       <section id="wordbookView" class="tab-pane hidden flex flex-col gap-2.5">
-        <div class="bg-white rounded-2xl p-3 shadow-sm border-2 border-slate-200 flex flex-col gap-2">
-          <div class="flex items-center justify-between gap-1.5">
+        <div class="bg-white rounded-2xl p-3 shadow-sm border-2 border-slate-200 flex flex-col gap-2 relative overflow-hidden">
+          <div class="flex items-center justify-between gap-1.5 z-10 relative">
             <span class="text-xs font-black text-slate-700 shrink-0">🧭 급수 선택:</span>
-            <select id="wordbookStageSelect" class="flex-grow py-1.5 px-2 rounded-xl border-2 border-amber-300 font-bold text-slate-800 text-xs bg-amber-50 focus:outline-none truncate">
-            </select>
+            <select id="wordbookStageSelect" class="flex-grow py-1.5 px-2 rounded-xl border-2 border-amber-300 font-bold text-slate-800 text-xs bg-amber-50 focus:outline-none truncate"></select>
           </div>
-          <div class="flex items-center justify-between bg-amber-50 p-2 rounded-xl border border-amber-200 text-xs">
+          <div class="flex items-center justify-between bg-amber-50 p-2 rounded-xl border border-amber-200 text-xs z-10 relative">
             <div class="text-[11px] text-amber-950 font-bold">
               💡 <strong>소리 나는 깍두기 단어장:</strong> 눈으로 글자 모양을 보고 📢 소리를 들어보세요!
             </div>
@@ -550,11 +398,10 @@
             </button>
           </div>
         </div>
-
         <div id="wordbookCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[620px] overflow-y-auto pr-1"></div>
       </section>
 
-      <!-- ================= 탭 3: 몬스터볼 뽑기방 뷰 ================= -->
+      <!-- ================= 탭 3: 🎰 가챠 뷰 ================= -->
       <section id="gachaView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-3xl p-4 shadow border-4 border-pink-300 text-center relative overflow-hidden">
           <div class="flex items-center justify-between border-b pb-2 mb-3">
@@ -574,41 +421,34 @@
             <div class="text-[11px] bg-amber-400 text-amber-950 font-black px-2.5 py-0.5 rounded-full shadow">
               🌟 15회 천장: 15회 연속 미등장 시 울트라 레어 이상 100% 확정!
             </div>
-            
             <div class="text-[11px] text-slate-300">
               현재 행운 천장 게이지: <strong id="pityCountText" class="text-amber-400 text-xs">0</strong> / 15회
             </div>
-
             <div class="flex flex-col sm:flex-row gap-2 w-full max-w-sm justify-center mt-1">
               <button id="drawGachaNormalBtn" class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-poke-red to-rose-600 text-white font-black text-xs shadow border-b-2 border-red-800 btn-bounce flex items-center justify-center gap-1.5">
-                <span class="text-base">🔴</span>
-                <span>일반 뽑기 (🍬 10개)</span>
+                <span class="text-base">🔴</span><span>일반 뽑기 (🍬 10개)</span>
               </button>
-
               <button id="drawGachaGoldBtn" class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-950 font-black text-xs shadow border-b-2 border-amber-600 btn-bounce flex items-center justify-center gap-1.5">
-                <span class="text-base">✨🟡</span>
-                <span>황금볼 뽑기 (<b id="goldBallBtnCount">10</b>)</span>
+                <span class="text-base">✨🟡</span><span>황금볼 뽑기 (<b id="goldBallBtnCount">10</b>)</span>
               </button>
             </div>
-            
             <div class="text-[10px] text-slate-400">
               * 황금볼은 <strong>레어 50% / 울트라 40% / 전설 10%</strong>로 등장합니다!
             </div>
           </div>
-
           <div class="mt-3 p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-600 text-left">
-            <strong class="text-slate-800 block mb-0.5">📊 획득 확률 안내:</strong>
+            <strong class="text-slate-800 block mb-0.5">📊 획득 확률 안내 (뽑기 22종):</strong>
             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[10px]">
               <li>⚪ 일반 (50%): 구구, 꼬렛, 캐터피, 뚜벅초, 빠모</li>
               <li>🔷 레어 (35%): 파이리, 꼬부기, 이상해씨, 이브이, 뜨아거, 냐오하</li>
               <li>🌟 울트라 (12%): 피카츄, 잠만보, 팬텀, 따라큐, 리자몽, 님피아, 거북왕, 루카리오</li>
-              <li>👑 전설 (3%): 뮤, 뮤츠 (레쿠쟈는 레이드, 메가진화 8종은 조각 각성 전용)</li>
+              <li>👑 전설 (3%): 뮤, 뮤츠 (메가 8종과 레쿠쟈는 특수 획득)</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- ================= 탭 4: 포켓몬 도감 (총 30종) ================= -->
+      <!-- ================= 탭 4: 📖 도감 뷰 (총 30종 확장) ================= -->
       <section id="dexView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-3xl p-3 sm:p-4 shadow border border-slate-200">
           <div class="flex items-center justify-between border-b pb-2 mb-2.5 gap-2">
@@ -622,11 +462,9 @@
               도감: <span id="dexCompletionRate" class="text-poke-red font-black">5%</span>
             </div>
           </div>
-
           <div id="dexGridContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-2 my-1"></div>
         </div>
 
-        <!-- 황금볼 합성소 (도감 1마리 영구 보존 방식: 3마리 이상 시 2마리 소모) -->
         <div class="bg-amber-50 rounded-2xl p-3 border border-amber-300 shadow-xs">
           <div class="flex items-center gap-1.5 mb-1.5">
             <span class="text-xl">✨🟡</span>
@@ -641,7 +479,7 @@
         </div>
       </section>
 
-      <!-- ================= 탭 5: 오답 노트 ================= -->
+      <!-- ================= 탭 5: 📝 오답 노트 뷰 ================= -->
       <section id="wrongNotesView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-2xl p-3 shadow border border-slate-200 flex items-center justify-between gap-2">
           <div>
@@ -649,18 +487,17 @@
               <span>📝</span> 오답 노트
             </h2>
             <p class="text-[10px] text-slate-500">
-              틀린 문제를 다시 맞춰 졸업시키세요! 모두 비우면 <strong class="text-pink-600 font-bold">🍬 올클리어 보너스 사탕 +3개!</strong>
+              틀린 문제를 다시 맞춰 즉시 졸업시키세요! 모두 비우면 <strong class="text-pink-600 font-bold">🍬 올클리어 보너스 사탕 +3개!</strong>
             </p>
           </div>
           <button id="clearAllWrongBtn" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-xs font-bold">
             도감 비우기
           </button>
         </div>
-
         <div id="wrongListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
       </section>
 
-      <!-- ================= 탭 6: 실시간 랭킹 ================= -->
+      <!-- ================= 탭 6: 🏆 랭킹 뷰 ================= -->
       <section id="rankingView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-2xl p-3 shadow border border-slate-200">
           <div class="flex items-center justify-between gap-2 mb-2.5">
@@ -681,7 +518,6 @@
               </button>
             </div>
           </div>
-
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
               <thead class="bg-slate-100 text-slate-600 border-b">
@@ -712,7 +548,6 @@
         제작: JJ아빠 💙
       </div>
     </footer>
-
   </div>
 
   <!-- ================= 모달 0: 스타팅 포켓몬 뽑기 환영 팝업 ================= -->
@@ -728,7 +563,6 @@
             <strong class="text-pink-600 font-bold">🍬 별사탕 10개</strong> + <strong class="text-amber-600 font-bold">✨🟡 황금 몬스터볼 10개</strong>가 지급됩니다!
           </p>
         </div>
-
         <div id="starterEggTrigger" class="w-28 h-28 my-1 flex items-center justify-center cursor-pointer btn-bounce bg-amber-50 rounded-2xl border-2 border-dashed border-amber-300 relative shadow-inner">
           <div class="w-20 h-20 rounded-full border-4 border-slate-900 bg-white relative overflow-hidden shadow-md flex flex-col anim-gacha-shake-tension">
             <div class="h-1/2 bg-poke-red"></div>
@@ -738,7 +572,6 @@
           </div>
           <span class="absolute -bottom-2 bg-amber-400 text-amber-950 text-[10px] font-black px-2 py-0.5 rounded-full shadow">터치해서 깨우기!</span>
         </div>
-
         <div id="starterResultCard" class="hidden w-full flex flex-col items-center gap-2 pt-2 border-t border-slate-200">
           <div class="w-24 h-24">
             <img id="starterResultImg" src="" alt="스타팅 포켓몬" class="w-full h-full object-contain filter drop-shadow">
@@ -759,16 +592,12 @@
     </div>
   </div>
 
-  <!-- ================= 모달 1: 4.2초 시네마틱 2분할 개방 & 썬더 스파크 가챠 연출 오버레이 ================= -->
+  <!-- ================= 모달 1: 4.2초 시네마틱 가챠 연출 오버레이 ================= -->
   <div id="cinematicGachaModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-2xl z-50 flex items-center justify-center p-4 hidden">
     <div class="relative w-full max-w-sm flex flex-col items-center justify-center text-center">
-      
       <div id="gachaSunburst" class="absolute w-[580px] h-[580px] pointer-events-none opacity-0 anim-sunburst transition-opacity duration-700" style="background: radial-gradient(circle, rgba(255,222,0,0.55) 0%, rgba(244,63,94,0.35) 45%, rgba(0,0,0,0) 72%);"></div>
-
       <div id="gachaShockwaveRing" class="absolute w-64 h-64 rounded-full border-4 border-amber-300 pointer-events-none opacity-0 anim-shockwave-ring"></div>
-
       <div id="gachaEnergyAura" class="absolute w-48 h-48 rounded-full filter blur-3xl opacity-0 transition-opacity duration-500"></div>
-
       <div id="gachaLightningCanvasWrap" class="absolute inset-0 pointer-events-none flex items-center justify-center">
         <canvas id="lightningCanvas" width="360" height="360" class="opacity-0 transition-opacity duration-300"></canvas>
       </div>
@@ -777,11 +606,9 @@
         <div id="gachaBallTopHalf" class="w-36 h-[4.5rem] rounded-t-full bg-poke-red border-4 border-b-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all">
           <div class="absolute bottom-1 right-5 w-4 h-2 bg-white/40 rounded-full blur-[1px]"></div>
         </div>
-
         <div id="gachaCenterCore" class="absolute z-20 w-11 h-11 rounded-full border-4 border-slate-900 bg-white shadow-md flex items-center justify-center">
           <div id="gachaCenterPulseLed" class="w-4 h-4 rounded-full bg-slate-300"></div>
         </div>
-
         <div id="gachaBallBottomHalf" class="w-36 h-[4.5rem] rounded-b-full bg-white border-4 border-t-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all">
           <div class="absolute top-1 left-5 w-5 h-2 bg-slate-200/50 rounded-full"></div>
         </div>
@@ -791,33 +618,25 @@
         몬스터볼이 하늘에서 내려옵니다...!
       </div>
 
-      <!-- 최종 등장 포켓몬 카드 -->
       <div id="gachaResultCard" class="hidden z-20 bg-white rounded-3xl p-5 shadow-2xl border-4 w-full max-w-xs flex flex-col items-center justify-center gap-2.5 anim-card-burst-epic">
         <div class="flex flex-col items-center gap-1">
-          <div id="gachaNeonGradeBanner" class="text-sm font-black tracking-widest px-4 py-0.5 rounded-full text-white shadow-lg animate-pulse">
-            ★ 등급 ★
-          </div>
+          <div id="gachaNeonGradeBanner" class="text-sm font-black tracking-widest px-4 py-0.5 rounded-full text-white shadow-lg animate-pulse">★ 등급 ★</div>
           <span id="gachaNewOrDupBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">NEW!</span>
         </div>
-        
         <div class="w-36 h-36 relative flex items-center justify-center my-1">
           <img id="gachaResultImg" src="" alt="획득 포켓몬" class="w-full h-full object-contain filter drop-shadow-xl">
         </div>
-
         <div class="text-center">
           <h3 id="gachaResultName" class="text-xl font-black text-slate-800">포켓몬 이름</h3>
           <p id="gachaResultDesc" class="text-xs text-slate-500 mt-0.5 font-bold"></p>
         </div>
-
         <div id="gachaRewardNotice" class="w-full py-1.5 px-2 bg-pink-50 border border-pink-200 rounded-xl text-[11px] font-black text-pink-700 text-center">
           도감 등록 완료!
         </div>
-
         <button id="closeGachaResultBtn" class="w-full py-2.5 bg-gradient-to-r from-poke-red to-rose-600 hover:from-poke-darkred hover:to-rose-700 text-white font-black rounded-xl shadow border-b-2 border-red-800 btn-bounce text-xs mt-1">
           확인하고 멋지게 장착하기!
         </button>
       </div>
-
     </div>
   </div>
 
@@ -882,24 +701,18 @@
     </div>
   </div>
 
-  <!-- ================= 모달 2: 레이드 랭킹 모달 ================= -->
   <div id="raidRankModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-xs w-full shadow-2xl border-4 border-emerald-400 text-center">
       <div class="flex items-center justify-between border-b pb-1.5 mb-2">
-        <h3 class="text-sm font-black text-slate-800 flex items-center gap-1">
-          <span>⚔️</span> <span>레쿠쟈 레이드 영웅 랭킹</span>
-        </h3>
+        <h3 class="text-sm font-black text-slate-800 flex items-center gap-1"><span>⚔️</span> <span>레쿠쟈 레이드 영웅 랭킹</span></h3>
         <button id="closeRaidRankModalBtn" class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center text-xs">✕</button>
       </div>
-      <div class="text-[10px] text-slate-500 mb-1.5 text-left">
-        * 1위 MVP는 <strong>🏆 황금 트로피 칭호</strong>와 특별 보너스를 받습니다!
-      </div>
+      <div class="text-[10px] text-slate-500 mb-1.5 text-left">* 1위 MVP는 <strong>🏆 황금 트로피 칭호</strong>와 특별 보너스를 받습니다!</div>
       <div id="raidHeroList" class="space-y-1 max-h-56 overflow-y-auto text-left text-xs"></div>
       <button id="okRaidRankBtn" class="w-full py-2 bg-emerald-500 text-white font-black rounded-xl shadow btn-bounce text-xs mt-2.5">닫기</button>
     </div>
   </div>
 
-  <!-- ================= 모달 3: 7일 누적 출석부 모달 ================= -->
   <div id="attendanceModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-sm w-full shadow-2xl border-4 border-amber-400 text-center relative overflow-hidden">
       <div class="flex items-center justify-between border-b pb-1.5 mb-2">
@@ -912,17 +725,13 @@
         </div>
         <button id="closeAttendanceModalBtn" class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center text-xs">✕</button>
       </div>
-
       <div id="attendanceGrid" class="grid grid-cols-4 sm:grid-cols-7 gap-1.5 my-2"></div>
-
       <button id="claimAttendanceBtn" class="w-full py-2.5 bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-950 font-black rounded-xl shadow border-b-2 border-amber-600 btn-bounce text-xs flex items-center justify-center gap-1 mt-1">
-        <span>💮</span>
-        <span id="claimAttendanceBtnText">출석 도장 찍기!</span>
+        <span>💮</span><span id="claimAttendanceBtnText">출석 도장 찍기!</span>
       </button>
     </div>
   </div>
 
-  <!-- ================= 모달 4: 친구 도감 쇼케이스 팝업 ================= -->
   <div id="showcaseModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-sm w-full shadow-2xl border-4 border-poke-red text-center relative">
       <div class="flex items-center justify-between border-b pb-1.5 mb-2">
@@ -935,9 +744,7 @@
         </div>
         <button id="closeShowcaseModalBtn" class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center text-xs">✕</button>
       </div>
-
       <div id="showcaseDexGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-1.5 my-2 max-h-60 overflow-y-auto"></div>
-
       <div class="p-2 bg-slate-50 rounded-xl text-[11px] font-bold text-slate-600 flex items-center justify-around border border-slate-200">
         <span>⚔️ 레이드: <strong id="showcaseRaidDamage" class="text-poke-red font-black">0</strong></span>
         <span>🏆 EXP: <strong id="showcaseExp" class="text-amber-700 font-black">0</strong></span>
@@ -945,49 +752,36 @@
     </div>
   </div>
 
-  <!-- ================= 모달 5: 소리가 안 나요 해결 가이드 ================= -->
   <div id="soundGuideModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-xs w-full shadow-2xl border-4 border-amber-400">
       <div class="flex items-center justify-between border-b pb-1.5 mb-2">
-        <h3 class="text-sm font-black text-slate-800 flex items-center gap-1">
-          <span>📢</span> <span>소리가 안 날 때 해결법</span>
-        </h3>
+        <h3 class="text-sm font-black text-slate-800 flex items-center gap-1"><span>📢</span> <span>소리가 안 날 때 해결법</span></h3>
         <button id="closeSoundGuideModalBtn" class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center text-xs">✕</button>
       </div>
-
       <div class="space-y-2 text-xs text-slate-700 mb-3">
         <div class="p-2 bg-amber-50 rounded-xl border border-amber-200">
           <div class="font-black text-amber-950 text-[11px]">1️⃣ 미디어 볼륨 확인</div>
           <p class="text-[10px] text-slate-600">스마트폰 볼륨 버튼을 누르고 <strong>[미디어 볼륨]</strong>이 켜져 있는지 확인하세요.</p>
         </div>
-
         <div class="p-2 bg-emerald-50 rounded-xl border border-emerald-200">
           <div class="font-black text-emerald-950 text-[11px]">2️⃣ 갤럭시 설정 (핵심!)</div>
           <p class="text-[10px] text-slate-600">스마트폰 <strong>[설정] ➔ 상단 돋보기(🔍)에 TTS 검색</strong> ➔ [기본 엔진]을 <strong>Google 음성 서비스</strong>로 바꾸면 또박또박 잘 나옵니다!</p>
         </div>
-
         <div class="p-2 bg-sky-50 rounded-xl border border-sky-200">
           <div class="font-black text-sky-950 text-[11px]">3️⃣ 화면 터치하기</div>
           <p class="text-[10px] text-slate-600">화면을 한 번 터치한 후 <strong>[📢 소리 다시듣기]</strong>를 누르면 음성이 팡 터집니다.</p>
         </div>
       </div>
-
-      <button id="okSoundGuideBtn" class="w-full py-2 bg-amber-400 text-amber-950 font-black rounded-xl shadow btn-bounce text-xs">
-        확인했습니다!
-      </button>
+      <button id="okSoundGuideBtn" class="w-full py-2 bg-amber-400 text-amber-950 font-black rounded-xl shadow btn-bounce text-xs">확인했습니다!</button>
     </div>
   </div>
 
-  <!-- ================= 모달 6: 게임 모험 방법 ================= -->
   <div id="gameGuideModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-xs w-full shadow-2xl border-4 border-sky-400">
       <div class="flex items-center justify-between border-b pb-1.5 mb-2">
-        <h3 class="text-sm font-black text-slate-800 flex items-center gap-1">
-          <span>🎮</span> <span>포켓몬 받아쓰기 방법</span>
-        </h3>
+        <h3 class="text-sm font-black text-slate-800 flex items-center gap-1"><span>🎮</span> <span>포켓몬 받아쓰기 방법</span></h3>
         <button id="closeGameGuideModalBtn" class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center text-xs">✕</button>
       </div>
-
       <div class="space-y-2 text-xs text-slate-700 mb-3">
         <div class="p-2 rounded-xl bg-amber-50 border border-amber-200">
           <strong class="text-amber-950 block text-[11px]">1단계: 받아쓰기 풀기</strong>
@@ -995,30 +789,23 @@
         </div>
         <div class="p-2 rounded-xl bg-pink-50 border border-pink-200">
           <strong class="text-pink-950 block text-[11px]">2단계: 별사탕과 황금볼 모으기</strong>
-          <span class="text-[10px]">사탕으로 다양한 포켓몬을 뽑고 중복은 황금볼로 합성!</span>
+          <span class="text-[10px]">사탕으로 22종 기본 포켓몬을 뽑고 중복은 황금볼로 합성!</span>
         </div>
-        <div class="p-2 rounded-xl bg-purple-50 border border-purple-200">
-          <strong class="text-purple-950 block text-[11px]">3단계: 메가진화 각성!</strong>
-          <span class="text-[10px]">중복 포켓몬을 모아 메가 조각으로 바꾸고 화려하게 진화시켜보세요!</span>
+        <div class="p-2 rounded-xl bg-fuchsia-50 border border-fuchsia-200">
+          <strong class="text-fuchsia-950 block text-[11px]">3단계: 메가진화 각성!</strong>
+          <span class="text-[10px]">중복 포켓몬을 분해해 조각 5개를 모으면 화려한 메가 폼체인지 해금!</span>
         </div>
       </div>
-
-      <button id="okGameGuideBtn" class="w-full py-2 bg-sky-500 text-white font-black rounded-xl shadow btn-bounce text-xs">
-        모험 시작하기!
-      </button>
+      <button id="okGameGuideBtn" class="w-full py-2 bg-sky-500 text-white font-black rounded-xl shadow btn-bounce text-xs">모험 시작하기!</button>
     </div>
   </div>
 
-  <!-- ================= 모달 7: 목소리 설정 ================= -->
   <div id="voiceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-xs w-full shadow-2xl border-4 border-emerald-400">
       <div class="flex items-center justify-between border-b pb-1.5 mb-2">
-        <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1">
-          <span>🎙️</span> <span>친절한 목소리 선택</span>
-        </h3>
+        <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1"><span>🎙️</span> <span>친절한 목소리 선택</span></h3>
         <button id="closeVoiceModalBtn" class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center text-xs">✕</button>
       </div>
-
       <div class="space-y-2 mb-3">
         <div>
           <label class="block text-[11px] font-bold text-slate-700 mb-0.5">한국어 음성:</label>
@@ -1026,13 +813,11 @@
         </div>
         <div>
           <label class="block text-[11px] font-bold text-slate-700 mb-0.5 flex justify-between">
-            <span>속도:</span>
-            <span id="rateValueDisplay" class="text-emerald-700 font-black">0.8x</span>
+            <span>속도:</span><span id="rateValueDisplay" class="text-emerald-700 font-black">0.8x</span>
           </label>
           <input type="range" id="voiceRateSlider" min="0.6" max="1.1" step="0.05" value="0.8" class="w-full accent-emerald-500">
         </div>
       </div>
-
       <div class="flex gap-1.5">
         <button id="testVoiceBtn" class="flex-1 py-1.5 bg-emerald-100 text-emerald-900 font-bold rounded-xl text-xs btn-bounce">미리듣기</button>
         <button id="saveVoiceSettingsBtn" class="flex-1 py-1.5 bg-emerald-500 text-white font-bold rounded-xl shadow text-xs btn-bounce">저장</button>
@@ -1040,16 +825,12 @@
     </div>
   </div>
 
-  <!-- ================= 모달 8: 소리 볼륨 조절 ================= -->
   <div id="soundSettingsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-xs w-full shadow-2xl border-4 border-amber-400">
       <div class="flex items-center justify-between border-b pb-1.5 mb-2">
-        <h3 class="text-sm font-black text-slate-800 flex items-center gap-1">
-          <span>🔊</span> <span>소리 설정</span>
-        </h3>
+        <h3 class="text-sm font-black text-slate-800 flex items-center gap-1"><span>🔊</span> <span>소리 설정</span></h3>
         <button id="closeSoundSettingsModalBtn" class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center text-xs">✕</button>
       </div>
-
       <div class="space-y-2 mb-3 text-xs font-bold text-slate-700">
         <div class="flex items-center justify-between p-2 bg-amber-50 rounded-xl border border-amber-200">
           <span>포켓몬 울음소리 재생:</span>
@@ -1057,32 +838,22 @@
         </div>
         <div>
           <label class="block mb-0.5 flex justify-between text-[11px]">
-            <span>울음소리 크기:</span>
-            <span id="pokeCryVolDisplay" class="text-poke-red font-black">75%</span>
+            <span>울음소리 크기:</span><span id="pokeCryVolDisplay" class="text-poke-red font-black">75%</span>
           </label>
           <input type="range" id="pokeCryVolSlider" min="0" max="1" step="0.05" value="0.75" class="w-full accent-poke-red">
         </div>
       </div>
-
-      <button id="saveSoundSettingsBtn" class="w-full py-2 bg-amber-500 text-white font-bold rounded-xl shadow text-xs btn-bounce">
-        저장하기
-      </button>
+      <button id="saveSoundSettingsBtn" class="w-full py-2 bg-amber-500 text-white font-bold rounded-xl shadow text-xs btn-bounce">저장하기</button>
     </div>
   </div>
 
-  <!-- ================= 모달 9: 닉네임 설정 (중복 방지 실시간 검증 탑재) ================= -->
   <div id="trainerNameModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-xs w-full text-center shadow-xl border-4 border-poke-red">
       <div class="text-3xl mb-1">🧢</div>
       <h4 class="text-sm font-bold text-slate-800 mb-0.5">닉네임 설정</h4>
       <p class="text-[10px] text-slate-500 mb-2">다른 친구와 겹치지 않는 멋진 이름을 지어주세요!</p>
-      
       <input type="text" id="trainerNicknameInput" maxlength="10" class="w-full py-1.5 px-2 border-2 border-amber-300 rounded-xl text-center font-bold text-xs focus:outline-none focus:border-poke-red mb-1.5" placeholder="닉네임 (최대 10자)">
-      
-      <div id="nicknameDuplicateWarning" class="text-[10px] text-rose-600 font-bold mb-2 hidden">
-        ⚠️ 이미 다른 친구가 사용 중인 닉네임이에요!
-      </div>
-
+      <div id="nicknameDuplicateWarning" class="text-[10px] text-rose-600 font-bold mb-2 hidden">⚠️ 이미 다른 친구가 사용 중인 닉네임이에요!</div>
       <div class="flex items-center gap-1.5">
         <button id="cancelTrainerNameBtn" class="flex-1 py-1.5 bg-slate-100 text-slate-700 font-bold rounded-xl text-xs">취소</button>
         <button id="saveTrainerNameBtn" class="flex-1 py-1.5 bg-poke-red text-white font-bold rounded-xl shadow btn-bounce text-xs">저장</button>
@@ -1090,34 +861,25 @@
     </div>
   </div>
 
-  <!-- ================= 모달 10: 결과 모달 ================= -->
   <div id="resultModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl p-5 max-w-xs w-full text-center shadow-2xl border-4 border-amber-400">
       <div id="resultTrophyIcon" class="text-4xl mb-1">🏆</div>
       <h3 class="text-base font-bold text-slate-800">받아쓰기 채점 결과</h3>
       <div class="text-2xl font-black text-poke-red my-1" id="resultFinalScore">100점</div>
       <p id="resultScoreMessage" class="text-xs text-slate-600 mb-3 whitespace-pre-line leading-relaxed"></p>
-
       <div class="space-y-1.5">
-        <button id="retryWholeStageBtn" class="w-full py-2 bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold rounded-xl shadow btn-bounce text-xs">
-          🔄 이 급수 다시 도전!
-        </button>
-        <button id="closeResultModalBtn" class="w-full py-2 bg-slate-100 text-slate-700 font-bold rounded-xl text-xs">
-          확인
-        </button>
+        <button id="retryWholeStageBtn" class="w-full py-2 bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold rounded-xl shadow btn-bounce text-xs">🔄 이 급수 다시 도전!</button>
+        <button id="closeResultModalBtn" class="w-full py-2 bg-slate-100 text-slate-700 font-bold rounded-xl text-xs">확인</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= 모달 11: 일반 알림 모달 ================= -->
   <div id="alertModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl p-4 max-w-xs w-full text-center shadow-xl border-4 border-amber-400">
       <div id="alertIcon" class="text-3xl mb-1">⭐</div>
       <h4 id="alertTitle" class="text-sm font-bold text-slate-800 mb-0.5">안내</h4>
       <p id="alertMessage" class="text-xs text-slate-600 mb-3 whitespace-pre-line leading-relaxed"></p>
-      <button id="closeAlertModalBtn" class="w-full py-2 bg-amber-500 text-white font-bold rounded-xl shadow btn-bounce text-xs">
-        확인
-      </button>
+      <button id="closeAlertModalBtn" class="w-full py-2 bg-amber-500 text-white font-bold rounded-xl shadow btn-bounce text-xs">확인</button>
     </div>
   </div>
 
@@ -1141,7 +903,7 @@
       15: { title: "8. 느끼고 표현해요", words: ["재채기했다.", "잘못을 깨달았습니다.", "늑대 아저씨네 옆집에", "고장 난 시계", "꺾어 온 강아지풀", "콧구멍에 간질간질", "학교 갈 때", "날씨가 무척 춥다.", "바람에 날아간 깃털", "뉘우치지 않았습니다."] }
     };
 
-    /* 2. 포켓몬 30종 마스터 테이블 (거북왕, 루카리오 추가 + 메가진화 8종) */
+    /* 2. 포켓몬 30종 마스터 테이블 (거북왕/루카리오 포함, 메가진화 8종 포함) */
     const GACHA_POKEMON_LIST = [
       // 일반 등급 (5종)
       { id: 16, name: "구구", grade: "common", gradeKr: "일반", color: "#64748b", dmg: 1, desc: "작고 귀여운 아기 새 포켓몬! 풀숲에서 종종걸음으로 다녀요." },
@@ -1158,7 +920,7 @@
       { id: 909, name: "뜨아거", grade: "rare", gradeKr: "레어", color: "#ef4444", dmg: 2, desc: "맛있는 음식을 너무 좋아하는 엉뚱하고 사랑스러운 먹보 아기 악어!" },
       { id: 906, name: "냐오하", grade: "rare", gradeKr: "레어", color: "#10b981", dmg: 2, desc: "달콤하고 향긋한 향기를 풍기며 살랑살랑 애교 부리는 풀고양이!" },
 
-      // 울트라 등급 (8종 - 거북왕, 루카리오 추가)
+      // 울트라 등급 (8종 - 거북왕, 루카리오 포함)
       { id: 25, name: "피카츄", grade: "ultra", gradeKr: "울트라", color: "#a855f7", dmg: 4, desc: "뺨에 있는 빨간 주머니에서 백만볼트 전기를 모으는 모두의 영원한 친구!" },
       { id: 143, name: "잠만보", grade: "ultra", gradeKr: "울트라", color: "#a855f7", dmg: 4, desc: "하루에 400kg을 먹고 쿨쿨 낮잠을 즐기는 푸근하고 든든한 대식가 포켓몬!" },
       { id: 94, name: "팬텀", grade: "ultra", gradeKr: "울트라", color: "#a855f7", dmg: 4, shardKey: "gengar", desc: "그림자 속에 숨어 깜짝 놀라게 하는 걸 좋아하는 장난기 많은 고스트!" },
@@ -1172,7 +934,7 @@
       { id: 151, name: "뮤", grade: "legend", gradeKr: "전설", color: "#ec4899", dmg: 8, desc: "모든 포켓몬의 유전자를 지녔다는 맑고 순수한 전설의 환상 포켓몬!" },
       { id: 150, name: "뮤츠", grade: "legend", gradeKr: "전설", color: "#9333ea", dmg: 8, shardKey: "mewtwo", desc: "뮤의 유전자에서 태어난 강력한 사이코 파워를 지닌 최강의 전설 포켓몬!" },
 
-      // 도감 21번: 월드 레이드 토벌 전용 레쿠쟈
+      // 도감 20번: 월드 레이드 토벌 전용 레쿠쟈
       { id: 384, name: "레쿠쟈", grade: "legend", gradeKr: "신화", color: "#10b981", dmg: 10, isSpecialRaidBoss: true, shardKey: "mega_rayquaza", desc: "구름 위 오존층에 살며 하늘을 가르는 전설의 초록 드래곤! 4조각을 모으면 깨어납니다." },
 
       // --- 메가진화 8종 (조각 각성 전용, 가챠에서 등장 안 함) ---
@@ -1223,24 +985,16 @@
     /* 이전 모든 구버전 키 호환 탐색 목록 (기존 유저 데이터 유실 원천 차단) */
     const ALL_UID_SCAN_KEYS = [
       PRIMARY_STORAGE_KEY_UID,
-      "gokjeong_poke_uid_v5",
-      "gokjeong_poke_uid_v4",
-      "gokjeong_poke_uid_v3",
-      "gokjeong_poke_uid_v2",
-      "gokjeong_poke_uid",
-      "userId"
+      "gokjeong_poke_uid_v5", "gokjeong_poke_uid_v4", "gokjeong_poke_uid_v3",
+      "gokjeong_poke_uid_v2", "gokjeong_poke_uid", "userId"
     ];
 
     const ALL_STATE_SCAN_KEYS = [
       PRIMARY_STORAGE_KEY_APP,
-      "gokjeong_poke_secure_state_v11",
-      "gokjeong_poke_secure_state_v10",
-      "gokjeong_poke_secure_state_v9",
-      "gokjeong_poke_secure_state_v8",
-      "gokjeong_poke_secure_state_v7",
-      "gokjeong_poke_secure_state_v6",
-      "gokjeong_poke_secure_state_v5",
-      "gokjeong_poke_secure_state",
+      "gokjeong_poke_secure_state_v11", "gokjeong_poke_secure_state_v10",
+      "gokjeong_poke_secure_state_v9", "gokjeong_poke_secure_state_v8",
+      "gokjeong_poke_secure_state_v7", "gokjeong_poke_secure_state_v6",
+      "gokjeong_poke_secure_state_v5", "gokjeong_poke_secure_state",
       "gokjeong_poke_state"
     ];
 
@@ -1249,7 +1003,6 @@
       if (_cachedUserId && _cachedUserId.trim() !== "") return _cachedUserId;
       let uid = null;
 
-      /* URL 파라미터(?uid=user_...)가 있는 경우 최우선 복원 바인딩 */
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const queryUid = urlParams.get('uid');
@@ -1261,7 +1014,6 @@
         }
       } catch (e) {}
 
-      /* 기존 모든 사물함 키를 순차 검색하여 기존 학생증 UID 복구 */
       for (const k of ALL_UID_SCAN_KEYS) {
         try {
           const val = localStorage.getItem(k);
@@ -1272,7 +1024,6 @@
         } catch (e) {}
       }
 
-      /* 완전히 처음 방문한 신규 학생인 경우에만 생성 */
       if (!uid || uid.trim() === "") {
         uid = 'user_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
         try { localStorage.setItem(PRIMARY_STORAGE_KEY_UID, uid); } catch (e) {}
@@ -1326,22 +1077,14 @@
       bossRound: 1,
       bossDefeatedAt: null,
       myRaidDamage: 0,
-      // 메가진화 조각 데이터
-      shards: {
-        charizard: 0,
-        mewtwo: 0,
-        gengar: 0,
-        blastoise: 0,
-        lucario: 0,
-        mega_rayquaza: 0
-      }
+      shards: { charizard: 0, mewtwo: 0, gengar: 0, blastoise: 0, lucario: 0, mega_rayquaza: 0 }
     };
+
+    let currentEventStage = 1;
 
     function loadSecureState() {
       try {
         state.userId = getGuaranteedUserId();
-
-        /* 모든 사물함(로컬 스토리지 키)을 검색하여 '닝닝' 등 기존 데이터 추출 */
         let raw = null;
         for (const k of ALL_STATE_SCAN_KEYS) {
           try {
@@ -1416,7 +1159,6 @@
           shards: state.shards
         };
         const serialized = JSON.stringify(payload);
-        /* 영구 고정 키에 저장 및 하위 호환 키 동시 백업 (절대 변경 금지) */
         localStorage.setItem(PRIMARY_STORAGE_KEY_APP, serialized);
         localStorage.setItem("gokjeong_poke_secure_state_v10", serialized);
         localStorage.setItem(PRIMARY_STORAGE_KEY_UID, state.userId);
@@ -1430,7 +1172,6 @@
     }
 
     loadSecureState();
-
     let cloudRankers = [];
 
     async function syncMyScoreToCloud() {
@@ -1465,12 +1206,11 @@
           shards: state.shards || {},
           updatedAt: serverTimestamp()
         }, { merge: true });
-      } catch (err) {
-        console.warn("클라우드 동기화 지연:", err);
-      }
+      } catch (err) {}
     }
 
     let raidRespawnInterval = null;
+    let isInitialLoad = true;
 
     function listenToCloudRaidAndRankings() {
       if (!window.PokeFirebase || !window.PokeFirebase.db) return;
@@ -1480,6 +1220,19 @@
       try {
         const { db, collection, doc, query, orderBy, limit, onSnapshot, setDoc } = window.PokeFirebase;
         
+        // 집중 급수 이벤트 연동
+        const eventDocRef = doc(db, "world_raid", "event_settings");
+        onSnapshot(eventDocRef, (snap) => {
+          if (snap.exists()) {
+            currentEventStage = snap.data().eventStage || 1;
+            updateEventStageUI();
+          } else {
+            setDoc(eventDocRef, { eventStage: 1 });
+            currentEventStage = 1;
+            updateEventStageUI();
+          }
+        });
+
         // 월드 보스 레쿠쟈 동기화
         const raidDocRef = doc(db, "world_raid", "rayquaza_s1");
         onSnapshot(raidDocRef, (snap) => {
@@ -1487,19 +1240,11 @@
             const data = snap.data();
             state.bossRound = data.round || 1;
             document.getElementById('raidRoundBadge').textContent = `S${state.bossRound}`;
-            
             if (typeof data.hp === 'number') {
               updateBossHpUI(data.hp, data.defeatedAt, data.round || 1, data.thresholds || {});
             }
           } else {
-            setDoc(raidDocRef, { 
-              hp: 1000, 
-              maxHp: 1000, 
-              round: 1, 
-              defeatedAt: null, 
-              thresholds: { 75: false, 50: false, 25: false },
-              contributions: {} 
-            });
+            setDoc(raidDocRef, { hp: 1000, maxHp: 1000, round: 1, defeatedAt: null, thresholds: { 75: false, 50: false, 25: false }, contributions: {} });
           }
         });
 
@@ -1509,53 +1254,21 @@
           if (snap.exists()) {
             const d = snap.data();
             let hasExternalUpdate = false;
-
-            /* 서버에 등록된 닉네임, 파트너, 도감 인벤토리를 기기에 안전하게 영구 복원 */
-            if (d.name && d.name.trim() !== "" && d.name !== state.userName) {
-              state.userName = d.name;
-              hasExternalUpdate = true;
-            }
-            if (d.partnerId && d.partnerId !== state.partnerId) {
-              state.partnerId = d.partnerId;
-              hasExternalUpdate = true;
-            }
-            if (d.partner && d.partner !== state.partnerName) {
-              state.partnerName = d.partner;
-              hasExternalUpdate = true;
-            }
+            if (d.name && d.name.trim() !== "" && d.name !== state.userName) { state.userName = d.name; hasExternalUpdate = true; }
+            if (d.partnerId && d.partnerId !== state.partnerId) { state.partnerId = d.partnerId; hasExternalUpdate = true; }
+            if (d.partner && d.partner !== state.partnerName) { state.partnerName = d.partner; hasExternalUpdate = true; }
             if (d.inventory && typeof d.inventory === 'object' && Object.keys(d.inventory).length > 0) {
               state.inventory = { ...state.inventory, ...d.inventory };
               state.hasClaimedStarter = true;
               hasExternalUpdate = true;
             }
-
-            if (typeof d.candies === 'number' && d.candies !== state.candies) {
-              state.candies = d.candies;
-              hasExternalUpdate = true;
-            }
-            if (typeof d.goldBalls === 'number' && d.goldBalls !== state.goldBalls) {
-              state.goldBalls = d.goldBalls;
-              hasExternalUpdate = true;
-            }
-            if (typeof d.exp === 'number' && d.exp !== state.userExp) {
-              state.userExp = d.exp;
-              hasExternalUpdate = true;
-            }
-            if (typeof d.rayquazaShards === 'number' && d.rayquazaShards > state.rayquazaShards) {
-              state.rayquazaShards = d.rayquazaShards;
-              hasExternalUpdate = true;
-            }
-            if (d.isRaidChampion !== undefined && d.isRaidChampion !== state.isRaidChampion) {
-              state.isRaidChampion = d.isRaidChampion;
-              hasExternalUpdate = true;
-            }
-            if (Array.isArray(d.claimedRaidRounds)) {
-              state.claimedRaidRounds = d.claimedRaidRounds;
-            }
-            if (d.shards && typeof d.shards === 'object') {
-              state.shards = { ...state.shards, ...d.shards };
-              hasExternalUpdate = true;
-            }
+            if (typeof d.candies === 'number' && d.candies !== state.candies) { state.candies = d.candies; hasExternalUpdate = true; }
+            if (typeof d.goldBalls === 'number' && d.goldBalls !== state.goldBalls) { state.goldBalls = d.goldBalls; hasExternalUpdate = true; }
+            if (typeof d.exp === 'number' && d.exp !== state.userExp) { state.userExp = d.exp; hasExternalUpdate = true; }
+            if (typeof d.rayquazaShards === 'number' && d.rayquazaShards > state.rayquazaShards) { state.rayquazaShards = d.rayquazaShards; hasExternalUpdate = true; }
+            if (d.isRaidChampion !== undefined && d.isRaidChampion !== state.isRaidChampion) { state.isRaidChampion = d.isRaidChampion; hasExternalUpdate = true; }
+            if (Array.isArray(d.claimedRaidRounds)) { state.claimedRaidRounds = d.claimedRaidRounds; }
+            if (d.shards && typeof d.shards === 'object') { state.shards = { ...state.shards, ...d.shards }; hasExternalUpdate = true; }
 
             if (hasExternalUpdate) {
               saveSecureState(false);
@@ -1570,7 +1283,6 @@
           }
         });
 
-        // 랭킹: 상위 100명까지 불러오고, 0 EXP 유령계정은 제외
         const rankQuery = query(collection(db, "rankings"), orderBy("exp", "desc"), limit(100));
         onSnapshot(rankQuery, (snapshot) => {
           cloudRankers = [];
@@ -1579,26 +1291,16 @@
             const expVal = Number(d.exp) || 0;
             if (expVal > 0) {
               cloudRankers.push({
-                id: docSnap.id,
-                name: d.name || "곡정초 트레이너",
-                partner: d.partner || "피카츄",
-                partnerId: d.partnerId || 25,
-                exp: expVal,
-                raidDamage: Number(d.raidDamage) || 0,
-                inventory: d.inventory || {},
-                dexCount: d.dexCount || Object.keys(d.inventory || {}).length,
-                hasMew: !!(d.inventory && d.inventory[151] > 0),
-                hasRayquaza: !!(d.inventory && d.inventory[384] > 0),
-                isRaidChampion: !!d.isRaidChampion,
-                isMe: (docSnap.id === uid)
+                id: docSnap.id, name: d.name || "곡정초 트레이너", partner: d.partner || "피카츄", partnerId: d.partnerId || 25,
+                exp: expVal, raidDamage: Number(d.raidDamage) || 0, inventory: d.inventory || {}, dexCount: d.dexCount || Object.keys(d.inventory || {}).length,
+                hasMew: !!(d.inventory && d.inventory[151] > 0), hasRayquaza: !!(d.inventory && d.inventory[384] > 0),
+                isRaidChampion: !!d.isRaidChampion, isMe: (docSnap.id === uid)
               });
             }
           });
           renderRankingTable();
         });
-      } catch (e) {
-        console.warn("클라우드 리스너 초기화 지연:", e);
-      }
+      } catch (e) {}
     }
 
     window.addEventListener('firebase-ready', () => {
@@ -1606,16 +1308,44 @@
       syncMyScoreToCloud();
     });
 
+    function updateEventStageUI() {
+      const selectEl = document.getElementById('stageSelect');
+      const wordbookSel = document.getElementById('wordbookStageSelect');
+      if (!selectEl || !wordbookSel) return;
+      
+      Array.from(selectEl.options).forEach(opt => {
+        const val = parseInt(opt.value);
+        let txt = opt.textContent.replace(" 🌟(이벤트)", "");
+        if (val === currentEventStage) txt += " 🌟(이벤트)";
+        opt.textContent = txt;
+      });
+      
+      Array.from(wordbookSel.options).forEach(opt => {
+        const val = parseInt(opt.value);
+        let txt = opt.textContent.replace(" 🌟(이벤트)", "");
+        if (val === currentEventStage) txt += " 🌟(이벤트)";
+        opt.textContent = txt;
+      });
+
+      if (isInitialLoad) {
+        initStage(currentEventStage);
+        isInitialLoad = false;
+      } else {
+        const tierBadge = document.getElementById('tierRewardBadge');
+        if(state.currentStage === currentEventStage) {
+          tierBadge.className = `w-full text-[11px] font-black py-1 px-2 rounded-xl border text-center truncate bg-amber-100 text-amber-900 border-amber-400 glow-event z-10 relative`;
+          tierBadge.textContent = `🌟 이벤트 급수! (정답 🍬2배 | 만점 황금볼+1 | ⚔️데미지 2배)`;
+        }
+      }
+    }
+
     async function isNicknameAlreadyTaken(desiredName) {
       if (!window.PokeFirebase || !window.PokeFirebase.db) return false;
       const uid = state.userId || getGuaranteedUserId();
       const trimmed = desiredName.trim();
-      
       const existingInCache = cloudRankers.find(r => r.name.toLowerCase() === trimmed.toLowerCase() && r.id !== uid);
       if (existingInCache) return true;
-
       if (INITIAL_RIVALS.some(r => r.name === trimmed)) return true;
-
       try {
         const { db, collection, getDocs } = window.PokeFirebase;
         const snap = await getDocs(collection(db, "rankings"));
@@ -1623,15 +1353,11 @@
         snap.forEach(doc => {
           if (doc.id !== uid) {
             const d = doc.data();
-            if (d.name && d.name.trim().toLowerCase() === trimmed.toLowerCase()) {
-              duplicateFound = true;
-            }
+            if (d.name && d.name.trim().toLowerCase() === trimmed.toLowerCase()) duplicateFound = true;
           }
         });
         return duplicateFound;
-      } catch (e) {
-        return false;
-      }
+      } catch (e) { return false; }
     }
 
     const CHO_LIST = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
@@ -1644,13 +1370,8 @@
       const choIndex = Math.floor(code / (21 * 28));
       const jungIndex = Math.floor((code % (21 * 28)) / 28);
       const jongIndex = code % 28;
-      return {
-        cho: CHO_LIST[choIndex],
-        jung: JUNG_LIST[jungIndex],
-        jong: JONG_LIST[jongIndex]
-      };
+      return { cho: CHO_LIST[choIndex], jung: JUNG_LIST[jungIndex], jong: JONG_LIST[jongIndex] };
     }
-
     function composeChar(cho, jung, jong = '') {
       const choIdx = CHO_LIST.indexOf(cho);
       const jungIdx = JUNG_LIST.indexOf(jung);
@@ -1669,9 +1390,7 @@
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContext();
       }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
       return audioCtx;
     }
 
@@ -1693,9 +1412,7 @@
 
     function playSuccessSound() {
       const notes = [523.25, 659.25, 783.99, 1046.50];
-      notes.forEach((freq, idx) => {
-        setTimeout(() => playTone(freq, 'triangle', 0.2, 0.2), idx * 80);
-      });
+      notes.forEach((freq, idx) => { setTimeout(() => playTone(freq, 'triangle', 0.2, 0.2), idx * 80); });
     }
 
     function playWrongSound() {
@@ -1715,14 +1432,11 @@
       } catch (e) {}
     }
 
-    function playSnapSound() {
-      playTone(880, 'sine', 0.08, 0.12);
-    }
+    function playSnapSound() { playTone(880, 'sine', 0.08, 0.12); }
 
     function playPokemonCry(pokeId, forcePlay = false) {
       if (!forcePlay && !enablePokeCryOnSolve && pokeId === state.partnerId) return;
       getAudioContext();
-      // 메가진화는 베이스 포켓몬의 울음소리를 재생
       let fetchId = pokeId;
       const megaBases = {10034:6, 10035:6, 10038:94, 10043:150, 10044:150, 10079:384, 10036:9, 10059:448};
       if (megaBases[pokeId]) fetchId = megaBases[pokeId];
@@ -1751,17 +1465,13 @@
         const raw = window.speechSynthesis.getVoices();
         availableVoices = raw.filter(v => v.lang.includes('ko') || v.lang.includes('KO') || v.name.includes('Korean') || v.name.includes('한국'));
         if (!selectedVoiceURI && availableVoices.length > 0) {
-          const naturalVoice = availableVoices.find(v => 
-            v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Yuna') || v.name.includes('유나')
-          );
+          const naturalVoice = availableVoices.find(v => v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Yuna') || v.name.includes('유나'));
           selectedVoiceURI = naturalVoice ? naturalVoice.voiceURI : availableVoices[0].voiceURI;
         }
         populateVoiceSelectModal();
       };
       loadAndSortVoices();
-      if (window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = loadAndSortVoices;
-      }
+      if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged = loadAndSortVoices;
     }
 
     function populateVoiceSelectModal() {
@@ -1831,49 +1541,33 @@
     let isChoiceProcessing = false;
 
     function getStageTierInfo(stage) {
+      let isEvent = (stage === currentEventStage);
+      let info = {};
       if (stage <= 5) {
-        return { 
-          tier: 'beginner', 
-          tierName: '🌱 초급',
-          tag: '🌱초급',
-          fullRewardDesc: '🌱 초급 (정답 🍬1개 + 10 EXP | 만점 +2개 | ⚔️1배)',
-          candyPerQ: 1, 
-          bonus100: 2, 
-          dmgMult: 1.0, 
-          badgeBg: 'bg-emerald-100 text-emerald-900 border-emerald-300',
-          selectStyle: 'border-emerald-400 bg-emerald-50'
-        };
+        info = { tier: 'beginner', tierName: '🌱 초급', tag: '🌱초급', candyPerQ: 1, bonus100: 2, dmgMult: 1.0, badgeBg: 'bg-emerald-100 text-emerald-900 border-emerald-300', selectStyle: 'border-emerald-400 bg-emerald-50' };
       } else if (stage <= 10) {
-        return { 
-          tier: 'intermediate', 
-          tierName: '🔥 모험',
-          tag: '🔥모험',
-          fullRewardDesc: '🔥 모험 (정답 🍬2개 + 10 EXP | 만점 +4개 | ⚔️1.5배)',
-          candyPerQ: 2, 
-          bonus100: 4, 
-          dmgMult: 1.5, 
-          badgeBg: 'bg-sky-100 text-sky-900 border-sky-300',
-          selectStyle: 'border-sky-400 bg-sky-50'
-        };
+        info = { tier: 'intermediate', tierName: '🔥 모험', tag: '🔥모험', candyPerQ: 2, bonus100: 4, dmgMult: 1.5, badgeBg: 'bg-sky-100 text-sky-900 border-sky-300', selectStyle: 'border-sky-400 bg-sky-50' };
       } else {
-        return { 
-          tier: 'master', 
-          tierName: '👑 마스터',
-          tag: '👑마스터',
-          fullRewardDesc: '👑 마스터 (정답 🍬3개 + 10 EXP | 만점 +6개 | 💥2배 크리티컬)',
-          candyPerQ: 3, 
-          bonus100: 6, 
-          dmgMult: 2.0, 
-          badgeBg: 'bg-purple-100 text-purple-900 border-purple-300',
-          selectStyle: 'border-purple-400 bg-purple-50'
-        };
+        info = { tier: 'master', tierName: '👑 마스터', tag: '👑마스터', candyPerQ: 3, bonus100: 6, dmgMult: 2.0, badgeBg: 'bg-purple-100 text-purple-900 border-purple-300', selectStyle: 'border-purple-400 bg-purple-50' };
       }
+      
+      if (isEvent) {
+        info.fullRewardDesc = `🌟 이벤트 급수! (정답 🍬2배 | 만점 황금볼+1 | ⚔️데미지 2배)`;
+        info.badgeBg = 'bg-amber-100 text-amber-900 border-amber-400 glow-event';
+        info.selectStyle = 'border-amber-400 bg-amber-50';
+      } else {
+        info.fullRewardDesc = `${info.tierName} (정답 🍬${info.candyPerQ}개 + 10 EXP | 만점 +${info.bonus100}개 | ⚔️${info.dmgMult}배)`;
+      }
+      return info;
     }
 
     function getPartnerDamage(stage) {
       const poke = GACHA_POKEMON_LIST.find(p => p.id === state.partnerId) || GACHA_POKEMON_LIST[11];
       const tierInfo = getStageTierInfo(stage);
-      return Math.round(poke.dmg * tierInfo.dmgMult);
+      let isEvent = (stage === currentEventStage);
+      let finalDmg = Math.round(poke.dmg * tierInfo.dmgMult);
+      if (isEvent) finalDmg *= 2;
+      return finalDmg;
     }
 
     function initStage(stageNum, customWordList = null) {
@@ -1883,10 +1577,10 @@
       
       const tierInfo = getStageTierInfo(state.currentStage);
       const tierBadge = document.getElementById('tierRewardBadge');
-      tierBadge.className = `w-full text-[11px] font-black py-1 px-2 rounded-xl border text-center truncate ${tierInfo.badgeBg}`;
+      tierBadge.className = `w-full text-[11px] font-black py-1 px-2 rounded-xl border text-center truncate z-10 relative ${tierInfo.badgeBg}`;
       tierBadge.textContent = tierInfo.fullRewardDesc;
 
-      stageSelectEl.className = `w-full flex-grow py-1.5 px-2 rounded-xl border-2 font-bold text-slate-800 text-xs focus:outline-none transition truncate ${tierInfo.selectStyle}`;
+      stageSelectEl.className = `w-full flex-grow py-1.5 px-2 rounded-xl border-2 font-bold text-slate-800 text-xs bg-amber-50 focus:outline-none focus:ring-2 transition truncate ${tierInfo.selectStyle}`;
 
       if (customWordList && customWordList.length > 0) {
         state.questions = [...customWordList];
@@ -1916,15 +1610,7 @@
         } else {
           const decomp = decomposeChar(char);
           if (decomp) {
-            units.push({
-              type: 'hangul',
-              full: char,
-              cho: decomp.cho,
-              jung: decomp.jung,
-              jong: decomp.jong,
-              hasJong: decomp.jong.length > 0,
-              currentShown: ''
-            });
+            units.push({ type: 'hangul', full: char, cho: decomp.cho, jung: decomp.jung, jong: decomp.jong, hasJong: decomp.jong.length > 0, currentShown: '' });
           } else {
             units.push({ type: 'punct', val: char, currentShown: '' });
           }
@@ -1938,23 +1624,17 @@
         showStageResult();
         return;
       }
-
       state.currentWord = state.questions[state.qIndex].trim();
       state.lives = 3;
       renderLives();
       hideFeedback();
-
       state.charUnits = buildCharUnits(state.currentWord);
       state.targetCharIdx = 0;
       state.curAssembly = { cho: '', jung: '', jong: '' };
-
       updateLiveScoreDisplay();
       renderKakdugi();
       findNextTargetStep();
-
-      setTimeout(() => {
-        speakCurrentTarget(state.currentWord, false);
-      }, 350);
+      setTimeout(() => { speakCurrentTarget(state.currentWord, false); }, 350);
     }
 
     function renderLives() {
@@ -1977,7 +1657,6 @@
     function renderKakdugi() {
       const wrapper = document.getElementById('kakdugiWrapper');
       wrapper.innerHTML = '';
-
       state.charUnits.forEach((unit, idx) => {
         if (unit.type === 'space') {
           const spaceBox = document.createElement('div');
@@ -1987,9 +1666,7 @@
         } else {
           const isCurrentFocus = (idx === state.targetCharIdx);
           const box = document.createElement('div');
-          box.className = `w-11 h-11 sm:w-14 sm:h-14 kakdugi-box rounded-xl flex items-center justify-center text-xl sm:text-2xl font-black text-slate-800 shadow-xs transition-all ${
-            isCurrentFocus ? 'ring-3 ring-amber-400 scale-105 bg-amber-50' : 'bg-white'
-          }`;
+          box.className = `w-11 h-11 sm:w-14 sm:h-14 kakdugi-box rounded-xl flex items-center justify-center text-xl sm:text-2xl font-black text-slate-800 shadow-xs transition-all ${isCurrentFocus ? 'ring-3 ring-amber-400 scale-105 bg-amber-50' : 'bg-white'}`;
           
           let displayChar = unit.currentShown || '';
           if (isCurrentFocus && unit.type === 'hangul' && (state.curAssembly.cho || state.curAssembly.jung)) {
@@ -2009,13 +1686,11 @@
       while (state.targetCharIdx < state.charUnits.length && state.charUnits[state.targetCharIdx].type === 'space') {
         state.targetCharIdx++;
       }
-
       if (state.targetCharIdx >= state.charUnits.length) {
         renderKakdugi();
         handleQuestionSolved();
         return;
       }
-
       const targetUnit = state.charUnits[state.targetCharIdx];
       const promptEl = document.getElementById('assemblyPrompt');
       let hangulOrder = 0;
@@ -2076,7 +1751,6 @@
         btn.addEventListener('click', () => onChoiceSelected(choiceText, correctVal, btn));
         grid.appendChild(btn);
       });
-
       setTimeout(() => { isChoiceProcessing = false; }, 60);
     }
 
@@ -2139,14 +1813,15 @@
       launchConfettiSmall();
 
       const tierInfo = getStageTierInfo(state.currentStage);
+      const isEvent = (state.currentStage === currentEventStage);
       const dmg = getPartnerDamage(state.currentStage);
+      
       let earnedCandy = tierInfo.candyPerQ;
+      if (isEvent) earnedCandy *= 2;
 
-      // 1문제 맞힐 때마다 경험치 +10 EXP 부분 누적 지급
       state.userExp += 10;
       document.getElementById('myTotalExp').textContent = state.userExp;
 
-      // [핵심 버그 수정 1]: 오답노트에서 풀고 맞힌 문제는 즉시 오답노트에서 영구 삭제
       let reviewBonusNotice = "";
       if (state.currentReviewWrongId) {
         const beforeWrongCount = state.wrongBook.length;
@@ -2154,16 +1829,12 @@
         state.currentReviewWrongId = null;
         reviewBonusNotice = "\n🎓 오답노트 졸업 완료! (오답 목록에서 삭제되었습니다)";
         
-        // 오답노트를 모두 비워 0개가 되었을 때 딱 1회성 올클리어 보너스 지급
         if (beforeWrongCount > 0 && state.wrongBook.length === 0) {
           state.candies += 3;
           setTimeout(() => {
             launchConfettiBig();
             playSuccessSound();
-            showAlertModal(
-              "🎉 오답노트 완벽 올클리어!", 
-              "틀렸던 문제를 모두 맞혀서 오답노트를 깨끗하게 비웠습니다!\n성실한 복습 노력으로 [🍬 별사탕 3개]를 선물합니다!"
-            );
+            showAlertModal("🎉 오답노트 완벽 올클리어!", "틀렸던 문제를 모두 맞혀서 오답노트를 깨끗하게 비웠습니다!\n성실한 복습 노력으로 [🍬 별사탕 3개]를 선물합니다!");
           }, 1200);
         }
         renderWrongBookList();
@@ -2176,11 +1847,7 @@
       const poke = GACHA_POKEMON_LIST.find(p => p.id === state.partnerId);
       const gradeKr = poke ? poke.gradeKr : "울트라";
 
-      showFeedback(
-        'success',
-        `🎉 정답이에요! [ ${state.currentWord} ]\n🍬 사탕 +${earnedCandy}개! (+10 EXP)\n[${state.partnerName}(${gradeKr})] 공격으로 레쿠쟈에게 ${dmg} 데미지!${reviewBonusNotice}`,
-        true
-      );
+      showFeedback('success', `🎉 정답이에요! [ ${state.currentWord} ]\n🍬 사탕 +${earnedCandy}개! (+10 EXP)\n[${state.partnerName}(${gradeKr})] 공격으로 레쿠쟈에게 ${dmg} 데미지!${reviewBonusNotice}`, true);
     }
 
     function handleQuestionFailed() {
@@ -2195,11 +1862,7 @@
       state.charUnits.forEach(u => { u.currentShown = u.full || u.val || ''; });
       renderKakdugi();
       
-      showFeedback(
-        'error',
-        `💨 아쉽게 포켓몬이 도망쳤어요!\n정답은 [ ${state.currentWord} ] 였습니다. 오답 노트에 적어둘게요!`,
-        true
-      );
+      showFeedback('error', `💨 아쉽게 포켓몬이 도망쳤어요!\n정답은 [ ${state.currentWord} ] 였습니다. 오답 노트에 적어둘게요!`, true);
     }
 
     function showFeedback(type, text, enableNextCountdown = false) {
@@ -2211,18 +1874,12 @@
       banner.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'border-emerald-300', 'bg-rose-100', 'text-rose-900', 'border-rose-300');
       banner.classList.add('border-2');
 
-      if (type === 'success') {
-        banner.classList.add('bg-emerald-100', 'text-emerald-900', 'border-emerald-300');
-      } else {
-        banner.classList.add('bg-rose-100', 'text-rose-900', 'border-rose-300');
-      }
+      if (type === 'success') { banner.classList.add('bg-emerald-100', 'text-emerald-900', 'border-emerald-300'); } 
+      else { banner.classList.add('bg-rose-100', 'text-rose-900', 'border-rose-300'); }
 
       textEl.textContent = text;
 
-      if (nextQuestionTimer) {
-        clearInterval(nextQuestionTimer);
-        nextQuestionTimer = null;
-      }
+      if (nextQuestionTimer) { clearInterval(nextQuestionTimer); nextQuestionTimer = null; }
 
       if (enableNextCountdown) {
         skipBtn.classList.remove('hidden');
@@ -2240,12 +1897,8 @@
             timerText.textContent = `${timeLeft.toFixed(1)}s`;
           }
         }, stepTime);
-
         skipBtn.onclick = () => {
-          if (nextQuestionTimer) {
-            clearInterval(nextQuestionTimer);
-            nextQuestionTimer = null;
-          }
+          if (nextQuestionTimer) { clearInterval(nextQuestionTimer); nextQuestionTimer = null; }
           goToNextQuestion();
         };
       } else {
@@ -2254,10 +1907,7 @@
     }
 
     function hideFeedback() {
-      if (nextQuestionTimer) {
-        clearInterval(nextQuestionTimer);
-        nextQuestionTimer = null;
-      }
+      if (nextQuestionTimer) { clearInterval(nextQuestionTimer); nextQuestionTimer = null; }
       document.getElementById('actionFeedback').classList.add('hidden');
     }
 
@@ -2269,7 +1919,6 @@
 
     function applyRaidDamageToBoss(dmg) {
       if (state.bossHp <= 0) return;
-
       state.myRaidDamage += dmg;
       document.getElementById('myRaidDamageText').textContent = state.myRaidDamage;
 
@@ -2283,19 +1932,8 @@
         const uid = state.userId || getGuaranteedUserId();
         const raidRef = doc(db, "world_raid", "rayquaza_s1");
 
-        const updateData = {
-          hp: newHp,
-          [`contributions.${uid}`]: {
-            name: state.userName || "곡정초 트레이너",
-            partner: state.partnerName,
-            dmg: state.myRaidDamage
-          }
-        };
-
-        if (newHp === 0 && prevHp > 0) {
-          updateData.defeatedAt = Date.now();
-        }
-
+        const updateData = { hp: newHp, [`contributions.${uid}`]: { name: state.userName || "곡정초 트레이너", partner: state.partnerName, dmg: state.myRaidDamage } };
+        if (newHp === 0 && prevHp > 0) updateData.defeatedAt = Date.now();
         setDoc(raidRef, updateData, { merge: true });
       } else {
         updateBossHpUI(newHp, newHp === 0 ? Date.now() : null, state.bossRound);
@@ -2310,10 +1948,7 @@
           state.goldBalls += 1;
           saveSecureState();
           playSuccessSound();
-          showAlertModal(
-            `💥 ${pct}% 실드 돌파! 럭키 브레이커!`, 
-            `레쿠쟈의 ${pct}% 체력 선을 무너뜨렸습니다!\n행운의 보상으로 [✨🟡 황금 몬스터볼 1개]를 획득했습니다!`
-          );
+          showAlertModal(`💥 ${pct}% 실드 돌파! 럭키 브레이커!`, `레쿠쟈의 ${pct}% 체력 선을 무너뜨렸습니다!\n행운의 보상으로 [✨🟡 황금 몬스터볼 1개]를 획득했습니다!`);
         }
       });
     }
@@ -2339,38 +1974,25 @@
       } else {
         timerText.classList.add('hidden');
         text.classList.remove('text-rose-400');
-        if (raidRespawnInterval) {
-          clearInterval(raidRespawnInterval);
-          raidRespawnInterval = null;
-        }
+        if (raidRespawnInterval) { clearInterval(raidRespawnInterval); raidRespawnInterval = null; }
       }
     }
 
     function startRespawnCountdown(defeatedAtTime, round) {
       if (raidRespawnInterval) clearInterval(raidRespawnInterval);
-
       const respawnTargetTime = defeatedAtTime + (5 * 60 * 1000);
       const timerText = document.getElementById('bossRespawnTimerText');
 
       const updateTimer = () => {
         const now = Date.now();
         const diff = respawnTargetTime - now;
-
         if (diff <= 0) {
           clearInterval(raidRespawnInterval);
           raidRespawnInterval = null;
           timerText.textContent = "⚡ 레쿠쟈 강림 중...!";
-
           if (window.PokeFirebase && window.PokeFirebase.db) {
             const { db, doc, setDoc } = window.PokeFirebase;
-            setDoc(doc(db, "world_raid", "rayquaza_s1"), {
-              hp: 1000,
-              maxHp: 1000,
-              round: (round || 1) + 1,
-              defeatedAt: null,
-              thresholds: { 75: false, 50: false, 25: false },
-              contributions: {}
-            }, { merge: true });
+            setDoc(doc(db, "world_raid", "rayquaza_s1"), { hp: 1000, maxHp: 1000, round: (round || 1) + 1, defeatedAt: null, thresholds: { 75: false, 50: false, 25: false }, contributions: {} }, { merge: true });
           } else {
             updateBossHpUI(1000, null, round + 1);
           }
@@ -2380,7 +2002,6 @@
           timerText.textContent = `⏰ ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} 후 부활!`;
         }
       };
-
       updateTimer();
       raidRespawnInterval = setInterval(updateTimer, 1000);
     }
@@ -2390,12 +2011,9 @@
         state.claimedRaidRounds.push(currentRound);
 
         let shardMsg = "";
-        
-        // 레쿠쟈를 이미 1마리라도 도감에 보유하고 있다면 -> '메가레쿠쟈 조각' 지급 (A안)
         if (state.inventory[384] > 0) {
           state.shards.mega_rayquaza = (state.shards.mega_rayquaza || 0) + 1;
           shardMsg = `[🧩 메가레쿠쟈 각성 조각 1개]를 획득했습니다! (현재: ${state.shards.mega_rayquaza}/5개)`;
-          
           if (state.shards.mega_rayquaza >= 5 && !state.inventory[10079]) {
             state.inventory[10079] = 1;
             state.partnerId = 10079;
@@ -2404,11 +2022,9 @@
             state.shards.mega_rayquaza -= 5;
           }
         } else {
-          // 아직 레쿠쟈 미보유 -> '기본 레쿠쟈 조각' 지급
           if (state.rayquazaShards < 4) {
             state.rayquazaShards += 1;
             shardMsg = `[🧩 레쿠쟈 조각 1개]를 획득했습니다! (현재: ${state.rayquazaShards}/4조각)`;
-            
             if (state.rayquazaShards >= 4) {
               state.inventory[384] = (state.inventory[384] || 0) + 1;
               state.partnerId = 384;
@@ -2417,17 +2033,12 @@
             }
           }
         }
-
         saveSecureState();
         updateRayquazaShardUI();
         renderDexGrid();
         launchConfettiBig();
         playPokemonCry(state.inventory[10079] ? 10079 : 384, true);
-
-        showAlertModal(
-          `🐉 레쿠쟈 토벌 성공! (시즌 ${currentRound})`, 
-          `곡정초 친구들과 함께 레쿠쟈를 쓰러뜨렸습니다!\n${shardMsg}\n(5분 뒤 더 강력한 레쿠쟈가 다시 나타납니다!)`
-        );
+        showAlertModal(`🐉 레쿠쟈 토벌 성공! (시즌 ${currentRound})`, `곡정초 친구들과 함께 레쿠쟈를 쓰러뜨렸습니다!\n${shardMsg}\n(5분 뒤 더 강력한 레쿠쟈가 다시 나타납니다!)`);
       }
     }
 
@@ -2436,18 +2047,14 @@
       const statusText = document.getElementById('rayquazaShardStatusText');
       if (!container) return;
       container.innerHTML = '';
-
       const count = state.rayquazaShards || 0;
       for (let i = 1; i <= 4; i++) {
         const isCollected = i <= count;
         const shard = document.createElement('div');
-        shard.className = `w-4 h-4 rounded flex items-center justify-center font-black text-[9px] border transition ${
-          isCollected ? 'bg-amber-400 text-amber-950 border-amber-300 shadow-sm' : 'bg-slate-800 text-slate-500 border-slate-700'
-        }`;
+        shard.className = `w-4 h-4 rounded flex items-center justify-center font-black text-[9px] border transition ${isCollected ? 'bg-amber-400 text-amber-950 border-amber-300 shadow-sm' : 'bg-slate-800 text-slate-500 border-slate-700'}`;
         shard.textContent = isCollected ? '🧩' : i;
         container.appendChild(shard);
       }
-
       if (count >= 4) {
         statusText.textContent = "🎉 4조각 완성! (이후 토벌 시 메가레쿠쟈 조각 지급)";
         statusText.className = "text-amber-300 font-black text-[9px]";
@@ -2460,11 +2067,8 @@
     function updateChampionTitleUI() {
       const badge = document.getElementById('headerChampionBadge');
       if (!badge) return;
-      if (state.isRaidChampion) {
-        badge.classList.remove('hidden');
-      } else {
-        badge.classList.add('hidden');
-      }
+      if (state.isRaidChampion) badge.classList.remove('hidden');
+      else badge.classList.add('hidden');
     }
 
     function showStageResult() {
@@ -2475,8 +2079,8 @@
 
       finalScoreEl.textContent = `${state.liveScore}점`;
       const tierInfo = getStageTierInfo(state.currentStage);
+      const isEvent = (state.currentStage === currentEventStage);
 
-      // 완주 보너스 +20 EXP
       state.userExp += 20;
 
       if (state.liveScore === 100) {
@@ -2484,7 +2088,14 @@
         const bonusCandy = tierInfo.bonus100;
         state.candies += bonusCandy;
         state.userExp += 50;
-        scoreMsgEl.textContent = `완벽한 100점 만점입니다!\n${tierInfo.tierName} 만점 추가 보너스로 🍬 사탕 +${bonusCandy}개 & +50 EXP 획득!`;
+        
+        let extraMsg = "";
+        if (isEvent) {
+          state.goldBalls += 1;
+          extraMsg = `\n🌟 집중 급수 만점 이벤트 잭팟 터짐!\n[✨🟡 황금 몬스터볼 1개] 추가 획득!`;
+        }
+        
+        scoreMsgEl.textContent = `완벽한 100점 만점입니다!\n${tierInfo.tierName} 만점 추가 보너스로 🍬 사탕 +${bonusCandy}개 & +50 EXP 획득!${extraMsg}`;
         launchConfettiBig();
         playSuccessSound();
       } else {
@@ -2510,12 +2121,7 @@
     function registerWrongWord(stage, qNum, word) {
       const exists = state.wrongBook.find(item => item.stage === stage && item.word === word);
       if (!exists) {
-        state.wrongBook.unshift({
-          id: 'wrong_' + Date.now(),
-          stage: stage,
-          qNum: qNum,
-          word: word
-        });
+        state.wrongBook.unshift({ id: 'wrong_' + Date.now(), stage: stage, qNum: qNum, word: word });
         saveSecureState();
         renderWrongBookList();
       }
@@ -2547,9 +2153,7 @@
             </div>
             <div class="text-xs font-black text-slate-800 mt-0.5 truncate">${item.word}</div>
           </div>
-          <button class="px-2.5 py-1 bg-poke-red text-white text-[10px] font-black rounded-lg shadow btn-bounce shrink-0" onclick="practiceWrongWord('${item.word.replace(/'/g, "\\'")}', ${item.stage}, '${item.id}')">
-            다시 풀기
-          </button>
+          <button class="px-2.5 py-1 bg-poke-red text-white text-[10px] font-black rounded-lg shadow btn-bounce shrink-0" onclick="practiceWrongWord('${item.word.replace(/'/g, "\\'")}', ${item.stage}, '${item.id}')">다시 풀기</button>
         `;
         container.appendChild(card);
       });
@@ -2573,26 +2177,23 @@
       const select = document.getElementById('wordbookStageSelect');
       if (!select) return;
       select.innerHTML = '';
-
       for (let i = 1; i <= 15; i++) {
         const info = getStageTierInfo(i);
         const opt = document.createElement('option');
         opt.value = i;
         opt.textContent = `[${info.tag}] ${i}급: ${DICTATION_DATA[i].title}`;
+        if (i === currentEventStage) opt.textContent += " 🌟(이벤트)";
         if (i === selectedWordbookStage) opt.selected = true;
         select.appendChild(opt);
       }
-
       select.onchange = (e) => {
         selectedWordbookStage = parseInt(e.target.value, 10);
         renderWordbookCards();
       };
-
       document.getElementById('startStageFromWordbookBtn').onclick = () => {
         switchTab('dictationView');
         initStage(selectedWordbookStage);
       };
-
       renderWordbookCards();
     }
 
@@ -2600,14 +2201,10 @@
       const container = document.getElementById('wordbookCardsGrid');
       if (!container) return;
       container.innerHTML = '';
-
       const stageWords = DICTATION_DATA[selectedWordbookStage].words;
-
       stageWords.forEach((word, idx) => {
         const card = document.createElement('div');
         card.className = "bg-white p-2.5 rounded-2xl border-2 border-amber-200 shadow-xs flex items-center justify-between gap-2 hover:border-amber-400 transition";
-
-        // 낱자 깍두기 박스 만들기
         let boxesHtml = '<div class="flex items-center gap-1 flex-wrap">';
         for (let char of word) {
           if (char === ' ') {
@@ -2617,17 +2214,13 @@
           }
         }
         boxesHtml += '</div>';
-
         card.innerHTML = `
           <div class="flex items-center gap-2 min-w-0 flex-grow">
-            <span class="w-5 h-5 rounded-full bg-poke-red text-white text-[10px] font-black flex items-center justify-center shrink-0">
-              ${idx + 1}
-            </span>
+            <span class="w-5 h-5 rounded-full bg-poke-red text-white text-[10px] font-black flex items-center justify-center shrink-0">${idx + 1}</span>
             ${boxesHtml}
           </div>
           <button class="p-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-900 rounded-xl font-black text-xs btn-bounce shrink-0 flex items-center gap-1 shadow-xs" onclick="speakCurrentTarget('${word.replace(/'/g, "\\'")}', false)" title="소리 듣기">
-            <span>📢</span>
-            <span class="text-[10px]">듣기</span>
+            <span>📢</span><span class="text-[10px]">듣기</span>
           </button>
         `;
         container.appendChild(card);
@@ -2637,7 +2230,6 @@
     let chosenStarter = null;
 
     function checkAndTriggerStarterTutorial() {
-      /* 이미 포켓몬을 보유하고 있거나 스타팅을 완료한 기존 계정은 튜토리얼 팝업을 절대 띄우지 않음 */
       const hasAnyPokemon = Object.values(state.inventory || {}).some(cnt => cnt > 0);
       if (!state.hasClaimedStarter && !hasAnyPokemon) {
         const modal = document.getElementById('welcomeStarterModal');
@@ -2648,19 +2240,15 @@
     document.getElementById('starterEggTrigger').addEventListener('click', () => {
       if (chosenStarter) return;
       playSnapSound();
-      
       const randomId = STARTER_POKEMON_IDS[Math.floor(Math.random() * STARTER_POKEMON_IDS.length)];
       chosenStarter = GACHA_POKEMON_LIST.find(p => p.id === randomId) || GACHA_POKEMON_LIST[5];
-
       const eggTrigger = document.getElementById('starterEggTrigger');
       const resultCard = document.getElementById('starterResultCard');
-
       eggTrigger.classList.add('hidden');
       document.getElementById('starterResultImg').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${chosenStarter.id}.png`;
       document.getElementById('starterResultName').textContent = chosenStarter.name;
       document.getElementById('starterResultGradeBadge').textContent = chosenStarter.gradeKr;
       document.getElementById('starterResultGradeBadge').style.backgroundColor = chosenStarter.color;
-
       resultCard.classList.remove('hidden');
       playSuccessSound();
       launchConfettiBig();
@@ -2669,24 +2257,18 @@
 
     document.getElementById('confirmStarterBtn').addEventListener('click', () => {
       if (!chosenStarter) return;
-
       state.hasClaimedStarter = true;
       state.partnerId = chosenStarter.id;
       state.partnerName = chosenStarter.name;
       state.inventory = { [chosenStarter.id]: 1 };
       state.candies += 10;
       state.goldBalls += 10;
-
       saveSecureState();
       updatePartnerUI();
       renderDexGrid();
       renderRankingTable();
-
       document.getElementById('welcomeStarterModal').classList.add('hidden');
-      showAlertModal(
-        "🎉 모험 준비 완료!", 
-        `[${chosenStarter.name}]이(가) 첫 번째 파트너가 되었어요!\n선물로 지급된 🍬 별사탕 10개와 ✨🟡 황금 몬스터볼 10개로 뽑기방을 이용하거나 받아쓰기를 시작해 보세요!`
-      );
+      showAlertModal("🎉 모험 준비 완료!", `[${chosenStarter.name}]이(가) 첫 번째 파트너가 되었어요!\n선물로 지급된 🍬 별사탕 10개와 ✨🟡 황금 몬스터볼 10개로 뽑기방을 이용하거나 받아쓰기를 시작해 보세요!`);
     });
 
     function drawLightningSparks(canvas, color = "#67e8f9") {
@@ -2694,13 +2276,10 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
-
       for (let i = 0; i < 6; i++) {
-        let x = cx;
-        let y = cy;
+        let x = cx; let y = cy;
         const angle = Math.random() * Math.PI * 2;
         const dist = Math.random() * 90 + 50;
-
         ctx.beginPath();
         ctx.moveTo(x, y);
         let curDist = 0;
@@ -2710,20 +2289,13 @@
           y += Math.sin(angle) * 15 + (Math.random() - 0.5) * 18;
           ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = color;
-        ctx.lineWidth = Math.random() * 2 + 1.5;
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 10;
-        ctx.stroke();
+        ctx.strokeStyle = color; ctx.lineWidth = Math.random() * 2 + 1.5; ctx.shadowColor = color; ctx.shadowBlur = 10; ctx.stroke();
       }
     }
 
     function rollGacha(isGoldBall = false) {
       if (isGoldBall) {
-        if (state.goldBalls < 1) {
-          showAlertModal("황금볼 부족", "황금 몬스터볼이 부족합니다!\n중복 포켓몬 3마리를 합성해 보세요!");
-          return null;
-        }
+        if (state.goldBalls < 1) { showAlertModal("황금볼 부족", "황금 몬스터볼이 부족합니다!\n중복 포켓몬 3마리를 합성해 보세요!"); return null; }
         state.goldBalls -= 1;
         const rand = Math.random() * 100;
         if (rand < 10) {
@@ -2737,19 +2309,14 @@
           return rares[Math.floor(Math.random() * rares.length)];
         }
       } else {
-        if (state.candies < 10) {
-          showAlertModal("별사탕 부족", "별사탕이 10개 필요합니다!\n받아쓰기 문제를 맞춰 별사탕을 모아보세요!");
-          return null;
-        }
+        if (state.candies < 10) { showAlertModal("별사탕 부족", "별사탕이 10개 필요합니다!\n받아쓰기 문제를 맞춰 별사탕을 모아보세요!"); return null; }
         state.candies -= 10;
         state.pityCount += 1;
-
         if (state.pityCount >= 15) {
           state.pityCount = 0;
           const highTier = GACHA_POKEMON_LIST.filter(p => (p.grade === 'ultra' || (p.grade === 'legend' && !p.isSpecialRaidBoss)) && !p.isMega);
           return highTier[Math.floor(Math.random() * highTier.length)];
         }
-
         const rand = Math.random() * 100;
         if (rand < 3) {
           state.pityCount = 0;
@@ -2785,59 +2352,41 @@
       ballContainer.classList.remove('anim-gacha-drop-4s', 'anim-gacha-shake-tension', 'hidden');
       ballTopHalf.classList.remove('anim-split-top');
       ballBottomHalf.classList.remove('anim-split-bottom');
-      ballTopHalf.style.transform = '';
-      ballBottomHalf.style.transform = '';
-      ballTopHalf.style.opacity = '1';
-      ballBottomHalf.style.opacity = '1';
+      ballTopHalf.style.transform = ''; ballBottomHalf.style.transform = '';
+      ballTopHalf.style.opacity = '1'; ballBottomHalf.style.opacity = '1';
       resultCard.classList.add('hidden');
-      sunburst.classList.add('opacity-0');
-      shockwave.classList.add('opacity-0');
-      aura.classList.add('opacity-0');
-      lightningCanvas.classList.add('opacity-0');
+      sunburst.classList.add('opacity-0'); shockwave.classList.add('opacity-0');
+      aura.classList.add('opacity-0'); lightningCanvas.classList.add('opacity-0');
 
-      if (isGold) {
-        ballTopHalf.className = "w-36 h-[4.5rem] rounded-t-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 border-4 border-b-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all";
-      } else {
-        ballTopHalf.className = "w-36 h-[4.5rem] rounded-t-full bg-gradient-to-r from-poke-red to-rose-600 border-4 border-b-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all";
-      }
-
+      if (isGold) ballTopHalf.className = "w-36 h-[4.5rem] rounded-t-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 border-4 border-b-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all";
+      else ballTopHalf.className = "w-36 h-[4.5rem] rounded-t-full bg-gradient-to-r from-poke-red to-rose-600 border-4 border-b-2 border-slate-900 shadow-2xl relative overflow-hidden transition-all";
       modal.classList.remove('hidden');
 
-      // 0.0s ~ 1.2s: 슈퍼 드롭
       playTone(130, 'sine', 0.35, 0.35);
       phaseText.textContent = "⚡ 몬스터볼이 하늘에서 내려옵니다...!";
       ballContainer.classList.add('anim-gacha-drop-4s');
 
-      // 1.2s ~ 2.6s: 펄스 진동
       setTimeout(() => {
         playTone(310, 'triangle', 0.25, 0.3);
         phaseText.textContent = "딸깍...! 볼 내부에서 엄청난 반응이 일어납니다!";
         ballContainer.classList.remove('anim-gacha-drop-4s');
         ballContainer.classList.add('anim-gacha-shake-tension');
         centerLed.className = "w-4 h-4 rounded-full bg-rose-500 animate-ping";
-
         shockwave.classList.remove('opacity-0');
         lightningCanvas.classList.remove('opacity-0');
 
         let sparkInterval = setInterval(() => {
           if (!modal.classList.contains('hidden') && !ballContainer.classList.contains('hidden')) {
             drawLightningSparks(lightningCanvas, poke.grade === 'legend' ? '#f472b6' : '#38bdf8');
-          } else {
-            clearInterval(sparkInterval);
-          }
+          } else clearInterval(sparkInterval);
         }, 120);
 
-        if (poke.grade === 'legend') {
-          aura.style.background = `radial-gradient(circle, #ec4899 0%, #a855f7 50%, transparent 75%)`;
-        } else if (poke.grade === 'ultra') {
-          aura.style.background = `radial-gradient(circle, #a855f7 0%, #6366f1 50%, transparent 75%)`;
-        } else {
-          aura.style.background = `radial-gradient(circle, #38bdf8 0%, #0284c7 50%, transparent 75%)`;
-        }
+        if (poke.grade === 'legend') aura.style.background = `radial-gradient(circle, #ec4899 0%, #a855f7 50%, transparent 75%)`;
+        else if (poke.grade === 'ultra') aura.style.background = `radial-gradient(circle, #a855f7 0%, #6366f1 50%, transparent 75%)`;
+        else aura.style.background = `radial-gradient(circle, #38bdf8 0%, #0284c7 50%, transparent 75%)`;
         aura.classList.remove('opacity-0');
       }, 1200);
 
-      // 2.6s ~ 3.4s: 몬스터볼 2분할 쪼개기
       setTimeout(() => {
         playTone(523.25, 'sawtooth', 0.4, 0.35);
         phaseText.textContent = "💥 몬스터볼이 활짝 개방됩니다!!";
@@ -2846,24 +2395,17 @@
         ballBottomHalf.classList.add('anim-split-bottom');
       }, 2600);
 
-      // 3.4s ~ 4.2s: 카드 등장
       setTimeout(() => {
         sunburst.classList.remove('opacity-0');
         playSuccessSound();
-
-        if (poke.grade === 'legend') {
-          launchConfettiBig();
-          playTone(1046.50, 'sawtooth', 0.6, 0.4);
-        } else {
-          launchConfettiSmall();
-        }
+        if (poke.grade === 'legend') { launchConfettiBig(); playTone(1046.50, 'sawtooth', 0.6, 0.4); } 
+        else launchConfettiSmall();
 
         ballContainer.classList.add('hidden');
         lightningCanvas.classList.add('opacity-0');
         phaseText.textContent = "";
 
         const isNew = !(state.inventory[poke.id] > 0);
-        
         const neonGrade = document.getElementById('gachaNeonGradeBanner');
         neonGrade.textContent = `★ ${poke.gradeKr.toUpperCase()} ★`;
         neonGrade.style.backgroundColor = poke.color;
@@ -2881,7 +2423,6 @@
         document.getElementById('gachaResultImg').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${poke.id}.png`;
         document.getElementById('gachaResultName').textContent = poke.name;
         document.getElementById('gachaResultDesc').textContent = `공격력: ${poke.dmg}⚔️ | ${poke.gradeKr} 등급`;
-
         resultCard.classList.remove('hidden');
         playPokemonCry(poke.id, true);
 
@@ -2893,147 +2434,9 @@
       }, 3400);
     }
 
-    document.getElementById('drawGachaNormalBtn').addEventListener('click', () => {
-      const poke = rollGacha(false);
-      if (poke) showCinematicGacha(poke, false);
-    });
-
-    document.getElementById('drawGachaGoldBtn').addEventListener('click', () => {
-      const poke = rollGacha(true);
-      if (poke) showCinematicGacha(poke, true);
-    });
-
-    document.getElementById('closeGachaResultBtn').addEventListener('click', () => {
-      document.getElementById('cinematicGachaModal').classList.add('hidden');
-    });
-
-    function renderRankingTable() {
-      const tbody = document.getElementById('rankingTableBody');
-      tbody.innerHTML = '';
-      document.getElementById('myTotalExp').textContent = state.userExp;
-
-      const myDisplayName = state.userName || "곡정초 트레이너";
-      const combinedMap = new Map();
-
-      INITIAL_RIVALS.forEach(r => combinedMap.set(r.name, {
-        ...r,
-        isMe: false,
-        avatar: "https://placehold.co/40x40/fef3c7/b45309?text=🧢",
-        dexCount: r.name === "챔피언 단델" ? 28 : 6,
-        hasMew: r.name === "챔피언 단델",
-        hasRayquaza: r.name === "챔피언 단델",
-        isRaidChampion: r.name === "챔피언 단델",
-        inventory: { 1: 1, 4: 1, 7: 1, 25: 1, 133: 1, 143: 1, 151: r.name === "챔피언 단델" ? 1 : 0, 384: r.name === "챔피언 단델" ? 1 : 0 }
-      }));
-
-      cloudRankers.forEach(cr => {
-        if (cr.exp > 0) {
-          combinedMap.set(cr.id, {
-            name: cr.name,
-            partner: cr.partner,
-            exp: cr.exp,
-            avatar: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${cr.partnerId}.png`,
-            raidDamage: cr.raidDamage || 0,
-            inventory: cr.inventory || {},
-            dexCount: cr.dexCount || Object.keys(cr.inventory || {}).length,
-            hasMew: !!cr.hasMew,
-            hasRayquaza: !!cr.hasRayquaza,
-            isRaidChampion: !!cr.isRaidChampion,
-            isMe: cr.isMe
-          });
-        }
-      });
-
-      if (state.userExp > 0) {
-        const myUnlockedCount = Object.keys(state.inventory).filter(id => (state.inventory[id] || 0) > 0).length;
-        combinedMap.set(state.userId, {
-          name: `👑 ${myDisplayName}`,
-          partner: state.partnerName,
-          exp: state.userExp,
-          avatar: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${state.partnerId}.png`,
-          raidDamage: state.myRaidDamage || 0,
-          inventory: state.inventory,
-          dexCount: myUnlockedCount,
-          hasMew: (state.inventory[151] || 0) > 0,
-          hasRayquaza: (state.inventory[384] || 0) > 0,
-          isRaidChampion: !!state.isRaidChampion,
-          isMe: true
-        });
-      }
-
-      const list = Array.from(combinedMap.values()).sort((a, b) => b.exp - a.exp);
-
-      list.forEach((user, idx) => {
-        const rank = idx + 1;
-        const row = document.createElement('tr');
-        row.className = user.isMe 
-          ? "bg-amber-100 font-bold text-amber-950 border-2 border-amber-400" 
-          : "hover:bg-slate-50 text-slate-700";
-
-        let medal = rank;
-        if (rank === 1) medal = "🥇";
-        else if (rank === 2) medal = "🥈";
-        else if (rank === 3) medal = "🥉";
-
-        row.innerHTML = `
-          <td class="p-1.5 text-center font-bold text-xs">${medal}</td>
-          <td class="p-1.5">
-            <div class="flex items-center gap-1">
-              ${user.isRaidChampion ? `<span class="text-[9px] bg-amber-400 text-amber-950 font-black px-1 rounded shadow-xs" title="레이드 챔피언">🏆</span>` : ''}
-              <span class="font-bold text-xs truncate max-w-[80px] sm:max-w-none">${user.name}</span>
-              ${user.hasMew ? `<span class="text-[8px] bg-pink-500 text-white font-black px-1 rounded-full">뮤</span>` : ''}
-              ${user.hasRayquaza ? `<span class="text-[8px] bg-emerald-600 text-white font-black px-1 rounded-full">레쿠쟈</span>` : ''}
-            </div>
-          </td>
-          <td class="p-1.5 text-slate-600 font-bold text-xs truncate max-w-[60px] sm:max-w-none">${user.partner}</td>
-          <td class="p-1.5 text-center text-[10px] font-black">${user.dexCount || 0}/30</td>
-          <td class="p-1.5 text-right font-black text-poke-red text-xs">${user.exp.toLocaleString()}</td>
-        `;
-
-        row.addEventListener('click', () => {
-          openTrainerShowcaseModal(user);
-        });
-
-        tbody.appendChild(row);
-      });
-    }
-
-    function openTrainerShowcaseModal(user) {
-      const modal = document.getElementById('showcaseModal');
-      document.getElementById('showcaseTrainerName').textContent = `${user.name}의 도감 전시대`;
-      
-      const inv = user.inventory || {};
-      const unlockedCount = Object.keys(inv).filter(id => (inv[id] || 0) > 0).length;
-
-      document.getElementById('showcaseTrainerMeta').textContent = 
-        `대표 파트너: ${user.partner} | 도감 수집: ${unlockedCount}/30마리`;
-      document.getElementById('showcaseRaidDamage').textContent = `${user.raidDamage || 0}⚔️`;
-      document.getElementById('showcaseExp').textContent = `${user.exp.toLocaleString()}`;
-
-      const grid = document.getElementById('showcaseDexGrid');
-      grid.innerHTML = '';
-
-      GACHA_POKEMON_LIST.forEach(poke => {
-        const isOwned = (inv[poke.id] || 0) > 0;
-        const cell = document.createElement('div');
-        cell.className = `p-1.5 rounded-xl border flex flex-col items-center justify-center text-center ${
-          isOwned ? (poke.isMega ? 'bg-fuchsia-50 border-fuchsia-300 shadow-xs' : 'bg-amber-50 border-amber-300 shadow-xs') : 'bg-slate-100 border-slate-200 opacity-30'
-        }`;
-        cell.innerHTML = `
-          <div class="w-10 h-10 flex items-center justify-center">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${poke.id}.png" class="w-full h-full object-contain ${isOwned ? '' : 'dex-silhouette'}">
-          </div>
-          <div class="text-[10px] font-black text-slate-800 truncate w-full">${isOwned ? poke.name : '???'}</div>
-        `;
-        grid.appendChild(cell);
-      });
-
-      modal.classList.remove('hidden');
-    }
-
-    document.getElementById('closeShowcaseModalBtn').addEventListener('click', () => {
-      document.getElementById('showcaseModal').classList.add('hidden');
-    });
+    document.getElementById('drawGachaNormalBtn').addEventListener('click', () => { const poke = rollGacha(false); if (poke) showCinematicGacha(poke, false); });
+    document.getElementById('drawGachaGoldBtn').addEventListener('click', () => { const poke = rollGacha(true); if (poke) showCinematicGacha(poke, true); });
+    document.getElementById('closeGachaResultBtn').addEventListener('click', () => { document.getElementById('cinematicGachaModal').classList.add('hidden'); });
 
     function renderDexGrid() {
       const container = document.getElementById('dexGridContainer');
@@ -3048,40 +2451,22 @@
         const isPartner = state.partnerId === poke.id;
 
         const card = document.createElement('div');
-        card.className = `p-2 rounded-xl border-2 flex flex-col items-center justify-between text-center cursor-pointer transition hover:scale-102 ${
-          isOwned 
-            ? (poke.isMega ? 'bg-white border-fuchsia-400 shadow-md' : 'bg-white border-amber-300 shadow-xs') 
-            : 'bg-slate-50 border-slate-200'
-        }`;
-
+        card.className = `p-2 rounded-xl border-2 flex flex-col items-center justify-between text-center cursor-pointer transition hover:scale-102 ${isOwned ? (poke.isMega ? 'bg-white border-fuchsia-400 shadow-md' : 'bg-white border-amber-300 shadow-xs') : 'bg-slate-50 border-slate-200'}`;
         card.innerHTML = `
           <div class="w-full flex items-center justify-between text-[9px]">
-            <span class="font-bold px-1 rounded" style="background:${poke.color}20; color:${poke.color}">
-              ${poke.gradeKr}${poke.isSpecialRaidBoss ? ' (레이드)' : ''}
-            </span>
+            <span class="font-bold px-1 rounded" style="background:${poke.color}20; color:${poke.color}">${poke.gradeKr}${poke.isSpecialRaidBoss ? ' (레이드)' : ''}</span>
             <span class="text-slate-400 font-bold">${isOwned ? `x${count}` : '-'}</span>
           </div>
-
           <div class="w-12 h-12 my-0.5 flex items-center justify-center">
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${poke.id}.png" class="w-full h-full object-contain ${isOwned ? '' : 'dex-silhouette'}">
           </div>
-
           <div class="text-xs font-black text-slate-800">${isOwned ? poke.name : '???'}</div>
           <div class="text-[9px] text-rose-600 font-bold">${isOwned ? `공격력 ${poke.dmg}⚔️` : '터치하여 확인'}</div>
-
-          ${isOwned ? `
-            <div class="mt-1 w-full py-0.5 rounded-lg text-[10px] font-black ${
-              isPartner ? 'bg-amber-400 text-amber-950 font-bold' : 'bg-slate-100 text-slate-700'
-            }">
-              ${isPartner ? '파트너 ✔' : '상세보기'}
-            </div>
-          ` : ''}
+          ${isOwned ? `<div class="mt-1 w-full py-0.5 rounded-lg text-[10px] font-black ${isPartner ? 'bg-amber-400 text-amber-950 font-bold' : 'bg-slate-100 text-slate-700'}">${isPartner ? '파트너 ✔' : '상세보기'}</div>` : ''}
         `;
-
         card.onclick = () => openPokemonDetailModal(poke, isOwned, count);
         container.appendChild(card);
       });
-
       document.getElementById('unlockedDexCountText').textContent = ownedCount;
       const rate = Math.round((ownedCount / 30) * 100);
       document.getElementById('dexCompletionRate').textContent = `${rate}%`;
@@ -3101,10 +2486,7 @@
 
       imgEl.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${poke.id}.png`;
       imgEl.className = `w-full h-full object-contain filter drop-shadow-md ${isOwned ? '' : 'dex-silhouette'}`;
-      
-      gradeBadge.textContent = poke.gradeKr;
-      gradeBadge.style.backgroundColor = poke.color;
-      
+      gradeBadge.textContent = poke.gradeKr; gradeBadge.style.backgroundColor = poke.color;
       dmgEl.textContent = `${poke.dmg}⚔️`;
 
       if (isOwned) {
@@ -3114,10 +2496,7 @@
         partnerBtn.classList.remove('hidden');
         partnerBtn.textContent = (state.partnerId === poke.id) ? "이미 대표 파트너입니다 ✔" : "대표 파트너로 장착";
         partnerBtn.disabled = (state.partnerId === poke.id);
-        partnerBtn.onclick = () => {
-          setPartnerPokemon(poke.id);
-          modal.classList.add('hidden');
-        };
+        partnerBtn.onclick = () => { setPartnerPokemon(poke.id); modal.classList.add('hidden'); };
       } else {
         nameEl.textContent = "??? (미발견)";
         ownBadge.textContent = "보유: 0마리";
@@ -3126,19 +2505,15 @@
       }
 
       playCryBtn.onclick = () => playPokemonCry(poke.id, true);
-
-      // 메가진화 조각 분해 및 각성 버튼 렌더링
       megaArea.innerHTML = '';
+
       if (poke.shardKey && isOwned) {
         const curShards = state.shards[poke.shardKey] || 0;
-        
         if (poke.id === 384) {
-          // 레쿠쟈 예외 처리 (분해 불가능, 레이드에서 획득)
           const infoTxt = document.createElement('div');
           infoTxt.className = "text-[10px] text-slate-500 font-bold mt-1 bg-slate-50 p-1.5 rounded-lg border border-slate-200 text-left";
           infoTxt.innerHTML = `* 레쿠쟈 레이드를 다시 클리어하면 메가 조각을 얻습니다.<br/>(현재 조각: ${curShards}/5개)`;
           megaArea.appendChild(infoTxt);
-          
           if (curShards >= 5) {
             const btnMega = document.createElement('button');
             btnMega.className = "w-full py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-black rounded-xl shadow btn-bounce text-xs mt-1 border-b-2 border-emerald-700 animate-pulse";
@@ -3147,7 +2522,6 @@
             megaArea.appendChild(btnMega);
           }
         } else {
-          // 일반 베이스 포켓몬
           if (count >= 2) {
             const btnConvert = document.createElement('button');
             btnConvert.className = "w-full py-1.5 px-2 bg-sky-100 hover:bg-sky-200 text-sky-800 font-black rounded-xl text-[11px] btn-bounce border border-sky-300 shadow-sm";
@@ -3160,7 +2534,6 @@
             infoTxt.innerHTML = `* 도감 보존을 위해 2마리 이상일 때만 조각 분해가 가능합니다. (현재 조각: ${curShards}/5개)`;
             megaArea.appendChild(infoTxt);
           }
-
           if (curShards >= 5) {
             const btnMega = document.createElement('button');
             btnMega.className = "w-full py-2 bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-black rounded-xl shadow btn-bounce text-xs mt-1 border-b-2 border-fuchsia-700 animate-pulse";
@@ -3170,13 +2543,84 @@
           }
         }
       }
-
       modal.classList.remove('hidden');
     }
 
-    document.getElementById('closePokeDetailBtn').addEventListener('click', () => {
+    function convertToShard(pokeId, shardKey) {
+      if ((state.inventory[pokeId] || 0) >= 2) {
+        state.inventory[pokeId]--;
+        state.shards = state.shards || {};
+        state.shards[shardKey] = (state.shards[shardKey] || 0) + 1;
+        saveSecureState();
+        const p = GACHA_POKEMON_LIST.find(x => x.id === pokeId);
+        playSuccessSound();
+        openPokemonDetailModal(p, true, state.inventory[pokeId]);
+        renderDexGrid();
+        renderDuplicateExchangeList();
+      } else {
+        showAlertModal("분해 불가", "도감 보존을 위해 2마리 이상일 때만 분해할 수 있습니다.");
+      }
+    }
+
+    let pendingMegaBaseId = null;
+    let pendingMegaShardKey = null;
+
+    function triggerMegaEvolution(baseId, shardKey) {
       document.getElementById('pokemonDetailModal').classList.add('hidden');
-    });
+      if (baseId === 6) {
+        pendingMegaBaseId = 6; pendingMegaShardKey = shardKey;
+        setupMegaChoiceModal('리자몽', 10034, 10035);
+      } else if (baseId === 150) {
+        pendingMegaBaseId = 150; pendingMegaShardKey = shardKey;
+        setupMegaChoiceModal('뮤츠', 10043, 10044);
+      } else {
+        const megaMap = { 94: 10038, 9: 10036, 448: 10059, 384: 10079 };
+        const targetMegaId = megaMap[baseId];
+        if (targetMegaId) executeMegaEvolution(shardKey, targetMegaId);
+      }
+    }
+
+    function setupMegaChoiceModal(name, idX, idY) {
+      const pX = GACHA_POKEMON_LIST.find(p => p.id === idX);
+      const pY = GACHA_POKEMON_LIST.find(p => p.id === idY);
+      document.getElementById('megaChoiceTitle').textContent = `🔥 ${name} 메가 폼 선택`;
+      document.getElementById('megaChoiceImgX').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${idX}.png`;
+      document.getElementById('megaChoiceNameX').textContent = pX.name;
+      document.getElementById('megaChoiceDmgX').textContent = pX.dmg;
+      document.getElementById('megaChoiceImgY').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${idY}.png`;
+      document.getElementById('megaChoiceNameY').textContent = pY.name;
+      document.getElementById('megaChoiceDmgY').textContent = pY.dmg;
+      document.getElementById('megaChoiceModal').classList.remove('hidden');
+    }
+
+    window.confirmMegaEvolution = function(choice) {
+      if (!pendingMegaBaseId) return;
+      let targetMegaId = null;
+      if (pendingMegaBaseId === 6) targetMegaId = choice === 'X' ? 10034 : 10035;
+      if (pendingMegaBaseId === 150) targetMegaId = choice === 'X' ? 10043 : 10044;
+      if (targetMegaId) {
+        document.getElementById('megaChoiceModal').classList.add('hidden');
+        executeMegaEvolution(pendingMegaShardKey, targetMegaId);
+      }
+    };
+
+    function executeMegaEvolution(shardKey, targetMegaId) {
+      if (state.shards[shardKey] >= 5) {
+        state.shards[shardKey] -= 5;
+        state.inventory[targetMegaId] = (state.inventory[targetMegaId] || 0) + 1;
+        const p = GACHA_POKEMON_LIST.find(x => x.id === targetMegaId);
+        state.partnerId = p.id;
+        state.partnerName = p.name;
+        saveSecureState();
+        renderDexGrid();
+        updatePartnerUI();
+        launchConfettiBig();
+        playPokemonCry(targetMegaId, true);
+        showAlertModal("🎉 MEGA EVOLUTION 성공!", `놀라운 빛과 함께 [${p.name}](으)로 화려하게 각성했습니다!\n대표 파트너로 자동 장착됩니다.`);
+      } else {
+        showAlertModal("진화 실패", "조각이 5개 모이지 않았습니다.");
+      }
+    }
 
     window.setPartnerPokemon = function(pokeId) {
       const poke = GACHA_POKEMON_LIST.find(p => p.id === pokeId);
@@ -3190,108 +2634,10 @@
       showAlertModal("🎉 대표 파트너 변경 완료!", `대표 파트너 포켓몬이 [${poke.name}]으로 변경되었습니다!`);
     };
 
-    function convertToShard(pokeId, shardKey) {
-      if ((state.inventory[pokeId] || 0) >= 2) {
-        state.inventory[pokeId]--;
-        state.shards = state.shards || {};
-        state.shards[shardKey] = (state.shards[shardKey] || 0) + 1;
-        saveSecureState();
-        
-        const p = GACHA_POKEMON_LIST.find(x => x.id === pokeId);
-        playSuccessSound();
-        openPokemonDetailModal(p, true, state.inventory[pokeId]); // UI 새로고침
-        renderDexGrid();
-        renderDuplicateExchangeList(); // 기존 합성소 갱신
-      } else {
-        showAlertModal("분해 불가", "도감 보존을 위해 2마리 이상일 때만 분해할 수 있습니다.");
-      }
-    }
-
-    let pendingMegaBaseId = null;
-    let pendingMegaShardKey = null;
-
-    function triggerMegaEvolution(baseId, shardKey) {
-      document.getElementById('pokemonDetailModal').classList.add('hidden');
-      
-      if (baseId === 6) { // 리자몽 X or Y
-        pendingMegaBaseId = 6;
-        pendingMegaShardKey = shardKey;
-        setupMegaChoiceModal('리자몽', 10034, 10035);
-      } else if (baseId === 150) { // 뮤츠 X or Y
-        pendingMegaBaseId = 150;
-        pendingMegaShardKey = shardKey;
-        setupMegaChoiceModal('뮤츠', 10043, 10044);
-      } else {
-        // 단일 폼체인지 메가진화
-        const megaMap = {
-          94: 10038,  // 팬텀
-          9: 10036,   // 거북왕
-          448: 10059, // 루카리오
-          384: 10079  // 레쿠쟈
-        };
-        const targetMegaId = megaMap[baseId];
-        if (targetMegaId) {
-          executeMegaEvolution(shardKey, targetMegaId);
-        }
-      }
-    }
-
-    function setupMegaChoiceModal(name, idX, idY) {
-      const pX = GACHA_POKEMON_LIST.find(p => p.id === idX);
-      const pY = GACHA_POKEMON_LIST.find(p => p.id === idY);
-      
-      document.getElementById('megaChoiceTitle').textContent = `🔥 ${name} 메가 폼 선택`;
-      document.getElementById('megaChoiceImgX').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${idX}.png`;
-      document.getElementById('megaChoiceNameX').textContent = pX.name;
-      document.getElementById('megaChoiceDmgX').textContent = pX.dmg;
-      
-      document.getElementById('megaChoiceImgY').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${idY}.png`;
-      document.getElementById('megaChoiceNameY').textContent = pY.name;
-      document.getElementById('megaChoiceDmgY').textContent = pY.dmg;
-      
-      document.getElementById('megaChoiceModal').classList.remove('hidden');
-    }
-
-    window.confirmMegaEvolution = function(choice) {
-      if (!pendingMegaBaseId) return;
-      
-      let targetMegaId = null;
-      if (pendingMegaBaseId === 6) targetMegaId = choice === 'X' ? 10034 : 10035;
-      if (pendingMegaBaseId === 150) targetMegaId = choice === 'X' ? 10043 : 10044;
-      
-      if (targetMegaId) {
-        document.getElementById('megaChoiceModal').classList.add('hidden');
-        executeMegaEvolution(pendingMegaShardKey, targetMegaId);
-      }
-    };
-
-    function executeMegaEvolution(shardKey, targetMegaId) {
-      if (state.shards[shardKey] >= 5) {
-        state.shards[shardKey] -= 5;
-        state.inventory[targetMegaId] = (state.inventory[targetMegaId] || 0) + 1;
-        
-        // 파트너 자동 장착
-        const p = GACHA_POKEMON_LIST.find(x => x.id === targetMegaId);
-        state.partnerId = p.id;
-        state.partnerName = p.name;
-        
-        saveSecureState();
-        renderDexGrid();
-        updatePartnerUI();
-        
-        launchConfettiBig();
-        playPokemonCry(targetMegaId, true);
-        showAlertModal("🎉 MEGA EVOLUTION 성공!", `놀라운 빛과 함께 [${p.name}](으)로 화려하게 각성했습니다!\n대표 파트너로 자동 장착됩니다.`);
-      } else {
-        showAlertModal("진화 실패", "조각이 5개 모이지 않았습니다.");
-      }
-    }
-
     function renderDuplicateExchangeList() {
       const container = document.getElementById('duplicateExchangeList');
       if (!container) return;
       container.innerHTML = '';
-
       let hasDuplicates = false;
       GACHA_POKEMON_LIST.forEach(poke => {
         const count = state.inventory[poke.id] || 0;
@@ -3304,26 +2650,17 @@
               <span class="text-xs font-black text-slate-800">${poke.name}</span>
               <span class="text-[10px] text-slate-500 font-bold">(보유 ${count}마리 ➔ 합성 후 ${count - 2}마리 남음)</span>
             </div>
-            <button class="px-2 py-0.5 bg-amber-400 hover:bg-amber-500 text-amber-950 font-black rounded-lg text-[10px] btn-bounce" onclick="exchangeDuplicateForGoldBall(${poke.id})">
-              2마리 합성 ➔ 황금볼 1개
-            </button>
+            <button class="px-2 py-0.5 bg-amber-400 hover:bg-amber-500 text-amber-950 font-black rounded-lg text-[10px] btn-bounce" onclick="exchangeDuplicateForGoldBall(${poke.id})">2마리 합성 ➔ 황금볼 1개</button>
           `;
           container.appendChild(row);
         }
       });
-
-      if (!hasDuplicates) {
-        container.innerHTML = `<div class="text-[10px] text-amber-800/80 text-center py-1">3마리 이상 모인 일반 중복 포켓몬이 없습니다. (1마리는 항상 도감에 안전하게 남습니다!)</div>`;
-      }
+      if (!hasDuplicates) container.innerHTML = `<div class="text-[10px] text-amber-800/80 text-center py-1">3마리 이상 모인 일반 중복 포켓몬이 없습니다. (1마리는 항상 도감에 안전하게 남습니다!)</div>`;
     }
 
     window.exchangeDuplicateForGoldBall = function(pokeId) {
       const current = state.inventory[pokeId] || 0;
-      if (current < 3) {
-        showAlertModal("합성 불가", "도감 보존을 위해 최소 3마리 이상 모여야 합성이 가능합니다!");
-        return;
-      }
-      
+      if (current < 3) { showAlertModal("합성 불가", "도감 보존을 위해 최소 3마리 이상 모여야 합성이 가능합니다!"); return; }
       state.inventory[pokeId] -= 2;
       state.goldBalls += 1;
       saveSecureState();
@@ -3332,6 +2669,36 @@
       playSuccessSound();
       showAlertModal("✨🟡 황금볼 합성 완료!", `2마리를 합성하여 [황금 몬스터볼] 1개를 획득했습니다!\n1마리는 도감에 안전하게 보존되었습니다.`);
     };
+
+    function updateWalletUI() {
+      document.getElementById('candyCountBadge').textContent = state.candies;
+      document.getElementById('goldBallCountBadge').textContent = state.goldBalls;
+      document.getElementById('gachaCandyDisplay').textContent = state.candies;
+      document.getElementById('goldBallBtnCount').textContent = state.goldBalls;
+      document.getElementById('pityCountText').textContent = state.pityCount;
+
+      const notiDot = document.getElementById('gachaNotiDot');
+      const tabDot = document.getElementById('tabGachaBadgeDot');
+      if (state.candies >= 10 || state.goldBalls >= 1) {
+        if (notiDot) notiDot.classList.remove('hidden');
+        if (tabDot) tabDot.classList.remove('hidden');
+      } else {
+        if (notiDot) notiDot.classList.add('hidden');
+        if (tabDot) tabDot.classList.add('hidden');
+      }
+    }
+
+    function updatePartnerUI() {
+      const poke = GACHA_POKEMON_LIST.find(p => p.id === state.partnerId) || GACHA_POKEMON_LIST[11];
+      let fetchId = poke.id;
+      const megaBases = {10034:6, 10035:6, 10038:94, 10043:150, 10044:150, 10079:384, 10036:9, 10059:448};
+      if (megaBases[poke.id]) fetchId = megaBases[poke.id];
+      
+      document.getElementById('partnerSpriteImg').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${fetchId}.png`;
+      document.getElementById('partnerNameBadge').textContent = state.partnerName;
+      document.getElementById('partnerOwnerText').textContent = state.userName || "트레이너";
+      document.getElementById('partnerDamageBadge').textContent = `공격력 ${poke.dmg}⚔️`;
+    }
 
     function checkAttendanceNotification() {
       const today = getTodayKST();
@@ -3352,10 +2719,7 @@
         const isNext = (reward.day === currentDay + 1);
 
         const card = document.createElement('div');
-        card.className = `p-1.5 rounded-xl border flex flex-col items-center justify-between text-center relative ${
-          isClaimed ? 'bg-emerald-50 border-emerald-400' : (isNext ? 'bg-amber-50 border-amber-400 ring-2 ring-amber-300' : 'bg-slate-50 border-slate-200 opacity-60')
-        }`;
-
+        card.className = `p-1.5 rounded-xl border flex flex-col items-center justify-between text-center relative ${isClaimed ? 'bg-emerald-50 border-emerald-400' : (isNext ? 'bg-amber-50 border-amber-400 ring-2 ring-amber-300' : 'bg-slate-50 border-slate-200 opacity-60')}`;
         card.innerHTML = `
           <div class="text-[9px] font-black ${isClaimed ? 'text-emerald-700' : 'text-slate-500'}">${reward.day}일차</div>
           <div class="text-xl my-0.5">${reward.icon}</div>
@@ -3380,19 +2744,11 @@
       }
     }
 
-    document.getElementById('openAttendanceModalBtn').addEventListener('click', () => {
-      renderAttendanceGrid();
-      document.getElementById('attendanceModal').classList.remove('hidden');
-    });
-
-    document.getElementById('closeAttendanceModalBtn').addEventListener('click', () => {
-      document.getElementById('attendanceModal').classList.add('hidden');
-    });
-
+    document.getElementById('openAttendanceModalBtn').addEventListener('click', () => { renderAttendanceGrid(); document.getElementById('attendanceModal').classList.remove('hidden'); });
+    document.getElementById('closeAttendanceModalBtn').addEventListener('click', () => { document.getElementById('attendanceModal').classList.add('hidden'); });
     document.getElementById('claimAttendanceBtn').addEventListener('click', () => {
       const today = getTodayKST();
       if (state.lastAttendanceDate === today) return;
-
       const nextDay = (state.attendanceDays % 7) + 1;
       const reward = ATTENDANCE_REWARDS.find(r => r.day === nextDay) || ATTENDANCE_REWARDS[0];
 
@@ -3412,122 +2768,88 @@
         launchConfettiBig();
         playPokemonCry(151, true);
       }
-
       saveSecureState();
       playSuccessSound();
       renderAttendanceGrid();
       renderDexGrid();
       renderRankingTable();
-
       showAlertModal(`🎉 ${nextDay}일차 출석 완료!`, `[${reward.title}] 보상이 지급되었습니다!`);
     });
 
-    function updateWalletUI() {
-      document.getElementById('candyCountBadge').textContent = state.candies;
-      document.getElementById('goldBallCountBadge').textContent = state.goldBalls;
-      document.getElementById('gachaCandyDisplay').textContent = state.candies;
-      document.getElementById('goldBallBtnCount').textContent = state.goldBalls;
-      document.getElementById('pityCountText').textContent = state.pityCount;
+    function renderRankingTable() {
+      const tbody = document.getElementById('rankingTableBody');
+      tbody.innerHTML = '';
+      document.getElementById('myTotalExp').textContent = state.userExp;
+      const myDisplayName = state.userName || "곡정초 트레이너";
+      const combinedMap = new Map();
 
-      const notiDot = document.getElementById('gachaNotiDot');
-      const tabDot = document.getElementById('tabGachaBadgeDot');
-      if (state.candies >= 10 || state.goldBalls >= 1) {
-        if (notiDot) notiDot.classList.remove('hidden');
-        if (tabDot) tabDot.classList.remove('hidden');
-      } else {
-        if (notiDot) notiDot.classList.add('hidden');
-        if (tabDot) tabDot.classList.add('hidden');
-      }
-    }
-
-    function updatePartnerUI() {
-      const poke = GACHA_POKEMON_LIST.find(p => p.id === state.partnerId) || GACHA_POKEMON_LIST[11];
-      document.getElementById('partnerSpriteImg').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${state.partnerId}.png`;
-      document.getElementById('partnerNameBadge').textContent = state.partnerName;
-      document.getElementById('partnerOwnerText').textContent = state.userName || "트레이너";
-      document.getElementById('partnerDamageBadge').textContent = `공격력 ${poke.dmg}⚔️`;
-    }
-
-    function renderRaidHeroList() {
-      const container = document.getElementById('raidHeroList');
-      if (!container) return;
-      container.innerHTML = '';
-
-      const heroMap = new Map();
-
-      INITIAL_RIVALS.forEach(r => {
-        heroMap.set(r.name, {
-          name: r.name,
-          partner: r.partner,
-          dmg: r.name === "챔피언 단델" ? 220 : (r.name.includes("1-1") ? 140 : 80),
-          isMe: false
-        });
-      });
-
+      INITIAL_RIVALS.forEach(r => combinedMap.set(r.name, { ...r, isMe: false, avatar: "https://placehold.co/40x40/fef3c7/b45309?text=🧢", dexCount: r.name === "챔피언 단델" ? 28 : 6, hasMew: r.name === "챔피언 단델", hasRayquaza: r.name === "챔피언 단델", isRaidChampion: r.name === "챔피언 단델", inventory: { 1: 1, 4: 1, 7: 1, 25: 1, 133: 1, 143: 1, 151: r.name === "챔피언 단델" ? 1 : 0, 384: r.name === "챔피언 단델" ? 1 : 0 } }));
+      
       cloudRankers.forEach(cr => {
-        if ((cr.raidDamage || 0) > 0) {
-          heroMap.set(cr.id, {
-            name: cr.name,
-            partner: cr.partner,
-            dmg: cr.raidDamage || 0,
-            isMe: cr.isMe
-          });
+        if (cr.exp > 0) {
+          combinedMap.set(cr.id, { name: cr.name, partner: cr.partner, exp: cr.exp, avatar: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${cr.partnerId}.png`, raidDamage: cr.raidDamage || 0, inventory: cr.inventory || {}, dexCount: cr.dexCount || Object.keys(cr.inventory || {}).length, hasMew: !!cr.hasMew, hasRayquaza: !!cr.hasRayquaza, isRaidChampion: !!cr.isRaidChampion, isMe: cr.isMe });
         }
       });
 
-      heroMap.set(state.userId, {
-        name: `👑 ${state.userName || '곡정초 트레이너'}`,
-        partner: state.partnerName,
-        dmg: state.myRaidDamage || 0,
-        isMe: true
-      });
+      if (state.userExp > 0) {
+        const myUnlockedCount = Object.keys(state.inventory).filter(id => (state.inventory[id] || 0) > 0).length;
+        combinedMap.set(state.userId, { name: `👑 ${myDisplayName}`, partner: state.partnerName, exp: state.userExp, avatar: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${state.partnerId}.png`, raidDamage: state.myRaidDamage || 0, inventory: state.inventory, dexCount: myUnlockedCount, hasMew: (state.inventory[151] || 0) > 0, hasRayquaza: (state.inventory[384] || 0) > 0, isRaidChampion: !!state.isRaidChampion, isMe: true });
+      }
 
-      const list = Array.from(heroMap.values()).sort((a, b) => b.dmg - a.dmg);
+      const list = Array.from(combinedMap.values()).sort((a, b) => b.exp - a.exp);
 
-      list.forEach((hero, idx) => {
-        const item = document.createElement('div');
-        const isMVP = (idx === 0);
-
-        item.className = `p-1.5 rounded-xl border flex items-center justify-between ${
-          isMVP ? 'bg-amber-100 border-amber-400 font-black text-amber-950 glow-champion' : (hero.isMe ? 'bg-emerald-50 border-emerald-300 font-bold text-emerald-950' : 'bg-slate-50 border-slate-200 text-slate-700 font-bold')
-        }`;
-        
-        let rankBadge = `${idx + 1}위`;
-        if (idx === 0) rankBadge = "🏆 1위 (MVP)";
-        else if (idx === 1) rankBadge = "🥈 2위";
-        else if (idx === 2) rankBadge = "🥉 3위";
-
-        item.innerHTML = `
-          <div class="flex items-center gap-1.5 truncate">
-            <span class="text-xs">${rankBadge}</span>
-            <span class="truncate text-xs">${hero.name}</span>
-            <span class="text-[10px] text-slate-500">(${hero.partner})</span>
-          </div>
-          <span class="text-rose-600 font-black text-xs shrink-0">${hero.dmg}⚔️</span>
+      list.forEach((user, idx) => {
+        const rank = idx + 1;
+        const row = document.createElement('tr');
+        row.className = user.isMe ? "bg-amber-100 font-bold text-amber-950 border-2 border-amber-400" : "hover:bg-slate-50 text-slate-700";
+        let medal = rank;
+        if (rank === 1) medal = "🥇"; else if (rank === 2) medal = "🥈"; else if (rank === 3) medal = "🥉";
+        row.innerHTML = `
+          <td class="p-1.5 text-center font-bold text-xs">${medal}</td>
+          <td class="p-1.5">
+            <div class="flex items-center gap-1">
+              ${user.isRaidChampion ? `<span class="text-[9px] bg-amber-400 text-amber-950 font-black px-1 rounded shadow-xs" title="레이드 챔피언">🏆</span>` : ''}
+              <span class="font-bold text-xs truncate max-w-[80px] sm:max-w-none">${user.name}</span>
+              ${user.hasMew ? `<span class="text-[8px] bg-pink-500 text-white font-black px-1 rounded-full">뮤</span>` : ''}
+              ${user.hasRayquaza ? `<span class="text-[8px] bg-emerald-600 text-white font-black px-1 rounded-full">레쿠쟈</span>` : ''}
+            </div>
+          </td>
+          <td class="p-1.5 text-slate-600 font-bold text-xs truncate max-w-[60px] sm:max-w-none">${user.partner}</td>
+          <td class="p-1.5 text-center text-[10px] font-black">${user.dexCount || 0}/30</td>
+          <td class="p-1.5 text-right font-black text-poke-red text-xs">${user.exp.toLocaleString()}</td>
         `;
-        container.appendChild(item);
+        row.addEventListener('click', () => { openTrainerShowcaseModal(user); });
+        tbody.appendChild(row);
       });
     }
 
-    const openRaidRankBtn = document.getElementById('openRaidRankModalBtn');
-    if (openRaidRankBtn) {
-      openRaidRankBtn.addEventListener('click', () => {
-        renderRaidHeroList();
-        document.getElementById('raidRankModal').classList.remove('hidden');
+    function openTrainerShowcaseModal(user) {
+      const modal = document.getElementById('showcaseModal');
+      document.getElementById('showcaseTrainerName').textContent = `${user.name}의 도감 전시대`;
+      const inv = user.inventory || {};
+      const unlockedCount = Object.keys(inv).filter(id => (inv[id] || 0) > 0).length;
+      document.getElementById('showcaseTrainerMeta').textContent = `대표 파트너: ${user.partner} | 도감 수집: ${unlockedCount}/30마리`;
+      document.getElementById('showcaseRaidDamage').textContent = `${user.raidDamage || 0}⚔️`;
+      document.getElementById('showcaseExp').textContent = `${user.exp.toLocaleString()}`;
+
+      const grid = document.getElementById('showcaseDexGrid');
+      grid.innerHTML = '';
+      GACHA_POKEMON_LIST.forEach(poke => {
+        const isOwned = (inv[poke.id] || 0) > 0;
+        const cell = document.createElement('div');
+        cell.className = `p-1.5 rounded-xl border flex flex-col items-center justify-center text-center ${isOwned ? (poke.isMega ? 'bg-fuchsia-50 border-fuchsia-300 shadow-xs' : 'bg-amber-50 border-amber-300 shadow-xs') : 'bg-slate-100 border-slate-200 opacity-30'}`;
+        cell.innerHTML = `
+          <div class="w-10 h-10 flex items-center justify-center">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${poke.id}.png" class="w-full h-full object-contain ${isOwned ? '' : 'dex-silhouette'}">
+          </div>
+          <div class="text-[10px] font-black text-slate-800 truncate w-full">${isOwned ? poke.name : '???'}</div>
+        `;
+        grid.appendChild(cell);
       });
+      modal.classList.remove('hidden');
     }
-    const closeRaidRankBtn = document.getElementById('closeRaidRankModalBtn');
-    if (closeRaidRankBtn) {
-      closeRaidRankBtn.addEventListener('click', () => {
-        document.getElementById('raidRankModal').classList.add('hidden');
-      });
-    }
-    const okRaidRankBtn = document.getElementById('okRaidRankBtn');
-    if (okRaidRankBtn) {
-      okRaidRankBtn.addEventListener('click', () => {
-        document.getElementById('raidRankModal').classList.add('hidden');
-      });
-    }
+
+    document.getElementById('closeShowcaseModalBtn').addEventListener('click', () => { document.getElementById('showcaseModal').classList.add('hidden'); });
 
     document.getElementById('openSoundGuideBtn').addEventListener('click', () => { document.getElementById('soundGuideModal').classList.remove('hidden'); });
     document.getElementById('closeSoundGuideModalBtn').addEventListener('click', () => { document.getElementById('soundGuideModal').classList.add('hidden'); });
@@ -3579,13 +2901,11 @@
       const input = document.getElementById('trainerNicknameInput');
       const warning = document.getElementById('nicknameDuplicateWarning');
       const nick = input.value.trim();
-
       if (!nick) {
         warning.textContent = "⚠️ 닉네임을 입력해주세요!";
         warning.classList.remove('hidden');
         return;
       }
-
       const taken = await isNicknameAlreadyTaken(nick);
       if (taken) {
         warning.textContent = "⚠️ 이미 다른 친구가 사용 중인 닉네임이에요!";
@@ -3593,7 +2913,6 @@
         playWrongSound();
         return;
       }
-
       state.userName = nick;
       saveSecureState();
       updatePartnerUI();
@@ -3610,7 +2929,6 @@
         if (pane.id === targetId) pane.classList.remove('hidden');
         else pane.classList.add('hidden');
       });
-
       tabs.forEach(tab => {
         if (tab.dataset.tab === targetId) {
           tab.classList.add('bg-poke-red', 'text-white', 'shadow');
@@ -3620,10 +2938,7 @@
           tab.classList.add('text-slate-600');
         }
       });
-
-      if (targetId === 'wordbookView') {
-        renderWordbookView();
-      }
+      if (targetId === 'wordbookView') renderWordbookView();
     }
 
     tabs.forEach(tab => tab.addEventListener('click', () => switchTab(tab.dataset.tab)));
@@ -3722,48 +3037,28 @@
 
       const selectEl = document.getElementById('stageSelect');
       selectEl.innerHTML = '';
-
-      const groupBeginner = document.createElement('optgroup');
-      groupBeginner.label = "🌱 초급 (1~5급) | 🍬1개 + 10 EXP";
-
-      const groupIntermediate = document.createElement('optgroup');
-      groupIntermediate.label = "🔥 모험 (6~10급) | 🍬2개 + 10 EXP";
-
-      const groupMaster = document.createElement('optgroup');
-      groupMaster.label = "👑 마스터 (11~15급) | 🍬3개 + 10 EXP";
+      const groupBeginner = document.createElement('optgroup'); groupBeginner.label = "🌱 초급 (1~5급)";
+      const groupIntermediate = document.createElement('optgroup'); groupIntermediate.label = "🔥 모험 (6~10급)";
+      const groupMaster = document.createElement('optgroup'); groupMaster.label = "👑 마스터 (11~15급)";
 
       for (let i = 1; i <= 15; i++) {
         const info = getStageTierInfo(i);
         const opt = document.createElement('option');
         opt.value = i;
         opt.textContent = `[${info.tag}] ${i}급: ${DICTATION_DATA[i].title}`;
-
-        if (i <= 5) groupBeginner.appendChild(opt);
-        else if (i <= 10) groupIntermediate.appendChild(opt);
-        else groupMaster.appendChild(opt);
+        if (i <= 5) groupBeginner.appendChild(opt); else if (i <= 10) groupIntermediate.appendChild(opt); else groupMaster.appendChild(opt);
       }
-
-      selectEl.appendChild(groupBeginner);
-      selectEl.appendChild(groupIntermediate);
-      selectEl.appendChild(groupMaster);
-
+      selectEl.appendChild(groupBeginner); selectEl.appendChild(groupIntermediate); selectEl.appendChild(groupMaster);
       selectEl.addEventListener('change', (e) => initStage(e.target.value));
 
-      document.getElementById('replayAudioBtn').addEventListener('click', () => {
-        if (!isSpeakingCooldown) speakCurrentTarget(state.currentWord, true);
-      });
-
+      document.getElementById('replayAudioBtn').addEventListener('click', () => { if (!isSpeakingCooldown) speakCurrentTarget(state.currentWord, true); });
       document.getElementById('headerPokeBall').addEventListener('click', () => playPokemonCry(25, true));
 
       const partnerBox = document.getElementById('partnerAvatarContainer');
       if (partnerBox) {
         partnerBox.addEventListener('click', () => {
           playPokemonCry(state.partnerId, true);
-          const quotes = [
-            `"${state.partnerName}: 곡정초 친구들 파이팅!"`,
-            `"${state.partnerName}: 또박또박 쓰면 절대 틀리지 않아!"`,
-            `"${state.partnerName}: 100점 맞고 레쿠쟈를 무찌르자!"`
-          ];
+          const quotes = [`"${state.partnerName}: 곡정초 친구들 파이팅!"`, `"${state.partnerName}: 또박또박 쓰면 절대 틀리지 않아!"`, `"${state.partnerName}: 100점 맞고 레쿠쟈를 무찌르자!"`];
           document.getElementById('partnerSpeechBubble').textContent = quotes[Math.floor(Math.random() * quotes.length)];
         });
       }
@@ -3783,9 +3078,6 @@
       renderWrongBookList();
       renderWordbookView();
       resizeConfetti();
-
-      initStage(1);
-
       checkAndTriggerStarterTutorial();
     });
   </script>
