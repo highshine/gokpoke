@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>곡정초 1학년 포켓몬 받아쓰기 마스터</title>
   
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts (기존 고운돋움 100% 보존) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Noto+Sans+KR:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -71,7 +69,7 @@
 
     .kakdugi-box {
       position: relative; background-color: #ffffff;
-      border: 3px solid #f87171; font-weight: 700;
+      border: 3px solid #f87171; font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif; font-weight: 700;
     }
     .kakdugi-box::before {
       content: ''; position: absolute; top: 50%; left: 0; right: 0;
@@ -82,7 +80,7 @@
       border-left: 1.5px dashed rgba(248, 113, 113, 0.45); pointer-events: none;
     }
 
-    .choice-btn { font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
+    .choice-btn { font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif; font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
     .btn-bounce { transition: transform 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.12s ease; }
     .btn-bounce:active { transform: scale(0.92) translateY(2px); }
     .dex-silhouette { filter: brightness(0) contrast(100%); opacity: 0.22; }
@@ -265,7 +263,7 @@
             <span class="text-amber-300 font-black">🧩 레쿠쟈 조각:</span>
             <div id="rayquazaShardsContainer" class="flex items-center gap-1"></div>
           </div>
-          <span id="rayquazaShardStatusText" class="text-emerald-300 font-bold text-[9px]">참여 시 1조각 지급!</span>
+          <span id="rayquazaShardStatusText" class="text-emerald-300 font-bold text-[9px]">참여 시 1조각 지급! (4조각 모으면 해금)</span>
         </div>
       </div>
     </div>
@@ -321,8 +319,6 @@
     </nav>
 
     <main class="w-full px-2.5 py-2 flex-grow flex flex-col">
-
-      <!-- ================= 탭 1: 받아쓰기 게임 뷰 ================= -->
       <section id="dictationView" class="tab-pane flex flex-col gap-2.5">
         <div class="bg-white rounded-2xl p-2.5 shadow-sm border-2 border-slate-200 flex flex-col gap-2 relative overflow-hidden">
           <div class="w-full flex items-center gap-1.5 z-10 relative">
@@ -382,7 +378,6 @@
         </div>
       </section>
 
-      <!-- ================= 탭 2: 📚 단어장 뷰 ================= -->
       <section id="wordbookView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-2xl p-3 shadow-sm border-2 border-slate-200 flex flex-col gap-2 relative overflow-hidden">
           <div class="flex items-center justify-between gap-1.5 z-10 relative">
@@ -401,7 +396,6 @@
         <div id="wordbookCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[620px] overflow-y-auto pr-1"></div>
       </section>
 
-      <!-- ================= 탭 3: 🎰 가챠 뷰 ================= -->
       <section id="gachaView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-3xl p-4 shadow border-4 border-pink-300 text-center relative overflow-hidden">
           <div class="flex items-center justify-between border-b pb-2 mb-3">
@@ -448,7 +442,6 @@
         </div>
       </section>
 
-      <!-- ================= 탭 4: 📖 도감 뷰 (총 30종 확장) ================= -->
       <section id="dexView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-3xl p-3 sm:p-4 shadow border border-slate-200">
           <div class="flex items-center justify-between border-b pb-2 mb-2.5 gap-2">
@@ -479,7 +472,6 @@
         </div>
       </section>
 
-      <!-- ================= 탭 5: 📝 오답 노트 뷰 ================= -->
       <section id="wrongNotesView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-2xl p-3 shadow border border-slate-200 flex items-center justify-between gap-2">
           <div>
@@ -497,7 +489,6 @@
         <div id="wrongListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
       </section>
 
-      <!-- ================= 탭 6: 🏆 랭킹 뷰 ================= -->
       <section id="rankingView" class="tab-pane hidden flex flex-col gap-2.5">
         <div class="bg-white rounded-2xl p-3 shadow border border-slate-200">
           <div class="flex items-center justify-between gap-2 mb-2.5">
@@ -550,7 +541,6 @@
     </footer>
   </div>
 
-  <!-- ================= 모달 0: 스타팅 포켓몬 뽑기 환영 팝업 ================= -->
   <div id="welcomeStarterModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="relative w-full max-w-sm flex flex-col items-center justify-center text-center">
       <div class="bg-white rounded-3xl p-5 shadow-2xl border-4 border-amber-400 w-full flex flex-col items-center justify-center gap-3">
@@ -592,7 +582,6 @@
     </div>
   </div>
 
-  <!-- ================= 모달 1: 4.2초 시네마틱 가챠 연출 오버레이 ================= -->
   <div id="cinematicGachaModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-2xl z-50 flex items-center justify-center p-4 hidden">
     <div class="relative w-full max-w-sm flex flex-col items-center justify-center text-center">
       <div id="gachaSunburst" class="absolute w-[580px] h-[580px] pointer-events-none opacity-0 anim-sunburst transition-opacity duration-700" style="background: radial-gradient(circle, rgba(255,222,0,0.55) 0%, rgba(244,63,94,0.35) 45%, rgba(0,0,0,0) 72%);"></div>
@@ -640,10 +629,9 @@
     </div>
   </div>
 
-  <!-- ================= 모달: 포켓몬 도감 상세 팝업 모달 ================= -->
-  <div id="pokemonDetailModal" class="fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <div id="pokemonDetailModal" class="fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden" onclick="if(event.target===this) document.getElementById('pokemonDetailModal').classList.add('hidden');">
     <div class="bg-white rounded-3xl p-5 max-w-xs w-full shadow-2xl border-4 border-amber-400 text-center relative overflow-hidden flex flex-col items-center">
-      <button id="closePokeDetailBtn" class="absolute top-3 right-3 w-7 h-7 rounded-full bg-slate-100 text-slate-600 font-black text-xs flex items-center justify-center hover:bg-slate-200">✕</button>
+      <button id="closePokeDetailBtn" class="absolute top-3 right-3 w-7 h-7 rounded-full bg-slate-100 text-slate-600 font-black text-xs flex items-center justify-center hover:bg-slate-200 z-50" onclick="document.getElementById('pokemonDetailModal').classList.add('hidden');">✕</button>
       
       <div class="w-full flex items-center justify-between mt-1 mb-2 px-1">
         <span id="detailGradeBadge" class="text-[10px] font-black px-2.5 py-0.5 rounded-full text-white bg-blue-500">레어</span>
@@ -679,8 +667,7 @@
     </div>
   </div>
 
-  <!-- ================= 모달: 메가진화 폼 선택 모달 (X / Y) ================= -->
-  <div id="megaChoiceModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <div id="megaChoiceModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden" onclick="if(event.target===this) document.getElementById('megaChoiceModal').classList.add('hidden');">
     <div class="bg-white rounded-3xl p-5 max-w-sm w-full shadow-2xl border-4 border-fuchsia-400 text-center relative">
       <h3 id="megaChoiceTitle" class="text-lg font-black text-slate-800 mb-1">🔥 메가진화 폼 선택</h3>
       <p class="text-xs text-slate-500 mb-3">5개의 조각이 모였습니다! 어떤 모습으로 각성시킬까요?</p>
@@ -732,7 +719,7 @@
     </div>
   </div>
 
-  <div id="showcaseModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
+  <div id="showcaseModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden" onclick="if(event.target===this) document.getElementById('showcaseModal').classList.add('hidden');">
     <div class="bg-white rounded-3xl p-4 max-w-sm w-full shadow-2xl border-4 border-poke-red text-center relative">
       <div class="flex items-center justify-between border-b pb-1.5 mb-2">
         <div class="flex items-center gap-1.5 text-left">
@@ -789,7 +776,7 @@
         </div>
         <div class="p-2 rounded-xl bg-pink-50 border border-pink-200">
           <strong class="text-pink-950 block text-[11px]">2단계: 별사탕과 황금볼 모으기</strong>
-          <span class="text-[10px]">사탕으로 22종 기본 포켓몬을 뽑고 중복은 황금볼로 합성!</span>
+          <span class="text-[10px]">사탕으로 22종 기본 포켓몬을 뽑고 중복은 황금볼이나 조각으로 합성!</span>
         </div>
         <div class="p-2 rounded-xl bg-fuchsia-50 border border-fuchsia-200">
           <strong class="text-fuchsia-950 block text-[11px]">3단계: 메가진화 각성!</strong>
@@ -874,7 +861,7 @@
     </div>
   </div>
 
-  <div id="alertModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+  <div id="alertModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden" onclick="if(event.target===this) document.getElementById('alertModal').classList.add('hidden');">
     <div class="bg-white rounded-3xl p-4 max-w-xs w-full text-center shadow-xl border-4 border-amber-400">
       <div id="alertIcon" class="text-3xl mb-1">⭐</div>
       <h4 id="alertTitle" class="text-sm font-bold text-slate-800 mb-0.5">안내</h4>
@@ -884,7 +871,6 @@
   </div>
 
   <script>
-    /* 1. 1학년 받아쓰기 1급 ~ 15급 데이터베이스 */
     const DICTATION_DATA = {
       1: { title: "1. 기분을 말해요", words: ["매미", "꽃", "병아리", "내 마음", "둥실둥실", "반짝반짝", "기뻐요", "슬퍼요", "화나요", "무서워요"] },
       2: { title: "1. 기분을 말해요", words: ["기분", "그림책", "놀이터", "예쁘게", "미끄럼틀", "그네", "웃겨요", "감사해요", "부러워", "화내지 말고"] },
@@ -903,24 +889,18 @@
       15: { title: "8. 느끼고 표현해요", words: ["재채기했다.", "잘못을 깨달았습니다.", "늑대 아저씨네 옆집에", "고장 난 시계", "꺾어 온 강아지풀", "콧구멍에 간질간질", "학교 갈 때", "날씨가 무척 춥다.", "바람에 날아간 깃털", "뉘우치지 않았습니다."] }
     };
 
-    /* 2. 포켓몬 30종 마스터 테이블 (거북왕/루카리오 포함, 메가진화 8종 포함) */
     const GACHA_POKEMON_LIST = [
-      // 일반 등급 (5종)
       { id: 16, name: "구구", grade: "common", gradeKr: "일반", color: "#64748b", dmg: 1, desc: "작고 귀여운 아기 새 포켓몬! 풀숲에서 종종걸음으로 다녀요." },
       { id: 19, name: "꼬렛", grade: "common", gradeKr: "일반", color: "#64748b", dmg: 1, desc: "호기심 많고 날쌘 꼬마 쥐 포켓몬! 튼튼한 앞니가 자랑이에요." },
       { id: 10, name: "캐터피", grade: "common", gradeKr: "일반", color: "#64748b", dmg: 1, desc: "초록빛 애벌레 포켓몬! 나뭇잎을 냠냠 먹으며 예쁜 나비가 되길 꿈꿔요." },
       { id: 43, name: "뚜벅초", grade: "common", gradeKr: "일반", color: "#64748b", dmg: 1, desc: "머리에 풀잎이 돋아난 포켓몬! 달빛을 받으며 사뿐사뿐 걸어요." },
       { id: 921, name: "빠모", grade: "common", gradeKr: "일반", color: "#f59e0b", dmg: 1, desc: "손바닥과 볼에서 전기를 찌릿찌릿 내뿜는 귀여운 전기 쥐 친구!" },
-      
-      // 레어 등급 (6종)
       { id: 4, name: "파이리", grade: "rare", gradeKr: "레어", color: "#3b82f6", dmg: 2, desc: "꼬리 끝에 따뜻한 불꽃이 타오르는 귀여운 아기 공룡 포켓몬!" },
       { id: 7, name: "꼬부기", grade: "rare", gradeKr: "레어", color: "#3b82f6", dmg: 2, desc: "단단한 등껍질을 가진 거북이 포켓몬! 시원한 물대포를 뿜어요." },
       { id: 1, name: "이상해씨", grade: "rare", gradeKr: "레어", color: "#3b82f6", dmg: 2, desc: "등에 커다란 꽃봉오리를 멘 포켓몬! 햇살을 받으면 쑥쑥 자라요." },
       { id: 133, name: "이브이", grade: "rare", gradeKr: "레어", color: "#3b82f6", dmg: 2, desc: "보송보송 털과 귀여운 눈망울! 무한한 가능성을 지닌 인기 포켓몬!" },
       { id: 909, name: "뜨아거", grade: "rare", gradeKr: "레어", color: "#ef4444", dmg: 2, desc: "맛있는 음식을 너무 좋아하는 엉뚱하고 사랑스러운 먹보 아기 악어!" },
       { id: 906, name: "냐오하", grade: "rare", gradeKr: "레어", color: "#10b981", dmg: 2, desc: "달콤하고 향긋한 향기를 풍기며 살랑살랑 애교 부리는 풀고양이!" },
-
-      // 울트라 등급 (8종 - 거북왕, 루카리오 포함)
       { id: 25, name: "피카츄", grade: "ultra", gradeKr: "울트라", color: "#a855f7", dmg: 4, desc: "뺨에 있는 빨간 주머니에서 백만볼트 전기를 모으는 모두의 영원한 친구!" },
       { id: 143, name: "잠만보", grade: "ultra", gradeKr: "울트라", color: "#a855f7", dmg: 4, desc: "하루에 400kg을 먹고 쿨쿨 낮잠을 즐기는 푸근하고 든든한 대식가 포켓몬!" },
       { id: 94, name: "팬텀", grade: "ultra", gradeKr: "울트라", color: "#a855f7", dmg: 4, shardKey: "gengar", desc: "그림자 속에 숨어 깜짝 놀라게 하는 걸 좋아하는 장난기 많은 고스트!" },
@@ -929,28 +909,22 @@
       { id: 700, name: "님피아", grade: "ultra", gradeKr: "울트라", color: "#ec4899", dmg: 4, desc: "리본 모양 더듬이로 다정한 마음을 전하는 우아하고 화려한 요정 포켓몬!" },
       { id: 9, name: "거북왕", grade: "ultra", gradeKr: "울트라", color: "#2563eb", dmg: 5, shardKey: "blastoise", desc: "등껍질에 장착된 2문의 고압 물대포는 두꺼운 철판도 뚫을 수 있어요." },
       { id: 448, name: "루카리오", grade: "ultra", gradeKr: "울트라", color: "#1d4ed8", dmg: 5, shardKey: "lucario", desc: "상대방의 마음의 파동을 읽어내어 빛의 탄환 파동탄을 쏘아냅니다." },
-
-      // 전설 등급 (2종)
       { id: 151, name: "뮤", grade: "legend", gradeKr: "전설", color: "#ec4899", dmg: 8, desc: "모든 포켓몬의 유전자를 지녔다는 맑고 순수한 전설의 환상 포켓몬!" },
       { id: 150, name: "뮤츠", grade: "legend", gradeKr: "전설", color: "#9333ea", dmg: 8, shardKey: "mewtwo", desc: "뮤의 유전자에서 태어난 강력한 사이코 파워를 지닌 최강의 전설 포켓몬!" },
-
-      // 도감 20번: 월드 레이드 토벌 전용 레쿠쟈
       { id: 384, name: "레쿠쟈", grade: "legend", gradeKr: "신화", color: "#10b981", dmg: 10, isSpecialRaidBoss: true, shardKey: "mega_rayquaza", desc: "구름 위 오존층에 살며 하늘을 가르는 전설의 초록 드래곤! 4조각을 모으면 깨어납니다." },
-
-      // --- 메가진화 8종 (조각 각성 전용, 가챠에서 등장 안 함) ---
+      // 메가진화 8종
       { id: 10034, name: "메가리자몽 X", grade: "mega", gradeKr: "메가진화", color: "#111827", dmg: 7, isMega: true, baseId: 6, desc: "푸른 화염을 입에 물고 검은 흑룡으로 각성한 리자몽의 드래곤 폼!" },
       { id: 10035, name: "메가리자몽 Y", grade: "mega", gradeKr: "메가진화", color: "#ea580c", dmg: 7, isMega: true, baseId: 6, desc: "날카로운 날개로 성층권까지 날아오르는 최강의 화염 와이번 폼!" },
       { id: 10038, name: "메가팬텀", grade: "mega", gradeKr: "메가진화", color: "#7c3aed", dmg: 6, isMega: true, baseId: 94, desc: "이마에 제3의 눈이 떠지며 이계 그림자 속에 몸을 숨긴 그림자 마스터!" },
+      { id: 10036, name: "메가거북왕", grade: "mega", gradeKr: "메가진화", color: "#2563eb", dmg: 6, isMega: true, baseId: 9, desc: "등에 초거대 주포 1문과 양팔에 2문의 캐논포를 장착한 중화기 거북이!" },
+      { id: 10059, name: "메가루카리오", grade: "mega", gradeKr: "메가진화", color: "#1d4ed8", dmg: 7, isMega: true, baseId: 448, desc: "전신에 검은 파동의 무늬를 두르고 일격필살을 날리는 격투 챔피언!" },
       { id: 10043, name: "메가뮤츠 X", grade: "mega", gradeKr: "메가진화", color: "#9333ea", dmg: 12, isMega: true, baseId: 150, desc: "염동력과 엄청난 피지컬 파워를 동시에 각성시킨 궁극의 사이코 파이터!" },
       { id: 10044, name: "메가뮤츠 Y", grade: "mega", gradeKr: "메가진화", color: "#a855f7", dmg: 12, isMega: true, baseId: 150, desc: "머리 뒤로 뻗은 꼬리로 염동력을 극한까지 끌어올린 지상 최강의 뮤츠!" },
-      { id: 10079, name: "메가레쿠쟈", grade: "mega", gradeKr: "메가진화", color: "#10b981", dmg: 15, isMega: true, baseId: 384, desc: "운석의 에너지를 흡수하여 황금빛 수염을 휘날리는 우주 최강의 드래곤!" },
-      { id: 10036, name: "메가거북왕", grade: "mega", gradeKr: "메가진화", color: "#2563eb", dmg: 6, isMega: true, baseId: 9, desc: "등에 초거대 주포 1문과 양팔에 2문의 캐논포를 장착한 중화기 거북이!" },
-      { id: 10059, name: "메가루카리오", grade: "mega", gradeKr: "메가진화", color: "#1d4ed8", dmg: 7, isMega: true, baseId: 448, desc: "전신에 검은 파동의 무늬를 두르고 일격필살을 날리는 격투 챔피언!" }
+      { id: 10079, name: "메가레쿠쟈", grade: "mega", gradeKr: "메가진화", color: "#10b981", dmg: 15, isMega: true, baseId: 384, desc: "운석의 에너지를 흡수하여 황금빛 수염을 휘날리는 우주 최강의 드래곤!" }
     ];
 
     const STARTER_POKEMON_IDS = [25, 4, 7, 1, 133, 909, 906];
 
-    /* 가상 라이벌 봇 */
     const INITIAL_RIVALS = [
       { name: "챔피언 단델", partner: "리자몽", partnerId: 6, exp: 2800 },
       { name: "곡정초 1-1 민우", partner: "거북왕", partnerId: 9, exp: 2100 },
@@ -978,24 +952,15 @@
       return `${adj} ${noun}${num}`;
     }
 
-    /* [영구 보존 고정 저장소 키 - 앞으로의 모든 업데이트에서도 절대 변경 금지] */
     const PRIMARY_STORAGE_KEY_UID = "gokjeong_uid";
     const PRIMARY_STORAGE_KEY_APP = "gokjeong_poke_secure_state_v10";
 
-    /* 이전 모든 구버전 키 호환 탐색 목록 (기존 유저 데이터 유실 원천 차단) */
     const ALL_UID_SCAN_KEYS = [
-      PRIMARY_STORAGE_KEY_UID,
-      "gokjeong_poke_uid_v5", "gokjeong_poke_uid_v4", "gokjeong_poke_uid_v3",
-      "gokjeong_poke_uid_v2", "gokjeong_poke_uid", "userId"
+      PRIMARY_STORAGE_KEY_UID, "gokjeong_poke_uid_v5", "gokjeong_poke_uid_v4", "gokjeong_poke_uid_v3", "gokjeong_poke_uid_v2", "gokjeong_poke_uid", "userId"
     ];
 
     const ALL_STATE_SCAN_KEYS = [
-      PRIMARY_STORAGE_KEY_APP,
-      "gokjeong_poke_secure_state_v11", "gokjeong_poke_secure_state_v10",
-      "gokjeong_poke_secure_state_v9", "gokjeong_poke_secure_state_v8",
-      "gokjeong_poke_secure_state_v7", "gokjeong_poke_secure_state_v6",
-      "gokjeong_poke_secure_state_v5", "gokjeong_poke_secure_state",
-      "gokjeong_poke_state"
+      PRIMARY_STORAGE_KEY_APP, "gokjeong_poke_secure_state_v11", "gokjeong_poke_secure_state_v10", "gokjeong_poke_secure_state_v9", "gokjeong_poke_secure_state_v8", "gokjeong_poke_secure_state_v7", "gokjeong_poke_secure_state_v6", "gokjeong_poke_secure_state_v5", "gokjeong_poke_secure_state", "gokjeong_poke_state"
     ];
 
     let _cachedUserId = null;
@@ -1220,7 +1185,6 @@
       try {
         const { db, collection, doc, query, orderBy, limit, onSnapshot, setDoc } = window.PokeFirebase;
         
-        // 집중 급수 이벤트 연동
         const eventDocRef = doc(db, "world_raid", "event_settings");
         onSnapshot(eventDocRef, (snap) => {
           if (snap.exists()) {
@@ -1233,7 +1197,6 @@
           }
         });
 
-        // 월드 보스 레쿠쟈 동기화
         const raidDocRef = doc(db, "world_raid", "rayquaza_s1");
         onSnapshot(raidDocRef, (snap) => {
           if (snap.exists()) {
@@ -1248,7 +1211,6 @@
           }
         });
 
-        // 내 계정 상태 동기화
         const myDocRef = doc(db, "rankings", uid);
         onSnapshot(myDocRef, (snap) => {
           if (snap.exists()) {
@@ -1580,7 +1542,7 @@
       tierBadge.className = `w-full text-[11px] font-black py-1 px-2 rounded-xl border text-center truncate z-10 relative ${tierInfo.badgeBg}`;
       tierBadge.textContent = tierInfo.fullRewardDesc;
 
-      stageSelectEl.className = `w-full flex-grow py-1.5 px-2 rounded-xl border-2 font-bold text-slate-800 text-xs bg-amber-50 focus:outline-none focus:ring-2 transition truncate ${tierInfo.selectStyle}`;
+      stageSelectEl.className = `w-full flex-grow py-1.5 px-2 rounded-xl border-2 font-bold text-slate-800 text-xs focus:outline-none transition truncate ${tierInfo.selectStyle}`;
 
       if (customWordList && customWordList.length > 0) {
         state.questions = [...customWordList];
